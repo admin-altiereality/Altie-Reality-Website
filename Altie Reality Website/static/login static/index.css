@@ -1,0 +1,492 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&family=Roboto:ital,wght@1,100&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: var(--font1);
+  list-style: none;
+  text-decoration: none !important;
+  outline: none !important;
+ -webkit-touch-callout: none;
+   -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+         -ms-user-select: none;
+	   user-select: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+:root {
+  --primary-color: #3b87eb;
+  --font1: "Baloo Bhai 2", cursive;
+  --font2: "Roboto", sans-serif;
+}
+/* css for google sigin button */
+.abcRioButton {
+  box-shadow: none !important;
+  width: 100% !important;
+  border: 1px solid black !important;
+  border-radius: 2px !important;
+  margin: auto !important;
+}
+.abcRioButtonContentWrapper {
+  background: #4285f4;
+}
+.g-signin2 {
+  width: 80% !important;
+}
+.abcRioButtonContents {
+  color: black;
+  font-weight: bolder;
+}
+.abcRioButtonIcon {
+  background-color: white;
+}
+.g-signuphere .abcRioButtonContents span {
+  visibility: hidden;
+}
+.g-signuphere .abcRioButtonContents span:nth-child(1):before {
+  content: "Sign Up with Google";
+  visibility: visible;
+}
+.g-signuphere .abcRioButtonContents span:nth-child(2):before {
+  content: "Signed Up Successfully";
+  visibility: visible;
+}
+.g-signinhere .abcRioButtonContents span {
+  visibility: hidden;
+}
+.g-signinhere .abcRioButtonContents span:nth-child(1):before {
+  content: "Sign In with Google";
+  visibility: visible;
+}
+.g-signinhere .abcRioButtonContents span:nth-child(2):before {
+  content: "Signed In Successfully";
+  visibility: visible;
+}
+
+/* other css */
+
+h2 {
+  margin: 5px 0;
+}
+
+hr {
+  width: 345px;
+  position: relative;
+  top: 4px;
+  margin: 4px;
+}
+
+.container1 {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.container1:before {
+  content: "";
+  position: absolute;
+  height: 300vmax;
+  width: 300vmax;
+  background: linear-gradient(
+    -45deg,
+    var(--primary-color),
+    var(--primary-color)
+  );
+  border-radius: 50%;
+  transform: translateY(-50%);
+  top: 0%;
+  right: 48%;
+  transition: 0.5s ease-in-out;
+  z-index: 5;
+}
+
+.login-signup {
+  width: 100%;
+  height: 100%;
+}
+
+form {
+  width: 50%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+}
+
+#form1 {
+  position: absolute;
+  top: 15%;
+  left: 0%;
+}
+
+#form2 {
+  position: absolute;
+  top: 23%;
+  right: 0%;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login > .forgot-password {
+  width: 100%;
+  text-align: right;
+  margin-right: 21%;
+}
+
+a:hover {
+  color: black !important;
+}
+
+.signup {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  background-color: rgb(231, 231, 231);
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+  height: 2rem;
+  margin: 5px;
+  border: 2px solid black;
+  border-radius: 34px;
+  outline: hidden;
+  position: relative;
+}
+
+.input > div {
+  text-align: center;
+  max-width: 20%;
+  padding: 0;
+}
+
+.input > div > i {
+  max-width: 0%;
+  max-height: 100%;
+  border-radius: 50%;
+  outline: hidden;
+}
+
+input {
+  position: relative;
+  background: none;
+  border: none;
+  outline: none;
+  height: 72%;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+input::placeholder {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+button {
+  border: 2px solid black;
+  height: 2.2rem;
+  width: 5.5rem;
+  border-radius: 23px;
+  outline: none;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--primary-color);
+}
+
+.btn:hover {
+  font-weight: bolder;
+  transition: 0.2s ease-in-out;
+  transform: scale(1.1);
+}
+
+h2 {
+  font-family: sans-serif;
+  font-weight: 600;
+  line-height: 130%;
+  text-transform: uppercase;
+}
+
+.fa {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  width: 2rem;
+  border-radius: 50%;
+  color: black;
+  margin: 7px 2px;
+}
+
+.fa:hover {
+  opacity: 0.7;
+  transform: scale(1.3);
+  transition: 0.2s ease-in-out;
+}
+
+.social {
+  display: flex;
+  flex-direction: row;
+}
+
+.social div {
+  padding: 1px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border: 1px solid black;
+  border-radius: 50%;
+  background-color: rgb(231, 226, 226);
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 12px 8px;
+}
+
+.pannel {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0%;
+}
+
+.left-pannel {
+  z-index: 5;
+  position: absolute;
+  top: 17vh;
+  width: 43vw;
+  height: 87vh;
+  left: 1%;
+  text-align: center;
+  pointer-events: all;
+  display: grid;
+  grid-template-rows: 2fr 2fr;
+}
+
+.right-pannel {
+  z-index: 5;
+  position: absolute;
+  top: 17vh;
+  width: 43vw;
+  height: 87vh;
+  right: -80%;
+  text-align: center;
+  pointer-events: all;
+  display: grid;
+  grid-template-rows: 2fr 3fr;
+}
+
+.pannel-img {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+.pannel img {
+  position: absolute;
+  max-height: 15vmax;
+  margin: 23px;
+}
+
+.change {
+  flex-grow: 0;
+}
+
+.change::before {
+  transform: translate(100%, -50%);
+  transition: 0.5s ease-in-out;
+  right: 45%;
+}
+
+.change .left-pannel {
+  transform: translateX(-80vw);
+  transition: 0.5s ease-in-out;
+}
+
+.change .right-pannel {
+  transform: translateX(-80vw);
+  transition: 0.5s ease-in-out;
+}
+
+.nochange .right-pannel {
+  transform: translateX(80vw);
+  transition: 0.5s ease-in-out;
+}
+
+.nochange .left-pannel {
+  transition: 0.5s ease-in-out;
+}
+
+@media only screen and (max-width: 650px) {
+  .input {
+    width: 250px;
+    height: 2rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .input {
+    /* width: 200px; */
+    height: 2rem;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .container1::before {
+    transform: translate(61%, -91%);
+    /* background: none; */
+  }
+  .left-pannel {
+    top: 1vh;
+    width: 75vw;
+    height: 17vh;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+    left: 25vw;
+  }
+  #form2 {
+    position: absolute;
+    top: 33%;
+    right: 0%;
+    width: 100%;
+  }
+  .change::before {
+    transform: translate(31%, 23%);
+    transition: 0.5s ease-in-out;
+    right: 45%;
+  }
+  .right-pannel {
+    top: 157vh;
+    width: 75vw;
+    right: 23vw;
+    height: 22vh;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+  }
+  .right-pannel h2,
+  .left-pannel h2 {
+    margin: 0px;
+    padding-bottom: 4px;
+    font-size: 20px;
+  }
+  #form1 {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+  }
+  .input {
+    margin: 3px;
+    width: 250px;
+    height: 2rem;
+  }
+  .social div {
+    padding: 0px;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    margin: 10px 6px;
+  }
+  .change .left-pannel {
+    transform: translateY(-80vh) translateX(0px);
+    transition: 0.5s ease-in-out;
+  }
+  .change .right-pannel {
+    transform: translateY(-80vh) translateX(0px);
+    transition: 0.5s ease-in-out;
+  }
+  .nochange .right-pannel {
+    transform: translateY(80vh) translateX(0px);
+    transition: 0.5s ease-in-out;
+  }
+  @media only screen and (max-height: 455px) {
+    .container1:before {
+      display: none;
+    }
+    .pannel {
+      display: none;
+    }
+    .container1 {
+      background-color: rgba(100, 156, 247, 0.5);
+    }
+    #form1,
+    #form2 {
+      height: 100%;
+      width: 100%;
+      top: 0;
+    }
+    .change .signup {
+      position: absolute;
+      top: 5%;
+    }
+    .nochange .login {
+      position: absolute;
+      bottom: 14%;
+    }
+    button {
+      background-color: rgb(231, 231, 231);
+    }
+  }
+}
+
+/* =================== */
+
+.errorsign1,
+.errorsign2,
+.errorsign3,
+.errorsign4,
+.errorsign5,
+.errorsign6 {
+  position: absolute;
+  bottom: -73%;
+  right: 0%;
+  visibility: hidden;
+}
+
+.errortext1,
+.errortext2,
+.errortext3,
+.errortext4,
+.errortext5,
+.errortext6 {
+  position: absolute;
+  top: 18%;
+  right: 40%;
+  visibility: hidden;
+}
+
+#invalidpassword {
+  display: none;
+  color: red;
+  margin-left: 22px;
+}
+
+#invalidnumber {
+  display: none;
+  color: red;
+}
+
+.alert {
+  z-index: 9;
+}

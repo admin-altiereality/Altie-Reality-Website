@@ -1,0 +1,38 @@
+
+
+
+.block-content-hero {
+    background-color: #c4eaff;
+    padding: clamp(2.5rem, -0.4906542056rem + 6.230529595vw, 5rem) clamp(0rem, 2.7453271028rem + -3.1152647975vw, 1.25rem);
+    width: calc(100% - clamp(2.5rem, -0.4906542056rem + 6.230529595vw, 5rem));
+    margin: clamp(7.5rem, -2.6869158879rem + 8.722741433vw, 5rem) clamp(1.25rem, -0.2453271028rem + 3.1152647975vw, 2.5rem) 3.5625rem;
+    position: relative;
+}
+
+section {
+  padding: 110px 0;
+  overflow: hidden
+}
+#page-block h1 {
+    font-weight: bold;
+    font-size: 80px; 
+}
+h1 b {
+  font-size: 2.5em; 
+}
+.b, strong {
+  font-weight: bolder;
+}
+
+    .button {
+display: inline-block;
+padding: 10px 20px;
+text-decoration: none;
+background-color: #3498db;
+color: #fff;
+border-radius: 5px;
+transition: background-color 0.3s ease;
+}
+.button:hover {
+background-color: #2980b9;
+}

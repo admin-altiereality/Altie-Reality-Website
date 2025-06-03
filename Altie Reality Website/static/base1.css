@@ -1,0 +1,60 @@
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: black !important;
+}
+.navibar {
+  background-color: aquamarine;
+  width: 100vw;
+  height: 60px;
+  text-align: center;
+  border: 2px solid grey;
+}
+.btn {
+  border: 2px solid black !important;
+  float: right;
+  margin-right: 3%;
+  margin-top: 8px;
+  font-weight: bolder;
+}
+.development {
+  display: inline-block;
+  margin-top: 10px;
+
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+@media only screen and (max-width: 530px) {
+  .development {
+    font-size: 1.4rem;
+  }
+}
+@media only screen and (max-width: 435px) {
+  .development {
+    font-size: 1.2rem;
+  }
+  .btn {
+    padding: 0.2rem 0.5rem !important;
+  }
+}
+@media only screen and (max-width: 380px) {
+  .development {
+    font-size: 0.93rem;
+    font-weight: bolder !important;
+    margin-top: 15px !important;
+  }
+  .btn {
+    padding: 0.1rem 0.3rem !important;
+    margin-right: 8px !important;
+    font-size: 15px !important;
+    font-size: 14px !important;
+    font-weight: bolder;
+    margin-top: 14px !important;
+  }
+}
+

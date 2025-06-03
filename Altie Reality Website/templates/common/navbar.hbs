@@ -1,0 +1,67 @@
+<!-- navbar -->
+<nav class="navbar">
+
+    <div id="logo">
+        <img src="/home static/commonphoto/logoblack.webp" alt="later" />
+    </div>
+    <ul id="navbarlinks">
+
+        <li><a href="/">Home</a></li>
+        <li><a href="/">Join Lesson</a></li>
+        <li><a href="/contactus">Contact Us</a></li>
+        <li><a href="/">About Us</a></li>
+    </ul>
+    {{#if isnotloggedin}}
+
+    <div class="navbtn">
+        <div class="navbtn2"><button class="btn" form="signinform">Sign In</button></div>
+    </div>
+
+    {{else}}
+    <div class="profile">
+        {{#if user.picture}}
+        <img src={{user.picture}} alt="pic" />
+        {{else}}
+        <img src="/random photo/snipping1.png" alt="pic" />
+        {{/if}}
+        <div>{{user.fname}}</div>
+
+    </div>
+    {{/if}}
+    <div id="hamburger">
+
+        <i class="fa fa-bars"></i>
+    </div>
+    <div class="closehamonclickoutside"></div>
+
+    <script>
+        // common javascript for navbar hamburger menu... let hamburger =
+        document.getElementById("hamburger"); let navbarlinks =
+            document.getElementById("navbarlinks"); let closehamonclickoutside =
+                document.querySelector(".closehamonclickoutside "); let body =
+                    document.getElementsByTagName("body"); let element1 =
+                        document.createElement("div"); element1.innerHTML = ` <span >{{#if
+      user
+    }}<div class="helloname">Hello, {{user.fname}}</div> {{else}}<button
+      class="homenavbtn" form="signinform" >Sign In</button>{{/if}}</span> <i
+    class="fa fa-times" onclick="closeham()"></i>`;
+        hamburger.addEventListener("click", () => {
+            navbarlinks.insertBefore(element1, navbarlinks.firstChild);
+            body[0].classList.add("stop"); navbarlinks.classList.add("mobileview");
+            closehamonclickoutside.style.display = "block"
+        });
+        closehamonclickoutside.addEventListener("click", (e) => {
+            body[0].classList.remove("stop");
+            navbarlinks.classList.remove("mobileview"); element1.remove();
+            e.target.style.display = "none"
+        }); function
+            closeham() {
+            body[0].classList.remove("stop");
+            navbarlinks.classList.remove("mobileview");
+            closehamonclickoutside.style.display = "none"
+        } // here ends the common javascript
+
+
+    </script>
+</nav>
+<!-- navbar ends -->

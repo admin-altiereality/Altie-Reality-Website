@@ -1,0 +1,195 @@
+.chatbot-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    font-family: 'Arial', sans-serif;
+}
+
+.chatbot-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #4154f1;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background 0.3s, box-shadow 0.3s;
+    animation: float 3s ease-in-out infinite;
+    padding: 0;
+}
+
+.chatbot-button:hover {
+    transform: scale(1.1);
+}
+
+.chatbot-button img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: transparent;
+}
+
+/* Minimized: button is only the image, no background, border, or border-radius */
+.chatbot-container.minimized .chatbot-button,
+.chatbot-container.minimized .chatbot-button:focus,
+.chatbot-container.minimized .chatbot-button:active {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    display: inline-block !important;
+    align-items: unset !important;
+    justify-content: unset !important;
+}
+
+.chatbot-container.minimized .chatbot-button img {
+    width: auto !important;
+    height: 48px !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    display: block !important;
+    border: 2px solid red !important;
+    outline: none !important;
+    padding: 0 !important;
+    animation:
+      chatbot-rotate 2s linear infinite,
+      chatbot-jump 2s cubic-bezier(.68,-0.55,.27,1.55) infinite;
+}
+
+.chatbot-window {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 350px;
+    height: 500px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.chatbot-header {
+    background: #4154f1;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbot-header h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.chatbot-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.chatbot-controls button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.chatbot-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin: 5px 0;
+}
+
+.user-message {
+    background: #e9ecef;
+    align-self: flex-end;
+}
+
+.bot-message {
+    background: #007bff;
+    color: white;
+    align-self: flex-start;
+}
+
+.chatbot-input {
+    padding: 15px;
+    border-top: 1px solid #dee2e6;
+    display: flex;
+    gap: 10px;
+}
+
+.chatbot-input input {
+    flex-grow: 1;
+    padding: 8px 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 20px;
+    outline: none;
+}
+
+.chatbot-input button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.chatbot-input button:hover {
+    background: #0056b3;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes chatbot-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes chatbot-jump {
+  0%, 100% { transform: translateY(0); }
+  20% { transform: translateY(-40px); }
+  40% { transform: translateY(0); }
+  60% { transform: translateY(-20px); }
+  80% { transform: translateY(0); }
+}
+
+.minimized {
+    height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+} 
