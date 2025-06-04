@@ -1,67 +1,75 @@
 <!-- navbar -->
-<nav class="navbar">
-
-    <div id="logo">
-        <img src="/home static/commonphoto/logoblack.webp" alt="later" />
+<header id="header" class="header fixed-top">
+  <div class="container-fluid container-xl header-flex">
+    <a href="/" class="logo d-flex align-items-center">
+      <img src="/home static/commonphoto/logoblack.webp" alt="Altie Reality Logo" style="max-height:40px; height:auto; width:auto; max-width:100%; display:block;" />
+      <span>Altie Reality</span>
+    </a>
+    <div class="ai-search-container ai-search-inline">
+      <!-- The search button, input, and close icon will be rendered by JS -->
     </div>
-    <ul id="navbarlinks">
-
+    <nav id="navbar" class="navbar">
+      <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="/">Join Lesson</a></li>
+        <li><a href="/join-lesson">Join Lesson</a></li>
         <li><a href="/contactus">Contact Us</a></li>
-        <li><a href="/">About Us</a></li>
-    </ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/demo">Demo</a></li>
+      </ul>
+    </nav>
     {{#if isnotloggedin}}
-
-    <div class="navbtn">
+      <div class="navbtn">
         <div class="navbtn2"><button class="btn" form="signinform">Sign In</button></div>
-    </div>
-
+      </div>
     {{else}}
-    <div class="profile">
+      <div class="profile">
         {{#if user.picture}}
-        <img src={{user.picture}} alt="pic" />
+          <img src={{user.picture}} alt="pic" />
         {{else}}
-        <img src="/random photo/snipping1.png" alt="pic" />
+          <img src="/random photo/snipping1.png" alt="pic" />
         {{/if}}
         <div>{{user.fname}}</div>
-
-    </div>
+      </div>
     {{/if}}
     <div id="hamburger">
-
-        <i class="fa fa-bars"></i>
+      <i class="fa fa-bars"></i>
     </div>
     <div class="closehamonclickoutside"></div>
-
-    <script>
-        // common javascript for navbar hamburger menu... let hamburger =
-        document.getElementById("hamburger"); let navbarlinks =
-            document.getElementById("navbarlinks"); let closehamonclickoutside =
-                document.querySelector(".closehamonclickoutside "); let body =
-                    document.getElementsByTagName("body"); let element1 =
-                        document.createElement("div"); element1.innerHTML = ` <span >{{#if
-      user
-    }}<div class="helloname">Hello, {{user.fname}}</div> {{else}}<button
-      class="homenavbtn" form="signinform" >Sign In</button>{{/if}}</span> <i
-    class="fa fa-times" onclick="closeham()"></i>`;
-        hamburger.addEventListener("click", () => {
-            navbarlinks.insertBefore(element1, navbarlinks.firstChild);
-            body[0].classList.add("stop"); navbarlinks.classList.add("mobileview");
-            closehamonclickoutside.style.display = "block"
-        });
-        closehamonclickoutside.addEventListener("click", (e) => {
-            body[0].classList.remove("stop");
-            navbarlinks.classList.remove("mobileview"); element1.remove();
-            e.target.style.display = "none"
-        }); function
-            closeham() {
-            body[0].classList.remove("stop");
-            navbarlinks.classList.remove("mobileview");
-            closehamonclickoutside.style.display = "none"
-        } // here ends the common javascript
-
-
-    </script>
-</nav>
+  </div>
+</header>
 <!-- navbar ends -->
+
+<script>
+  // common javascript for navbar hamburger menu... let hamburger =
+  document.getElementById("hamburger"); let navbarlinks =
+      document.getElementById("navbarlinks"); let closehamonclickoutside =
+          document.querySelector(".closehamonclickoutside "); let body =
+              document.getElementsByTagName("body"); let element1 =
+                  document.createElement("div"); element1.innerHTML = ` <span >{{#if
+    user
+  }}<div class="helloname">Hello, {{user.fname}}</div> {{else}}<button
+    class="homenavbtn" form="signinform" >Sign In</button>{{/if}}</span> <i
+  class="fa fa-times" onclick="closeham()"></i>`;
+  hamburger.addEventListener("click", () => {
+      navbarlinks.insertBefore(element1, navbarlinks.firstChild);
+      body[0].classList.add("stop"); navbarlinks.classList.add("mobileview");
+      closehamonclickoutside.style.display = "block"
+  });
+  closehamonclickoutside.addEventListener("click", (e) => {
+      body[0].classList.remove("stop");
+      navbarlinks.classList.remove("mobileview"); element1.remove();
+      e.target.style.display = "none"
+  }); function
+      closeham() {
+      body[0].classList.remove("stop");
+      navbarlinks.classList.remove("mobileview");
+      closehamonclickoutside.style.display = "none"
+  } // here ends the common javascript
+
+
+</script>
+
+<head>
+  <link rel="stylesheet" href="/assets/css/ai-search.css" />
+  <script src="/assets/js/ai-search.js"></script>
+</head>
