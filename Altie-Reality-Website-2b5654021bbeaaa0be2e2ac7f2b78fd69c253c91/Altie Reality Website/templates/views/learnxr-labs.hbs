@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1QVJFF7NCD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1QVJFF7NCD');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+  <title>LearnXR Labs - Altie Reality</title>
+  <meta content="" name="description" />
+  <meta content="" name="keywords" />
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon" />
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet" />
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+  
+  <style>
+    .lab-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+    }
+
+    .lab-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .lab-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 15px 15px 0 0;
+    }
+
+    .lab-content {
+      padding: 20px;
+    }
+
+    .lab-title {
+      color: #012970;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .lab-description {
+      color: #444444;
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+
+    .lab-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .loading-spinner {
+      text-align: center;
+      padding: 50px;
+    }
+
+    .filter-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f6f9ff;
+      border-radius: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <a href="https://www.altiereality.com" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="" />
+        <span>Altie Reality</span>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="https://www.altiereality.com/XRtouch" target="_blank">XRtouch </a></li>
+          <li><a class="nav-link scrollto" href="/#values">Features</a></li>
+          <li><a class="active" href="https://www.altiereality.com/blog" target="_blank">Timeline</a></li>
+          <li><a href="/">Home</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Labs List Section -->
+    <section class="labs-section" style="margin-top: 100px;">
+      <div class="container" data-aos="fade-up">
+        <header class="section-header">
+          <h2>Our Labs</h2>
+          <p>LearnXR™ Virtual Learning Labs</p>
+        </header>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+          <div class="row">
+            <div class="col-md-4">
+              <select id="subjectFilter" class="form-select">
+                <option value="">All Subjects</option>
+                <option value="physics">Physics</option>
+                <option value="chemistry">Chemistry</option>
+                <option value="biology">Biology</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <select id="gradeFilter" class="form-select">
+                <option value="">All Grades</option>
+                <option value="9">Grade 9</option>
+                <option value="10">Grade 10</option>
+                <option value="11">Grade 11</option>
+                <option value="12">Grade 12</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <input type="text" id="searchInput" class="form-control" placeholder="Search labs...">
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="loading-spinner">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
+        <!-- Labs Grid -->
+        <div class="row" id="labsContainer">
+          <!-- Labs will be dynamically inserted here -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright 2025
+        <strong><span> Altie Reality Private Limited </span></strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/purecounter/purecounter.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <!-- Firebase Configuration and Data Fetching -->
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDTK79Bj0sZtqSgS8113vDyiL55YDK2lBE",
+      authDomain: "lexrn1.firebaseapp.com",
+      databaseURL: "https://lexrn1-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "lexrn1",
+      storageBucket: "lexrn1.appspot.com",
+      messagingSenderId: "1074016177582",
+      appId: "1:1074016177582:web:0be8164ec879dcdb5e0c3f",
+      measurementId: "G-PW5WY8V6MZ"
+    };
+
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+
+    // Add this constant at the top of your script section
+    const DEFAULT_LAB_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM2Yzc1N2QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5WUiBMYWI8L3RleHQ+PC9zdmc+';
+
+    // Enhanced lab card rendering function
+    function renderLabCard(lab) {
+      return `
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="lab-card">
+            <div class="lab-image-container">
+              <img src="${lab.imageUrl || DEFAULT_LAB_IMAGE}" 
+                   alt="${lab.title}" 
+                   class="lab-image"
+                   onerror="this.src='${DEFAULT_LAB_IMAGE}'">
+              ${lab.isNew ? '<span class="new-badge">New</span>' : ''}
+            </div>
+            <div class="lab-content">
+              <div class="lab-header">
+                <h3 class="lab-title">${lab.title}</h3>
+                <span class="lab-difficulty ${lab.difficulty?.toLowerCase() || 'beginner'}">
+                  ${lab.difficulty || 'Beginner'}
+                </span>
+              </div>
+              <p class="lab-description">${lab.description}</p>
+              <div class="lab-meta">
+                <div class="lab-info">
+                  <span class="meta-item">
+                    <i class="bi bi-mortarboard"></i> Grade ${lab.grade || 'All'}
+                  </span>
+                  <span class="meta-item">
+                    <i class="bi bi-book"></i> ${lab.subject || 'General'}
+                  </span>
+                  <span class="meta-item">
+                    <i class="bi bi-clock"></i> ${lab.duration || '30 mins'}
+                  </span>
+                </div>
+              </div>
+              <div class="lab-stats">
+                <span class="stat-item">
+                  <i class="bi bi-star-fill"></i> ${lab.rating || '4.5'}
+                </span>
+                <span class="stat-item">
+                  <i class="bi bi-people-fill"></i> ${lab.studentsEnrolled || '0'} students
+                </span>
+              </div>
+              <div class="lab-actions">
+                <a href="/lab/${lab.id}" class="btn-get-started">
+                  Launch Lab <i class="bi bi-arrow-right"></i>
+                </a>
+                <button onclick="previewLab('${lab.id}')" class="btn-preview">
+                  Preview <i class="bi bi-eye"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Function to fetch and display labs
+    async function fetchLabs() {
+      const labsContainer = document.getElementById('labsContainer');
+      const loadingSpinner = document.getElementById('loadingSpinner');
+      
+      try {
+        loadingSpinner.style.display = 'block';
+        console.log('Attempting to fetch VR lessons...');
+
+        // Build query for vrlesson collection
+        let query = db.collection('vrlesson');
+        
+        const subject = document.getElementById('subjectFilter')?.value;
+        const grade = document.getElementById('gradeFilter')?.value;
+        const searchTerm = document.getElementById('searchInput')?.value?.toLowerCase();
+
+        if (subject) {
+          query = query.where('subject', '==', subject);
+        }
+
+        // Note: Removed the orderBy to prevent index errors initially
+        const snapshot = await query.get();
+        console.log(`Retrieved ${snapshot.size} VR lessons`);
+
+        const labs = [];
+
+        snapshot.forEach(doc => {
+          const lessonData = doc.data();
+          const lab = {
+            id: doc.id,
+            title: lessonData.name || 'Untitled Lesson',
+            description: lessonData.description || 'No description available',
+            imageUrl: lessonData.thumbnailUrl || 'assets/img/default-lab.png',
+            subject: lessonData.subject || 'General',
+            grade: lessonData.grade || 'All',
+            difficulty: lessonData.difficulty || 'Beginner',
+            duration: lessonData.duration || '30 mins',
+            isNew: lessonData.isNew || false
+          };
+          
+          if (searchTerm) {
+            if (lab.title.toLowerCase().includes(searchTerm) ||
+                lab.description.toLowerCase().includes(searchTerm)) {
+              labs.push(lab);
+            }
+          } else {
+            labs.push(lab);
+          }
+        });
+
+        loadingSpinner.style.display = 'none';
+
+        if (labs.length === 0) {
+          labsContainer.innerHTML = `
+            <div class="col-12 text-center">
+              <div class="empty-state">
+                <h3>No VR Lessons Found</h3>
+                <p>Try adjusting your filters or search terms</p>
+                <button onclick="resetFilters()" class="btn-get-started">
+                  Reset Filters
+                </button>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        labsContainer.innerHTML = labs.map(renderLabCard).join('');
+        
+        // Initialize tooltips and other Bootstrap components
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+      } catch (error) {
+        console.error('Error details:', error);
+        loadingSpinner.style.display = 'none';
+        labsContainer.innerHTML = `
+          <div class="col-12">
+            <div class="error-state text-center">
+              <i class="bi bi-exclamation-circle"></i>
+              <h3>Oops! Something went wrong</h3>
+              <p>Unable to load VR lessons. Please try again later.</p>
+              <p class="text-muted small">${error.message}</p>
+              <button onclick="fetchLabs()" class="btn-get-started mt-3">
+                Retry
+              </button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Function to preview lab
+    function previewLab(labId) {
+      Swal.fire({
+        title: 'VR Lesson Preview',
+        html: '<div id="labPreview" class="lab-preview-container">Loading preview...</div>',
+        width: '80%',
+        showCloseButton: true,
+        showConfirmButton: false,
+        didOpen: async () => {
+          try {
+            const doc = await db.collection('vrlesson').doc(labId).get();
+            const lesson = doc.data();
+            document.getElementById('labPreview').innerHTML = `
+              <div class="preview-content">
+                <img src="${lesson.thumbnailUrl || lesson.imageUrl || DEFAULT_LAB_IMAGE}" 
+                     class="preview-image"
+                     onerror="this.src='${DEFAULT_LAB_IMAGE}'">
+                <h3>${lesson.name}</h3>
+                <p>${lesson.description}</p>
+                <div class="preview-details">
+                  <h4>Learning Objectives:</h4>
+                  <ul>
+                    ${(lesson.objectives || []).map(obj => `<li>${obj}</li>`).join('')}
+                  </ul>
+                </div>
+              </div>
+            `;
+          } catch (error) {
+            console.error('Error loading preview:', error);
+            document.getElementById('labPreview').innerHTML = 'Error loading preview';
+          }
+        }
+      });
+    }
+
+    // Function to reset filters
+    function resetFilters() {
+      document.getElementById('subjectFilter').value = '';
+      document.getElementById('gradeFilter').value = '';
+      document.getElementById('searchInput').value = '';
+      fetchLabs();
+    }
+
+    // Setup filter event listeners
+    function setupFilters() {
+      const filters = ['subjectFilter', 'gradeFilter'];
+      filters.forEach(filterId => {
+        document.getElementById(filterId).addEventListener('change', fetchLabs);
+      });
+
+      // Debounce search input
+      const searchInput = document.getElementById('searchInput');
+      let searchTimeout;
+      searchInput.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(fetchLabs, 300);
+      });
+    }
+
+    // Initialize when document is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchLabs();
+      setupFilters();
+    });
+  </script>
+
+  <!-- Add these styles to your existing style section -->
+  <style>
+    .lab-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+
+    .lab-image-container {
+      position: relative;
+    }
+
+    .new-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #4154f1;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .lab-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .lab-difficulty {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .lab-difficulty.beginner { background: #e8f5e9; color: #2e7d32; }
+    .lab-difficulty.intermediate { background: #fff3e0; color: #f57c00; }
+    .lab-difficulty.advanced { background: #ffebee; color: #c62828; }
+
+    .lab-meta {
+      margin: 15px 0;
+    }
+
+    .meta-item {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 15px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .meta-item i {
+      margin-right: 5px;
+    }
+
+    .lab-stats {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #6c757d;
+    }
+
+    .stat-item i {
+      color: #ffd700;
+    }
+
+    .lab-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-preview {
+      background: transparent;
+      border: 1px solid #4154f1;
+      color: #4154f1;
+      padding: 8px 20px;
+      border-radius: 4px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-preview:hover {
+      background: #4154f1;
+      color: white;
+    }
+
+    .empty-state {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .empty-state img {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    .error-state {
+      padding: 40px;
+    }
+
+    .error-state i {
+      font-size: 48px;
+      color: #dc3545;
+      margin-bottom: 20px;
+    }
+
+    .lab-preview-container {
+      padding: 20px;
+    }
+
+    .preview-image {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .preview-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .preview-details {
+      margin-top: 20px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+  </style>
+</body>
+</html> 

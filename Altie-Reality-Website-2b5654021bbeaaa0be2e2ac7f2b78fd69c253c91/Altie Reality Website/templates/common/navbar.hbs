@@ -1,0 +1,76 @@
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top">
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+    <a href="/" class="logo d-flex align-items-center">
+      <picture>
+        <source srcset="/home static/commonphoto/logoblack.webp" type="image/webp">
+        <img src="/home static/commonphoto/logoblack.webp" alt="Altie Reality Logo" style="height: 50px; width: auto;" />
+      </picture>
+    </a>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/">Join Lesson</a></li>
+        <li><a href="/contactus">Contact Us</a></li>
+        <li><a href="/">About Us</a></li>
+      </ul>
+
+      <div class="nav-right">
+        {{#if isnotloggedin}}
+        <div class="navbtn">
+          <button class="btn" form="signinform">Sign In</button>
+        </div>
+        {{else}}
+        <div class="profile">
+          {{#if user.picture}}
+          <img src={{user.picture}} alt="pic" />
+          {{else}}
+          <img src="/random photo/snipping1.png" alt="pic" />
+          {{/if}}
+          <div>{{user.fname}}</div>
+        </div>
+        {{/if}}
+        
+        <!-- Dark Mode Toggle -->
+        <div class="theme-toggle-wrapper">
+          <button id="darkModeToggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+            <span class="toggle-text">🌙</span>
+          </button>
+        </div>
+      </div>
+
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav>
+  </div>
+</header>
+<!-- End Header -->
+
+<script>
+  // Dark mode toggle functionality
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+  
+  // Check for saved theme preference or use system preference
+  const currentTheme = localStorage.getItem('theme') || 
+    (prefersDarkScheme.matches ? 'dark' : 'light');
+  
+  // Apply theme on load
+  if (currentTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+    darkModeToggle.querySelector('.toggle-text').textContent = '☀️';
+  }
+
+  // Toggle theme
+  darkModeToggle.addEventListener('click', () => {
+    if (document.body.classList.contains('dark-theme')) {
+      document.body.classList.remove('dark-theme');
+      localStorage.setItem('theme', 'light');
+      darkModeToggle.querySelector('.toggle-text').textContent = '🌙';
+    } else {
+      document.body.classList.add('dark-theme');
+      localStorage.setItem('theme', 'dark');
+      darkModeToggle.querySelector('.toggle-text').textContent = '☀️';
+    }
+  });
+</script>
