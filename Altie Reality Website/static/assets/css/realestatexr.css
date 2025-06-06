@@ -1,0 +1,583 @@
+/* Real Estate XR Page Styles */
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 350px;
+    background: #2d3a4a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 110px;
+}
+
+.hero-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-img {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.7);
+}
+
+.hero-text-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-shadow: 0 2px 8px #222;
+    background: rgba(44,54,70,0.3);
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.hero-text-overlay h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.hero-text-overlay p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    text-align: center;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Features Section */
+.features-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #f8fafc 0%, #e9f0fb 100%);
+    min-height: 60vh;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 48px;
+    margin-top: 60px;
+}
+
+.feature-card {
+    background: rgba(255,255,255,0.95);
+    padding: 48px 36px 40px 36px;
+    border-radius: 28px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(80, 120, 200, 0.13), 0 1.5px 8px rgba(0,0,0,0.04);
+    transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
+    border: 1.5px solid #e3eafc;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 16px 48px rgba(80, 120, 200, 0.18), 0 2px 12px rgba(0,0,0,0.07);
+    border-color: #b6d0fa;
+    background: linear-gradient(120deg, #fafdff 60%, #e9f0fb 100%);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 2.2rem;
+    margin-bottom: 18px;
+    color: #1a2a4a;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.feature-card p {
+    color: #4a5a6a;
+    line-height: 1.7;
+    font-size: 1.18rem;
+    margin-bottom: 0;
+}
+
+/* How It Works Section */
+.how-it-works {
+    padding: 100px 0;
+    background-color: white;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.step-card {
+    text-align: center;
+    padding: 30px;
+    position: relative;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    background: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 auto 20px;
+}
+
+.step-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.step-card p {
+    color: #666;
+}
+
+/* Demo Section */
+.demo-section {
+    padding: 100px 0;
+    background-color: #f8f9fa;
+}
+
+.demo-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.video-placeholder {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.video-placeholder img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    font-size: 2rem;
+    color: #007bff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-button:hover {
+    background: #007bff;
+    color: white;
+}
+
+.demo-info {
+    padding: 30px;
+}
+
+.demo-info h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.demo-info p {
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* Contact Section */
+.contact-section {
+    padding: 100px 0;
+    background-color: white;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 50px auto 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+/* Button Styles */
+.btn-primary,
+.btn-secondary {
+    display: inline-block;
+    padding: 15px 35px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary:hover {
+    background-color: white;
+    color: #007bff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section p {
+        font-size: 1.2rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .demo-content {
+        grid-template-columns: 1fr;
+    }
+
+    .features-grid,
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 900px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    .feature-card {
+        padding: 36px 18px 32px 18px;
+    }
+    .feature-card h3 {
+        font-size: 1.6rem;
+    }
+    .feature-card p {
+        font-size: 1rem;
+    }
+}
+
+/* --- Navbar/Header Fixes for RealEstateXR page --- */
+header.header.fixed-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 997;
+  background: #fff;
+  padding: 20px 0;
+  box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.header .logo img {
+  max-height: 40px;
+  margin-right: 6px;
+}
+
+.header .logo span {
+  font-size: 30px;
+  font-weight: 700;
+  color: #012970;
+  font-family: "Nunito", sans-serif;
+  margin-top: 3px;
+}
+
+.navbar {
+  padding: 0;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar a,
+.navbar a:focus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 10px 30px;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #013289;
+  white-space: nowrap;
+  transition: 0.3s;
+}
+
+.navbar a:hover,
+.navbar .active,
+.navbar .active:focus,
+.navbar li:hover > a {
+  color: #4154f1;
+}
+
+/* Remove any extra margin or padding from the top of the page */
+body {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* --- Enhanced AR Info Section Styles --- */
+.ar-info-section {
+    background: linear-gradient(120deg, #fafdff 60%, #e9f0fb 100%);
+    padding: 64px 0 48px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 340px;
+    animation: fadeInUp 0.8s cubic-bezier(.4,2,.6,1);
+}
+.ar-info-section .container {
+    background: rgba(255,255,255,0.98);
+    border-radius: 2.2rem;
+    box-shadow: 0 8px 32px rgba(80, 120, 200, 0.13), 0 1.5px 8px rgba(0,0,0,0.04);
+    padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    border: 1.5px solid #e3eafc;
+}
+.ar-section-title {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #1a2a4a;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 1.15;
+}
+.ar-section-title .highlight {
+    color: #4154f1;
+    background: linear-gradient(90deg, #b6d0fa 0%, #e9f0fb 100%);
+    padding: 0 0.3em;
+    border-radius: 0.3em;
+}
+.ar-section-subtitle {
+    font-size: 1.25rem;
+    color: #4a5a6a;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+}
+.ar-info-section p {
+    color: #2d3a4a;
+    font-size: 1.18rem;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+@media (max-width: 900px) {
+    .ar-info-section .container {
+        padding: 2rem 0.7rem 1.5rem 0.7rem;
+    }
+    .ar-section-title {
+        font-size: 2rem;
+    }
+    .ar-section-subtitle {
+        font-size: 1.05rem;
+    }
+    .ar-info-section p {
+        font-size: 1rem;
+    }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Features Section Heading Enhancements --- */
+.features-section-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #1a2a4a;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 1.15;
+}
+.features-section-title .highlight {
+    color: #4154f1;
+    background: linear-gradient(90deg, #b6d0fa 0%, #e9f0fb 100%);
+    padding: 0 0.3em;
+    border-radius: 0.3em;
+}
+.features-section-subtitle {
+    font-size: 1.18rem;
+    color: #4a5a6a;
+    text-align: center;
+    margin-bottom: 2.2rem;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+}
+@media (max-width: 900px) {
+    .features-section-title {
+        font-size: 1.5rem;
+    }
+    .features-section-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* --- Examples Section Enhancements --- */
+.examples-section-title {
+    font-size: 2.3rem;
+    font-weight: 900;
+    color: #1a2a4a;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 1.15;
+}
+.examples-section-title .highlight {
+    color: #4154f1;
+    background: linear-gradient(90deg, #b6d0fa 0%, #e9f0fb 100%);
+    padding: 0 0.3em;
+    border-radius: 0.3em;
+}
+.examples-section-subtitle {
+    font-size: 1.13rem;
+    color: #4a5a6a;
+    text-align: center;
+    margin-bottom: 2.2rem;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+}
+.examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 36px;
+    margin-top: 40px;
+}
+.example-card {
+    background: rgba(255,255,255,0.97);
+    border-radius: 1.5rem;
+    box-shadow: 0 6px 24px rgba(80, 120, 200, 0.10), 0 1px 4px rgba(0,0,0,0.04);
+    padding: 2.2rem 1.5rem 1.7rem 1.5rem;
+    text-align: center;
+    border: 1.2px solid #e3eafc;
+    transition: transform 0.22s cubic-bezier(.4,2,.6,1), box-shadow 0.22s;
+    position: relative;
+    overflow: hidden;
+}
+.example-card:hover {
+    transform: translateY(-7px) scale(1.025);
+    box-shadow: 0 12px 32px rgba(80, 120, 200, 0.16), 0 2px 8px rgba(0,0,0,0.07);
+    border-color: #b6d0fa;
+    background: linear-gradient(120deg, #fafdff 60%, #e9f0fb 100%);
+}
+.example-icon {
+    font-size: 2.3rem;
+    margin-bottom: 0.7rem;
+    display: block;
+}
+.example-card h3 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1a2a4a;
+    margin-bottom: 0.5rem;
+}
+.example-card p {
+    color: #4a5a6a;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+@media (max-width: 900px) {
+    .examples-section-title {
+        font-size: 1.3rem;
+    }
+    .examples-section-subtitle {
+        font-size: 0.98rem;
+    }
+    .example-card {
+        padding: 1.2rem 0.7rem 1.1rem 0.7rem;
+    }
+    .example-card h3 {
+        font-size: 1.05rem;
+    }
+    .example-card p {
+        font-size: 0.95rem;
+    }
+} 

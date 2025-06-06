@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1QVJFF7NCD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1QVJFF7NCD');
+</script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="google-signin-client_id"
+        content="242246152684-5p9qi4hh7v812pjn262flig8h44a4vgm.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link rel="stylesheet" href="/login static/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>login page</title>
+</head>
+
+<body>
+    <div class="container1 nochange">
+        {{#if sahiyagalat}}
+        <div class="alert alert-{{errortype}} alert-dismissible fade show" role="alert">
+            <strong>{{msgtype}}</strong> {{errormsg}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {{/if}}
+        <div class="login-signup">
+            <form id="form1" onsubmit=" return submitchecksignup()" action="/signup" method="POST">
+                <div class="signup">
+                    <!-- sign Up option  -->
+                    <h2>Sign Up</h2>
+                    <i class="input">
+                        <div><i class="fa fa-id-badge" style="font-size: 20px;"></i></div>
+                        <input id="name" type="text" name="name" placeholder="Enter Name">
+                        <i class=" errorsign errorsign1 fa fa-exclamation-circle" style="color: red;"></i>
+                        <small class="errortext errortext1" style="color:rgb(199, 22, 22);">Field Required</small>
+                    </i>
+                    <i class="input">
+                        <div><i class="fa fa-envelope"></i></div>
+                        <input id="email1" name="email" type="email" placeholder="Enter Email Id">
+                        <i class=" errorsign errorsign2 fa fa-exclamation-circle" style="color: red;"></i>
+                        <small class="errortext errortext2" style="color:rgb(199, 22, 22);">Field Required</small>
+                    </i>
+                    <i class="input">
+                        <div><i class="fa fa-mobile" style="font-size: 25px;"></i></div>
+                        <input name="number" id="number" type="number" placeholder="Enter Mobile No">
+                        <i class="errorsign  errorsign3 fa fa-exclamation-circle" style="color: red;"></i>
+                        <small class="errortext errortext3" style="color:rgb(199, 22, 22);">Field Required</small>
+
+                    </i>
+                    <small id="invalidnumber">invalid mobile number</small>
+                    <i class="input">
+                        <div><i class="fa fa-lock" style="font-size: 20px;"></i></div>
+                        <input name="password" id="password1" type="password" placeholder="Enter Password"> <i
+                            class="errorsign  errorsign4 fa fa-exclamation-circle" style="color: red;"> </i>
+                        <small class="errortext errortext4" style="color:rgb(199, 22, 22);">Field Required</small>
+                    </i>
+                    <small id="invalidpassword">
+                        <ul>
+                            <li>: must be atlest 8 characters long</li>
+                            <li>: should contain atleast one number[0-9]</li>
+                            <li>: must include atleast special character(!@#$%^&*)</li>
+                        </ul>
+                    </small>
+                    <div class="btn"><button>Sign-Up</button>
+                    </div>
+
+                    <hr>
+                    <small>Sign Up using social media</small>
+                    <!-- social media icons -->
+                    {{!-- <div class="social">
+                        <div><a href="#" class="fa fa-facebook"></a></div>
+                        <div><a href="#" class="fa fa-twitter"></a></div>
+                        <div><a href="/google" class="fa fa-google"></a></div>
+                    </div> --}}
+
+
+                    {{!-- google button here --}}
+                    <div class="g-signin2 g-signuphere" data-onsuccess="onSignIn"></div>
+                </div>
+            </form>
+            <form id="form2" onsubmit=" return submitchecklogin()" action="/signin" method="POST">
+                <div class="login">
+                    <!-- sign in option  -->
+                    <h2>Sign In</h2>
+                    <i class="input">
+                        <div><i class="fa fa-envelope"></i></div>
+                        <input name="email" id="email2" type="email" placeholder="Enter Email Id"> <i
+                            class=" errorsign errorsign5 fa fa-exclamation-circle" style="color: red;">
+                        </i>
+                        <small class="errortext errortext5" style="color:rgb(199, 22, 22);">Field Required</small>
+                    </i>
+                    <i class="input">
+                        <div><i class="fa fa-lock" style="font-size: 20px;"></i></div>
+                        <input name="password" id="password2" type="password" placeholder="Enter Password"> <i
+                            class="errorsign  errorsign6 fa fa-exclamation-circle" style="color: red;">
+
+                        </i>
+                        <small class="errortext errortext6" style="color:rgb(199, 22, 22);">Field Required</small>
+                    </i>
+                    <small class="forgot-password"> <a href="/resetpassword">Forgot password ?</a></small>
+                    <div class="btn"><button>Sign-In</button></div>
+
+                    <hr>
+                    <small>Sign In using google </small>
+                    <!-- social media icons -->
+                    {{!-- <div class="social">
+                        <div><a href="#" class="fa fa-facebook"></a></div>
+                        <div><a href="#" class="fa fa-twitter"></a></div>
+                        <div><a href="#" class="fa fa-google"></a></div>
+
+                    </div> --}}
+
+
+                    {{!-- Google signin button --}}
+                    <div class="g-signin2 g-signinhere" data-onsuccess="onSignIn"></div>
+                </div>
+            </form>
+
+        </div>
+        <div class="pannel">
+            <div class="left-pannel">
+
+                <div class="pannel-img"><img src="/login static/loginphoto/loginrocket.gif" alt=""></div>
+                <div class="pannel-content">
+                    <h2>New-Here</h2>
+                    <div class="btn" id="signbtn"> <button>Sign-Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-pannel">
+                <div class="pannel-content">
+                    <h2>Already a User</h2>
+                    <div class="btn" id="signinbtn"> <button>Sign-In</button>
+                    </div>
+                </div>
+                <div class="pannel-img"><img src="/login static/loginphoto/loginman.png" alt=""></div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script src="/login static/g-api.js"></script>
+<script src="/login static/index.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+</html>

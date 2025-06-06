@@ -1,0 +1,95 @@
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top">
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li class="dropdown"><a href="#"><span>Industries We Serve</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a href="/realestatexr">Real Estate XR</a></li>
+            <li><a href="#">TEST LINK</a></li>
+            <!-- Add more industries here if needed -->
+          </ul>
+        </li>
+        <li><a href="/">Join Lesson</a></li>
+        <li><a href="/contactus">Contact Us</a></li>
+        <li><a href="/">About Us</a></li>
+        <li><a href="/visible-test">VISIBLE TEST</a></li>
+      </ul>
+
+      <div class="nav-right">
+        {{#if isnotloggedin}}
+        <div class="navbtn">
+          <button class="btn" form="signinform">Sign In</button>
+        </div>
+        {{else}}
+        <div class="profile">
+          {{#if user.picture}}
+          <img src="{{user.picture}}" alt="pic" />
+          {{/if}}
+          <div>{{user.fname}}</div>
+        </div>
+        {{/if}}
+        
+        <!-- Dark Mode Toggle -->
+        <div class="theme-toggle-wrapper">
+          <button id="darkModeToggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+            <span class="toggle-text">🌙</span>
+          </button>
+        </div>
+      </div>
+
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav>
+  </div>
+</header>
+<!-- End Header -->
+
+<script>
+  // Dark mode toggle functionality
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+  
+  // Check for saved theme preference or use system preference
+  const currentTheme = localStorage.getItem('theme') || 
+    (prefersDarkScheme.matches ? 'dark' : 'light');
+  
+  // Apply theme on load
+  if (currentTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+    darkModeToggle.querySelector('.toggle-text').textContent = '☀️';
+  }
+
+  // Toggle theme
+  darkModeToggle.addEventListener('click', () => {
+    if (document.body.classList.contains('dark-theme')) {
+      document.body.classList.remove('dark-theme');
+      localStorage.setItem('theme', 'light');
+      darkModeToggle.querySelector('.toggle-text').textContent = '🌙';
+    } else {
+      document.body.classList.add('dark-theme');
+      localStorage.setItem('theme', 'dark');
+      darkModeToggle.querySelector('.toggle-text').textContent = '☀️';
+    }
+  });
+
+  // Mobile Navigation Toggle
+  const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+  const navbar = document.getElementById('navbar');
+  const navList = navbar.querySelector('ul');
+
+  mobileNavToggle.addEventListener('click', () => {
+    navList.classList.toggle('mobile-nav-active');
+    mobileNavToggle.classList.toggle('bi-list');
+    mobileNavToggle.classList.toggle('bi-x');
+  });
+
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!navbar.contains(e.target) && navList.classList.contains('mobile-nav-active')) {
+      navList.classList.remove('mobile-nav-active');
+      mobileNavToggle.classList.add('bi-list');
+      mobileNavToggle.classList.remove('bi-x');
+    }
+  });
+</script>

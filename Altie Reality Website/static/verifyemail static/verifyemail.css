@@ -1,0 +1,37 @@
+.verifycontainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.verifyemail {
+  display: flex;
+  width: 50%;
+  height: 50%;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+.verifyemail > h3 {
+  margin-top: 5%;
+}
+.verifyemail > p:nth-child(2) {
+  margin-top: 12%;
+}
+.verifyemail > p,
+.verifyemail > h2,
+.verifyemail > button {
+  max-width: 80%;
+}
+
+@media only screen and (max-width: 710px) {
+  .verifyemail {
+    height: 70%;
+    width: 70%;
+  }
+}

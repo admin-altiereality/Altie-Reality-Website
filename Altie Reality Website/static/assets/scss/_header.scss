@@ -1,0 +1,105 @@
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+.header {
+  transition: all 0.5s;
+  z-index: 997;
+  padding: 20px 0;
+  width: 100%;
+  overflow-x: hidden;
+
+  &.header-scrolled {
+    background: #fff;
+    padding: 15px 0;
+    box-shadow: 0px 2px 20px rgba($secondary, 0.10);
+  }
+
+  .container-fluid {
+    padding: 0 20px;
+    max-width: 100%;
+  }
+
+  .logo {
+    line-height: 0;
+    img {
+      max-height: 40px;
+      margin-right: 6px;
+    }
+
+    span {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: $secondary;
+      font-family: $font-primary;
+      margin-top: 3px;
+    }
+
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+
+      @media (max-width: 991px) {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        padding: 20px;
+        flex-direction: column;
+        gap: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
+        &.mobile-nav-active {
+          display: flex;
+        }
+      }
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      @media (max-width: 991px) {
+        margin-left: auto;
+      }
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+      margin-left: 15px;
+
+      @media (max-width: 991px) {
+        display: block;
+      }
+    }
+  }
+}
+
+// Mobile Navigation Styles
+@media (max-width: 991px) {
+  .header {
+    .navbar {
+      .nav-right {
+        .navbtn, .profile {
+          display: none;
+        }
+      }
+    }
+  }
+}

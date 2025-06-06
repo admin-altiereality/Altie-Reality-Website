@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Extended Reality (XR) for Museums - Altie Reality</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon" />
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/realestatexr.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chatbot Files -->
+    <link href="css/chatbot.css?v=2" rel="stylesheet" />
+    <script src="js/chatbot.js"></script>
+    <!-- Search Files -->
+    <link href="css/search.css" rel="stylesheet" />
+    <script src="js/search.js"></script>
+</head>
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between" style="gap: 2.5rem;">
+            <a href="https://www.altiereality.com" class="logo d-flex align-items-center" style="margin-right: 2.5rem; min-width: 210px;">
+                <picture style="display: flex; align-items: center;">
+                    <source srcset="assets/img/logo.webp" type="image/webp">
+                    <img src="assets/img/logo.png" alt="Altie Reality Logo" style="height: 50px; width: auto; max-width: none; object-fit: contain;" />
+                </picture>
+                <span style="font-size:2.1rem; font-weight:800; letter-spacing:0.5px; color:#012970; white-space:nowrap; margin-left: 0.7rem;">Altie Reality</span>
+            </a>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a href="https://www.altiereality.com/XRtouch" target="_blank">XRtouch </a></li>
+                    <li><a class="nav-link scrollto" href="#values">Features</a></li>
+                    <li><a class="active" href="https://www.altiereality.com/blog" target="_blank">Timeline</a></li>
+                    <li class="dropdown"><a href="#"><span>Industries We Serve</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="https://learnxr.altiereality.com" target="_blank">Education - LearnXR™ </a></li>
+                            <li><a href="https://metamatch.altiereality.com" target="_blank">Social - MetaMatch </a></li>
+                            <li><a href="https://play.google.com/store/apps/details?id=com.altiereality.reliconnect"
+                                target="_blank">Religion - ReliconnectVR™</a></li>
+                            <li><a href="https://www.altiereality.com/medical" target="_blank">Medical</a></li>
+                            <li><a href="/realestatexr">Real Estate XR</a></li>
+                            <li><a href="https://www.altiereality.com/architecture" target="_blank">Real Estate</a></li>
+                            <li><a href="https://www.altiereality.com/defence" target="_blank">Defence</a></li>
+                            <li><a href="https://www.altiereality.com/gaming" target="_blank">Gaming - Altie Studios </a></li>
+                        </ul>
+                    <li><a class="nav-ling scrollto" href="https://www.altiereality.com/career" target="_blank">Careers</a>
+                    <li><a class="nav-link scrollto" href="https://learnxr.altiereality.com/" target="_blank"> LearnXR™</a></li>
+                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    <li><a class="nav-link scrollto" href="#" data-bs-toggle="modal" data-bs-target="#bookDemoModal">Book a Demo</a></li>
+                </ul>
+
+                <!-- Dark Mode Toggle -->
+                <div class="theme-toggle-wrapper" style="margin-left: 20px;">
+                    <button id="darkModeToggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+        </div>
+    </header>
+    <!-- End Header -->
+    <script>
+        // Dark mode toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // Check for saved theme preference or use system preference
+            const currentTheme = localStorage.getItem('theme') || 
+                (prefersDarkScheme.matches ? 'dark' : 'light');
+            
+            // Apply theme on load
+            if (currentTheme === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+                document.body.classList.add('dark-theme');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+
+            // Toggle theme
+            darkModeToggle.addEventListener('click', () => {
+                if (document.body.classList.contains('dark-theme')) {
+                    document.documentElement.classList.remove('dark-theme');
+                    document.body.classList.remove('dark-theme');
+                    localStorage.setItem('theme', 'light');
+                    darkModeToggle.querySelector('i').classList.remove('fa-sun');
+                    darkModeToggle.querySelector('i').classList.add('fa-moon');
+                } else {
+                    document.documentElement.classList.add('dark-theme');
+                    document.body.classList.add('dark-theme');
+                    localStorage.setItem('theme', 'dark');
+                    darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                    darkModeToggle.querySelector('i').classList.add('fa-sun');
+                }
+            });
+        });
+    </script>
+
+    <!-- Hero Section with Image -->
+    <section class="hero-section">
+        <div class="hero-image-wrapper">
+            <img class="hero-img" src="/assets/images/realestatexr/ar-museum-hero.webp" alt="Extended Reality (XR) for Museums">
+            <div class="hero-text-overlay">
+                <h1>Extended Reality (XR) for Museums</h1>
+                <p>Transforming the way visitors experience art, history, and culture through immersive digital storytelling and interactive exhibits.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What is AR for Museums -->
+    <section class="ar-info-section">
+        <div class="container">
+            <h2 class="ar-section-title">What is <span class="highlight">Extended Reality</span> in museums?</h2>
+            <p class="ar-section-subtitle">Extended Reality (XR) in museums refers to the use of immersive technologies—Virtual Reality (VR), Augmented Reality (AR), and Mixed Reality (MR)—to enhance the way visitors experience exhibitions, artifacts, and storytelling. It blends digital content with the physical museum space to create interactive and educational experiences.</p>
+            <p>Augmented Reality (AR) overlays digital information—such as 3D models, animations, and interactive content—onto real-world museum exhibits. Using smartphones, tablets, or AR glasses, visitors can unlock new layers of information, see reconstructions, and interact with displays in ways never before possible.</p>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="features-section-title">Benefits of <span class="highlight">XR in Museums</span></h2>
+            <p class="features-section-subtitle">Explore how Extended Reality is revolutionizing the museum experience for visitors and curators alike.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img src="/assets/images/realestatexr/feature1.jpg" alt="AR in Museums" class="feature-img" />
+                    <h3>Immersive Storytelling</h3>
+                    <p>Bring history and art to life with 3D reconstructions, animations, and interactive narratives.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/assets/images/realestatexr/feature2.jpg" alt="VR in Museums" class="feature-img" />
+                    <h3>Interactive Learning</h3>
+                    <p>Engage visitors of all ages with hands-on digital experiences and gamified tours.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/assets/images/realestatexr/feature3.jpg" alt="MR in Museums" class="feature-img" />
+                    <h3>Accessibility & Inclusion</h3>
+                    <p>Offer multilingual content, audio guides, and visual enhancements for a wider audience.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/assets/images/realestatexr/feature4.jpg" alt="Remote Visits" class="feature-img" />
+                    <h3>Remote & Virtual Visits</h3>
+                    <p>Allow users to explore museum collections from anywhere in the world using AR apps.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Examples Section -->
+    <section class="real-examples-section">
+      <div class="container">
+        <h2 class="examples-section-title">Real Examples</h2>
+        <div class="examples-list">
+          <div class="example-item"><strong>The Louvre, Paris:</strong> Uses AR apps to explore artworks interactively.</div>
+          <div class="example-item"><strong>British Museum, London:</strong> Offers VR reconstructions of ancient sites.</div>
+          <div class="example-item"><strong>Celtic Museum Salzburg:</strong> AR avatars of Celtic figures guide visitors through exhibits and explain artifacts in their native tongue. One of the earliest AR uses in Austrian museums</div>
+          <div class="example-item"><strong>Museum Moderner Kunst (mumok), Vienna:</strong> A mixed‑reality app transforms the museum's architecture—blending digital animations layered onto physical walls that react to viewer movement, enhancing exhibitions through playful visual storytelling</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Real-World Examples Section -->
+    <section class="examples-section">
+        <div class="container">
+            <h2 class="examples-section-title">Real-World <span class="highlight">Examples</span></h2>
+            <p class="examples-section-subtitle">See how museums are using AR to create unforgettable, interactive experiences for visitors.</p>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">🏛️</div>
+                    <h3>3D Reconstructions</h3>
+                    <p>View ancient cities, artifacts, or extinct animals as they once were, right next to the real exhibit.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🖼️</div>
+                    <h3>Interactive Info Panels</h3>
+                    <p>Scan a painting or sculpture to reveal artist stories, restoration history, or hidden details.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🗺️</div>
+                    <h3>AR-Guided Tours</h3>
+                    <p>Follow a digital guide, solve puzzles, or participate in scavenger hunts throughout the museum.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🕶️</div>
+                    <h3>Virtual Try-Ons</h3>
+                    <p>See yourself in historical costumes or with ancient tools using AR mirrors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <!-- <div class="cta-button">
+        <a href="/contactus" class="cta-btn">Get in Touch</a>
+    </div> -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="footer-newsletter">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 text-center">
+                        <h4>Our Newsletter</h4>
+                        <p>
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <form id="newsletter-form">
+                            <input type="email" name="email" placeholder="Your Email" required />
+                            <input type="submit" value="Subscribe" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-top">
+            <div class="container">
+                <div class="row gy-4">
+                    <div class="col-lg-5 col-md-12 footer-info">
+                        <a href="https://www.altiereality.com" class="logo d-flex align-items-center">
+                            <img src="assets/img/logo.png" alt="" />
+                            <span>Altie Reality</span>
+                        </a>
+                        <p>
+                            "Altie Reality Private Limited is a pioneering Metaverse firm offering AR/VR as a Service across Gaming,
+                            Real Estate, Education, Tourism, and Entertainment. Recognized by FITT IIT Delhi, Meta,iHub Dhristi, IIT
+                            Jodhpur, SPTBI Mumbai and iStart
+                            Rajasthan, we deliver innovative, immersive, and affordable solutions to transform industries and redefine
+                            experiences. Explore the future with us."
+                        </p>
+                        <div class="social-links mt-3">
+                            <a href="https://www.youtube.com/channel/UCXhsQN9jsazg4FDoIuSseBg" target="_blank" class="twitter"><i
+                                    class="bi bi-youtube"></i></a>
+                            <a href="https://www.facebook.com/altiereality" target="_blank" class="facebook"><i
+                                    class="bi bi-facebook"></i></a>
+                            <a href="https://www.instagram.com/learn__xr" target="_blank" class="instagram"><i
+                                    class="bi bi-instagram"></i></a>
+                            <a href="https://in.linkedin.com/company/altie-reality" target="_blank" class="linkedin"><i
+                                    class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li>
+                                <i class="bi bi-chevron-right"></i>
+                                <a href="#">Home</a>
+                            </li>
+                            <li>
+                                <i class="bi bi-chevron-right"></i>
+                                <a href="#">About us</a>
+                            </li>
+                            <li>
+                                <i class="bi bi-chevron-right"></i>
+                                <a href="#">Services</a>
+                            </li>
+                            <li>
+                                <i class="bi bi-chevron-right"></i>
+                                <a href="https://www.altiereality.com/termsandconditions" target="_blank">Terms of service</a>
+                            </li>
+                            <li>
+                                <i class="bi bi-chevron-right"></i>
+                                <a href="https://www.altiereality.com/privacy" target="_blank">Privacy policy</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-6 footer-links">
+                        <h4> Our Products  </h4>
+                        <ul>
+                            <li>
+                                <i class="bi bi-chevron-right"></i>
+                                <a href="https://learnxr.altiereality.com" target="_blank"> LearnXR™ Labs for Schools </a>
+                            </li>
+                            <li>
+                                <i class="bi bi-chevron-right"></i>
+                                <a href="https://play.google.com/store/apps/details?id=com.altiereality.reliconnect"
+                                    target="_blank">ReliconnectVR™- VR Pilgrimage</a>
+                            </li>
+                            <li>
+                                <i class="bi bi-chevron-right"></i>
+                                <a href="#">360 VR Tour </a>
+                            </li>
+                            <li>
+                                <i class="bi bi-chevron-right"></i>
+                                <a href="#"> Digital Twin </a>
+                            </li>
+                            <li>
+                                <i class="bi bi-chevron-right"></i>
+                                <a href="#">EstateXR - Real Estate VR </a>
+                            </li>
+                            <li>
+                                <i class="bi bi-chevron-right"></i>
+                                <a href="#"> XR Government Consultancy </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+                        <h4>Contact Us</h4>
+                        <p>
+                            Altie Reality Private Limited<br />
+                            41,42 Bhamashah Technohub
+                            <br />
+                            Sansthan Path,Jaipur
+                            <br />
+                            India
+                            <br /><br />
+                            <strong>Phone:</strong>
+                            +91 8619953434<br />
+                            <strong>Email:</strong>
+                            info.altiereality@gmail.com<br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright 2025
+                <strong><span> Altie Reality Private Limited </span></strong>. All Rights Reserved
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html> 
