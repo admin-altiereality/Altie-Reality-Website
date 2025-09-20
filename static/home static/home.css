@@ -1,0 +1,369 @@
+@import "base.css";
+.container {
+  width: 100vw;
+  height: 120vh;
+  margin: 0 0 133px 0;
+  /* background: linear-gradient(to top left, rgb(214, 217, 238), rgb(209, 209, 209)); */
+}
+
+.content1 {
+  height: 90%;
+  position: relative;
+  overflow-y: hidden;
+}
+
+.firstpage {
+  width: 100%;
+  height: 100%;
+}
+
+.content1 #biglogo {
+  margin: auto;
+  width: 35%;
+  height: 55%;
+  text-align: center;
+  overflow-y: hidden;
+}
+
+.content1 #biglogo img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#img1,
+#img2,
+#img3,
+#img4,
+#img5,
+#img6 {
+  height: 40%;
+  width: 20%;
+}
+
+#img1 img,
+#img2 img,
+#img3 img,
+#img4 img,
+#img5 img,
+#img6 img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#img4 img {
+  max-height: 91%;
+}
+
+#img1 {
+  position: absolute;
+  top: 0%;
+  overflow-y: hidden;
+}
+
+#img2 {
+  overflow-y: hidden;
+  position: absolute;
+  top: 54%;
+  left: 3%;
+  overflow-y: hidden;
+}
+
+#img3 {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  text-align: left;
+  height: 30%;
+  overflow-y: hidden;
+}
+
+#img4 {
+  position: absolute;
+  top: 65%;
+  right: 2%;
+  height: 28%;
+  overflow-y: hidden;
+}
+
+#img5 {
+  position: absolute;
+  top: 31%;
+  left: 19%;
+}
+
+#img6 {
+  display: none;
+  position: absolute;
+  top: 3%;
+  right: 33%;
+  width: 7%;
+  height: 23%;
+}
+
+.logocontent {
+  max-width: 50%;
+  height: auto;
+  overflow-y: hidden;
+  margin: auto;
+  text-align: center;
+}
+
+.logocontent h1 {
+  font-size: 53px;
+  margin: -15px !important;
+}
+
+.logocontent p {
+  font-size: 23px;
+}
+
+.contbtn {
+  box-shadow: 1 1px 6px 0 grey;
+  max-width: fit-content;
+  padding: 3px 14px !important;
+  height: auto;
+  background: var(--primary-color);
+  border: 1px solid rgb(27, 25, 25);
+  border-radius: 30px;
+  padding: 5px;
+  margin: 24px auto;
+}
+
+.contbtn button {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 18px;
+  color: white;
+}
+
+.contbtn:hover button,
+.contbtn:hover {
+  color: black;
+  opacity: 0.92;
+  transform: scale(1.08);
+}
+
+.container2 {
+  width: 100vw;
+  height: auto;
+  text-align: center;
+}
+
+.container2 .firstgrid {
+  margin: auto;
+  height: 70vh;
+  width: 100%;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(313px, 1fr));
+  /* background: linear-gradient(to bottom right, rgb(212, 216, 245), rgb(209, 209, 209)); */
+}
+
+.firstgridtxt {
+  text-align: center;
+  min-height: 87%;
+  margin-right: 20px;
+  width: 100%;
+}
+
+.firstgridimg {
+  text-align: center;
+  overflow-y: hidden;
+  height: auto;
+}
+
+.firstgridimg img {
+  max-width: 80%;
+  max-height: 80%;
+  border: 2px solid #fff;
+  border-radius: 25px;
+  outline: hidden;
+  -moz-box-shadow: 24px 24px 6px #5541b9;
+  -webkit-box-shadow: 24px 24px 6px #5541b9;
+  box-shadow: 24px 24px 6px #5541b9;
+}
+
+.secondgrid {
+  padding: 2%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  width: 100%;
+  height: 100%;
+}
+
+.featuresbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 23px auto;
+  max-height: 200%;
+  width: 100%;
+  /* overflow-y: hidden; */
+}
+
+.featuresbox img {
+  width: 65px;
+  height: 35%;
+}
+
+/* -------------------------------------- */
+
+.thirdgrid {
+  height: 70%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 12px;
+}
+
+.thirdgridtxt {
+  text-align: center;
+  min-height: 87%;
+  width: 50%;
+  margin: 8% 0;
+}
+
+.thirdgridimg {
+  text-align: center;
+  overflow-y: hidden;
+  height: auto;
+  max-width: 50%;
+  margin: 8% 0;
+  /* box-shadow: 10px 10px 5px rgb(87, 89, 226); */
+}
+
+.thirdgridimg img {
+  max-width: 80%;
+  max-height: 80%;
+  border: 2px solid #fff;
+  border-radius: 25px;
+  outline: hidden;
+  -moz-box-shadow: -24px 24px 6px #5541b9;
+  -webkit-box-shadow: -24px 24px 6px #5541b9;
+  box-shadow: -24px 24px 6px #5541b9;
+}
+
+.fourthgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(227px, 1fr));
+  width: 100vw;
+  height: auto;
+  /* background: linear-gradient(to bottom left, rgb(212, 216, 245), rgb(209, 209, 209)); */
+}
+
+.fourthgrid .card1 {
+  width: 95%;
+  height: auto;
+  text-align: center;
+  border: 1px solid grey;
+  border-radius: 13px;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.card1 .cardimg {
+  width: 95%;
+  height: auto;
+  margin: 12px;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card1 .cardimg img {
+  width: 97%;
+  height: 95%;
+}
+
+.card1 .cardcontent {
+  height: auto;
+  margin: 10px;
+}
+
+/* media query goes here  */
+
+@media only screen and (max-width: 685px) {
+  .fourthgrid {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+  }
+  .card1 .cardimg img {
+    width: 60%;
+    height: 100%;
+    border-radius: 13px;
+  }
+  .card1 {
+    margin: 12px;
+    width: 80% !important;
+    background-color: rgb(204, 206, 207) !important;
+  }
+  .card1 .cardimg {
+    background: none;
+  }
+}
+
+@media only screen and (max-width: 624px) {
+  .container {
+    margin: 12% 0 0 0;
+    height: 100vh;
+  }
+  .contbtn {
+    max-width: fit-content;
+    margin: 8px auto;
+    padding: 3px 10px;
+  }
+  .logocontent h1 {
+    font-size: 39px;
+  }
+  .logocontent p {
+    font-size: 16px;
+  }
+  .content1 #biglogo {
+    height: 38%;
+    margin: auto;
+    width: 53%;
+  }
+  #img5 {
+    display: none;
+  }
+  .thirdgrid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .thirdgridimg {
+    margin: 5% 0 2% 0;
+    padding: 6%;
+    max-width: 87%;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .secondgrid {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 455px) {
+  .logocontent {
+    max-width: 76%;
+  }
+  .container {
+    margin: 20% 0 0 0;
+  }
+  #img2 {
+    top: 64%;
+  }
+}

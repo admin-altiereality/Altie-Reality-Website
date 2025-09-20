@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Extended Reality (XR) for Museums - Altie Reality</title>
+    <meta content="Transform your museum experience with cutting-edge XR technology" name="description" />
+    <meta content="museum, XR, virtual reality, augmented reality, mixed reality, cultural heritage" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon" />
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/realestatexr.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chatbot Files -->
+    <link href="css/chatbot.css?v=2" rel="stylesheet" />
+    <script src="js/chatbot.js"></script>
+    <!-- Search Files -->
+    <link href="css/search.css" rel="stylesheet" />
+    <script src="js/search.js"></script>
+
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #012970 0%, #0d6efd 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .hero-text-overlay {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-text-overlay h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .hero-text-overlay p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .ar-info-section {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+
+        .ar-section-title {
+            font-size: 2.5rem;
+            color: #012970;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .ar-section-subtitle {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444444;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+
+        .features-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(1, 41, 112, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: #012970;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .feature-card p {
+            color: #444444;
+            line-height: 1.6;
+        }
+
+        .examples-section {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .example-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(1, 41, 112, 0.1);
+            text-align: center;
+        }
+
+        .example-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .example-card h3 {
+            color: #012970;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .example-card p {
+            color: #444444;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: #0d6efd;
+        }
+
+        .cta-button {
+            text-align: center;
+            padding: 40px 0;
+            background-color: #f8f9fa;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #0d6efd;
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background: #012970;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+            <a href="https://www.altiereality.com" class="logo d-flex align-items-center">
+                <img src="assets/img/logo.png" alt="" / loading="lazy">
+                <span>Altie Reality</span>
+            </a>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a href="https://www.altiereality.com/XRtouch">XRtouch </a></li>
+                    <li><a class="active" href="https://www.altiereality.com/blog">Timeline</a></li>
+                    <li class="dropdown"><a href="#"><span>Industries We Serve</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="https://learnxr.altiereality.com">Education - LearnXR™ </a></li>
+                            <li><a href="https://metamatch.altiereality.com">MetaMatch </a></li>
+                            <li><a href="https://play.google.com/store/apps/details?id=com.altiereality.reliconnect">Religion - ReliconnectVR™</a></li>
+                            <li><a href="https://www.altiereality.com/medical">Medical</a></li>
+                            <li><a href="/realestatexr">Real Estate XR</a></li>
+                            <li><a href="https://www.altiereality.com/architecture">Real Estate</a></li>
+                            <li><a href="https://www.altiereality.com/defence">Defence</a></li>
+                            <li><a href="https://www.altiereality.com/gaming">Gaming - Altie Studios </a></li>
+                        </ul>
+                    <li><a class="nav-ling scrollto" href="https://www.altiereality.com/career">Careers</a>
+                    <li><a class="nav-link scrollto" href="https://learnxr.altiereality.com/"> LearnXR™</a></li>
+                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-text-overlay">
+            <h1>Extended Reality (XR) for Museums</h1>
+            <p>Transform your museum experience with cutting-edge XR technology. Create immersive, interactive, and educational experiences that bring history and art to life.</p>
+        </div>
+    </section>
+
+    <!-- What is XR for Museums -->
+    <section class="ar-info-section">
+        <div class="container">
+            <h2 class="ar-section-title">What is <span class="highlight">Extended Reality</span> in museums?</h2>
+            <p class="ar-section-subtitle">Extended Reality (XR) in museums combines Virtual Reality (VR), Augmented Reality (AR), and Mixed Reality (MR) to create immersive, interactive experiences that enhance visitor engagement and learning. Our solutions transform traditional museum spaces into dynamic, interactive environments where visitors can explore exhibits in entirely new ways.</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="ar-section-title">Key <span class="highlight">Features</span></h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Immersive Storytelling</h3>
+                    <p>Create compelling narratives that bring historical events and artifacts to life through interactive 3D reconstructions and animations.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Interactive Learning</h3>
+                    <p>Engage visitors with hands-on digital experiences, gamified tours, and educational content that makes learning fun and memorable.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Accessibility & Inclusion</h3>
+                    <p>Make your museum accessible to all with multilingual content, audio guides, and visual enhancements for diverse audiences.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Virtual Exhibitions</h3>
+                    <p>Extend your museum's reach with virtual exhibitions that allow visitors to explore collections from anywhere in the world.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section class="examples-section">
+        <div class="container">
+            <h2 class="ar-section-title">Real-World <span class="highlight">Applications</span></h2>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">🏛️</div>
+                    <h3>3D Reconstructions</h3>
+                    <p>View ancient cities and artifacts as they once were, with detailed 3D models and historical context.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🖼️</div>
+                    <h3>Interactive Exhibits</h3>
+                    <p>Engage with artworks through AR overlays that reveal hidden details and artist stories.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🗺️</div>
+                    <h3>Guided Tours</h3>
+                    <p>Follow digital guides through themed exhibitions with interactive elements and quizzes.</p>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🎮</div>
+                    <h3>Educational Games</h3>
+                    <p>Learn through play with museum-themed games that teach history and art appreciation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <div class="cta-button">
+        <a href="#" class="cta-btn" data-bs-toggle="modal" data-bs-target="#bookDemoModal">Schedule a Demo</a>
+    </div>
+
+    <!-- Calendly Modal -->
+    <div class="modal fade" id="bookDemoModal" tabindex="-1" aria-labelledby="bookDemoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookDemoModalLabel">Schedule a Demo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Calendly inline widget begin -->
+                    <div class="calendly-inline-widget" data-url="https://calendly.com/info-altiereality/altie-reality-1-1-2" style="min-width:320px;height:700px;"></div>
+                    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+                    <!-- Calendly inline widget end -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="footer-newsletter">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 text-center">
+                        <h4>Our Newsletter</h4>
+                        <p>Stay updated with the latest in XR technology and museum innovations.</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <form id="newsletter-form">
+                            <input type="email" name="email" placeholder="Your Email" required />
+                            <input type="submit" value="Subscribe" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-top">
+            <div class="container">
+                <div class="row gy-4">
+                    <div class="col-lg-5 col-md-12 footer-info">
+                        <a href="https://www.altiereality.com" class="logo d-flex align-items-center">
+                            <img src="assets/img/logo.png" alt="" / loading="lazy">
+                            <span>Altie Reality</span>
+                        </a>
+                        <p>
+                            Altie Reality Private Limited is a pioneering Metaverse firm offering AR/VR as a Service across Gaming,
+                            Education, Healthcare, and more. We're dedicated to transforming how people interact with digital content.
+                        </p>
+                        <div class="social-links mt-3">
+                            <a href="https://www.youtube.com/channel/UCXhsQN9jsazg4FDoIuSseBg" target="_blank" class="twitter"><i class="bi bi-youtube"></i></a>
+                            <a href="https://www.facebook.com/altiereality" target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="https://www.instagram.com/learn__xr" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="https://in.linkedin.com/company/altie-reality" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bi bi-chevron-right"></i> <a href="https://www.altiereality.com">Home</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="https://www.altiereality.com/about">About us</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="https://www.altiereality.com/services">Services</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="https://www.altiereality.com/terms">Terms of service</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="https://www.altiereality.com/privacy">Privacy policy</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-6 footer-links">
+                        <h4>Our Services</h4>
+                        <ul>
+                            <li><i class="bi bi-chevron-right"></i> <a href="https://www.altiereality.com/XRtouch">XRtouch</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="https://learnxr.altiereality.com">LearnXR™</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="https://metamatch.altiereality.com">MetaMatch</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="https://www.altiereality.com/gaming">Gaming</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="https://www.altiereality.com/medical">Medical</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+                        <h4>Contact Us</h4>
+                        <p>
+                            BTH, Second Floor  <br>
+                            Sansthan Path, Malviya Nagar<br>
+                            Jaipur , Rajasthan <br><br>
+                            <strong>Phone:</strong> +91 8619953434 <br>
+                            <strong>Email:</strong> info@altiereality.com<br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Altie Reality</span></strong>. All Rights Reserved
+            </div>
+        </div>
+    </footer>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html> 
