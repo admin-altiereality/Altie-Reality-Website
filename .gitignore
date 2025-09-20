@@ -80,3 +80,6 @@ build/
 *.zip
 *.tar.gz
 *.rar
+
+# Large files that exceed GitHub limits
+public/AltieRealityWebsite.zip
