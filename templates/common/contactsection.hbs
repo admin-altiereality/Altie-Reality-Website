@@ -1,5 +1,6 @@
-<section class="section" id="contact">
+<section class="section{{#if contactFlush}} section--flush-top{{/if}}" id="contact">
   <div class="container container--wide">
+    {{#unless contactFlush}}
     <div class="section-head" data-reveal>
       <p class="eyebrow">Contact</p>
       <h2>Talk to the team.</h2>
@@ -8,6 +9,7 @@
         you want to build and we will show you what is already running.
       </p>
     </div>
+    {{/unless}}
 
     <div class="split" style="align-items: start;">
       <div class="grid grid-2" style="gap: var(--s5);" data-reveal>
