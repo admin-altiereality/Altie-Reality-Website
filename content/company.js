@@ -114,18 +114,22 @@ const xrtouchFeatures = [
     body:
       "Six degrees of freedom lets an object move in six directions, supporting realistic and dynamic interaction inside virtual environments.",
     image: "/media/images/6DOF.webp",
+    imageAlt: "Diagram of the six degrees of freedom an XR controller tracks",
   },
   {
     title: "Immersive 3D visualisation",
     body:
       "Integrates realistic visual elements into extended reality environments to give users a dynamic, spatial experience.",
     image: "/media/images/3dd.webp",
+    imageAlt: "A physical model overlaid with an interactive 3D architectural visualisation",
   },
   {
     title: "Works with smartphones",
     body:
       "The XRtouch controller works with the LearnXR app on both Android and iOS devices. Connect your smartphone to the controller to begin.",
-    image: "/media/images/phn.webp",
+    image: "/media/images/wid%20phn.webp",
+    imageAlt:
+      "The XRtouch controller tracked by a smartphone camera, shown in augmented, virtual and mixed reality use",
   },
 ];
 
