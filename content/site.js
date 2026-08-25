@@ -37,7 +37,7 @@ const company = {
   calendly: "https://calendly.com/info-altiereality/altie-reality-1-1-2",
   careersForm: "https://forms.gle/6Nym8X5jWMjdd7Pu5",
   founded: "2021",
-  logo: "/assets/img/logo.png",
+  logo: "/media/assets/img/logo.webp",
 };
 
 // Preserved exactly as they appear on the current site.
@@ -75,21 +75,21 @@ const products = [
     blurb:
       "Curriculum-aligned immersive lessons delivered on Meta Quest, Android and Cardboard VR, with teacher tooling and learning analytics behind them.",
     // Real screenshots of the shipped Android app.
-    image: "/assets/img/portfolio/portfolio-1.png",
+    image: "/media/assets/img/portfolio/portfolio-1.webp",
     imageFit: "contain",
     shots: [
       {
-        src: "/assets/img/portfolio/portfolio-1.png",
+        src: "/media/assets/img/portfolio/portfolio-1.webp",
         alt: "LearnXR app home screen listing free lessons and video XR lessons",
         caption: "Lesson library",
       },
       {
-        src: "/assets/img/portfolio/portfolio-2.png",
+        src: "/media/assets/img/portfolio/portfolio-2.webp",
         alt: "LearnXR lesson detail screen for Curiosity on Mars",
         caption: "Lesson detail",
       },
       {
-        src: "/assets/img/portfolio/portfolio-3.png",
+        src: "/media/assets/img/portfolio/portfolio-3.webp",
         alt: "LearnXR immersive scene with a Cardboard VR toggle",
         caption: "Immersive scene",
       },
@@ -115,7 +115,7 @@ const products = [
     summary: "A 6DoF handheld controller for XR content.",
     blurb:
       "A wireless, ergonomic accessory that pairs with a head-mounted display to navigate virtual and augmented environments through buttons, sensors and haptic feedback.",
-    image: "/images/hardware.jpg",
+    image: "/media/images/hardware.webp",
     links: [],
   },
   {
@@ -159,7 +159,7 @@ const products = [
     summary: "Immersive game and simulation development.",
     blurb:
       "Our interactive studio practice: gamified corporate training, simulation and XR entertainment built on the same engine stack as our products.",
-    image: "/images/game.jpg",
+    image: "/media/images/game.webp",
     links: [],
   },
 ];
@@ -174,7 +174,7 @@ const industries = [
     title: "Mixed Reality Solutions for Schools & Colleges",
     lead:
       "Embarking on a transformative journey in education, Mixed Reality (MR) solutions are revolutionizing the traditional classroom experience for schools and colleges. Our comprehensive MR solutions seamlessly integrate the physical and digital worlds, creating immersive learning environments. Students are no longer confined to textbooks; instead, they engage with holographic educational content that brings lessons to life. From interactive 3D models for science classes to historical reenactments in social studies, MR fosters experiential learning, captivating students' attention and deepening their understanding of complex subjects. Additionally, virtual field trips and collaborative projects become a reality, transcending geographical boundaries and enhancing global connectivity.",
-    image: "/images/education%202.webp",
+    image: "/media/images/education%202.webp",
     imageAlt: "Students using immersive learning technology in a classroom",
     useCases: [
       "Engage students with holographic content",
@@ -211,7 +211,7 @@ const industries = [
     title: "Virtual, Augmented and Mixed Reality solutions for Healthcare",
     lead:
       "In the ever-evolving landscape of healthcare, the integration of Virtual Reality (VR), Augmented Reality (AR), and Mixed Reality (MR) solutions is revolutionizing patient care, medical training, and diagnostics. Virtual Reality immerses patients in therapeutic environments, reducing stress and anxiety during treatments. Augmented Reality enhances surgeons' precision with holographic overlays during procedures, offering real-time data and improving surgical outcomes. Mixed Reality seamlessly merges physical and digital worlds, facilitating collaborative medical simulations and training for healthcare professionals.",
-    image: "/images/medicala%202.jpg",
+    image: "/media/images/medicala%202.webp",
     imageAlt: "Mixed reality visualisation applied to healthcare",
     useCases: [
       "Immersive environments for stress reduction during treatments",
@@ -248,7 +248,7 @@ const industries = [
     title: "Mixed Reality in Defence",
     lead:
       "In the realm of defence, Mixed Reality (MR) stands as a transformative force, seamlessly merging the physical and virtual worlds to enhance military capabilities and strategic operations. MR enables defence professionals to visualize complex data, tactical scenarios, and critical information overlaid onto the real world, providing unparalleled situational awareness. From training simulations that immerse soldiers in realistic battlefield environments to holographic displays aiding in mission planning, MR technologies empower defence forces to make informed decisions swiftly and effectively.",
-    image: "/images/defence%202.webp",
+    image: "/media/images/defence%202.webp",
     imageAlt: "Mixed reality applied to defence training and mission planning",
     useCases: [
       "Conduct realistic training scenarios in mixed reality",
@@ -289,7 +289,7 @@ const industries = [
     title: "AR & VR Solutions for Interior Design & Architecture",
     lead:
       "In the dynamic realm of interior design and architecture, Augmented Reality (AR) and Virtual Reality (VR) solutions are reshaping the creative process. Augmented Reality brings design concepts to life by overlaying virtual elements onto real-world spaces, allowing clients to visualize and interact with proposed designs in their own environments. Virtual Reality immerses architects and designers in three-dimensional virtual spaces, offering a realistic sense of scale, proportion, and ambiance — from virtual walkthroughs of unbuilt structures to interactive AR catalogs for furniture placement.",
-    image: "/images/architectue.jpg",
+    image: "/media/images/architectue.webp",
     imageAlt: "Architectural visualisation in virtual reality",
     useCases: [
       "Overlay virtual design elements onto real spaces",
@@ -331,7 +331,7 @@ const industries = [
     title: "Metaverse Solutions for the Automotive Industry",
     lead:
       "Altie Reality reshapes the automotive industry through metaverse solutions. Our virtual showrooms redefine the car-buying experience, allowing customers to explore models from anywhere. Digital prototyping accelerates innovation, bringing designs to life in a collaborative virtual environment. Immersive training simulations equip the workforce with hands-on experience, while virtual test drives and experiential marketing redefine customer engagement.",
-    image: "/images/automotive%202.webp",
+    image: "/media/images/automotive%202.webp",
     imageAlt: "Virtual automotive showroom and digital prototyping",
     useCases: [
       "Remote exploration of car models",
@@ -369,7 +369,7 @@ const industries = [
     title: "Interactive Corporate Training With Immersive Technology",
     lead:
       "Interactive corporate training programs powered by immersive technologies such as Virtual Reality and Augmented Reality have proven exceptionally effective at engaging employees. These technologies transport trainees into realistic scenarios, providing hands-on experience without real-world consequences. In VR, employees can simulate challenging situations, from high-pressure client meetings to emergency response drills, honing their skills in a safe and controlled environment. Gamification is not limited to entertainment — it can be leveraged to raise engagement in industrial training, something classroom teaching has always struggled with.",
-    image: "/images/game.jpg",
+    image: "/media/images/game.webp",
     imageAlt: "Immersive gaming and simulation experience",
     useCases: [
       "Simulate real-world scenarios for practical skill development",
@@ -410,7 +410,7 @@ const industries = [
     title: "Extended Reality for Museums",
     lead:
       "Extended Reality in museums combines Virtual Reality, Augmented Reality and Mixed Reality to create immersive, interactive experiences that raise visitor engagement and learning. Our solutions turn traditional museum spaces into dynamic environments where visitors explore exhibits in entirely new ways.",
-    image: "/images/3dd.jpg",
+    image: "/media/images/3dd.webp",
     imageAlt: "Extended reality exhibition experience in a museum",
     useCases: [
       "Immersive storytelling through interactive 3D reconstructions and animations",

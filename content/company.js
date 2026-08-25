@@ -11,19 +11,19 @@ const team = [
     name: "Gaurav Purbia",
     role: "Founder & CEO",
     credential: "B.Tech, Electrical Engineering — UTD Kota",
-    image: "/assets/img/team/Team-1.png",
+    image: "/media/assets/img/team/Team-1.webp",
   },
   {
     name: "Dhanraj P",
     role: "Chief Technology Officer",
     credential: "Dual Degree, Aerospace Engineering — IIT Kharagpur",
-    image: "/assets/img/team/Team-3.png",
+    image: "/media/assets/img/team/Team-3.webp",
   },
   {
     name: "Devendra Sharma",
     role: "Chief Business Development Officer",
     credential: "Ex-Sergeant, Indian Air Force",
-    image: "/assets/img/team/Team-4.png",
+    image: "/media/assets/img/team/Team-4.webp",
   },
 ];
 
@@ -113,19 +113,19 @@ const xrtouchFeatures = [
     title: "6DoF tracking",
     body:
       "Six degrees of freedom lets an object move in six directions, supporting realistic and dynamic interaction inside virtual environments.",
-    image: "/images/6DOF.jpg",
+    image: "/media/images/6DOF.webp",
   },
   {
     title: "Immersive 3D visualisation",
     body:
       "Integrates realistic visual elements into extended reality environments to give users a dynamic, spatial experience.",
-    image: "/images/3dd.jpg",
+    image: "/media/images/3dd.webp",
   },
   {
     title: "Works with smartphones",
     body:
       "The XRtouch controller works with the LearnXR app on both Android and iOS devices. Connect your smartphone to the controller to begin.",
-    image: "/images/phn.jpg",
+    image: "/media/images/phn.webp",
   },
 ];
 
@@ -146,35 +146,35 @@ const roles = [
     type: "Internship",
     body:
       "Code, create and contribute to production XR projects across our product line and studio work.",
-    image: "/images/unity.jpg",
+    image: "/media/images/unity.webp",
   },
   {
     title: "Flutter Developer",
     type: "Internship",
     body:
       "Cross-platform app development with expertise in the Dart programming language.",
-    image: "/images/flutter.png",
+    image: "/media/images/flutter.webp",
   },
   {
     title: "Blender / 3D Artist",
     type: "Internship",
     body:
       "Model, texture and optimise the 3D content that our immersive environments are built from.",
-    image: "/images/3d.jpg",
+    image: "/media/images/3d.webp",
   },
   {
     title: "Business Developer",
     type: "Internship",
     body:
       "Build strategic skills and contribute directly to how our products reach schools and enterprises.",
-    image: "/images/bd.jpg",
+    image: "/media/images/bd.webp",
   },
   {
     title: "Sales",
     type: "Internship",
     body:
       "Hone commercial skills and make a measurable impact on our growth trajectory.",
-    image: "/images/sales.jpg",
+    image: "/media/images/sales.webp",
   },
 ];
 
@@ -185,28 +185,28 @@ const testimonials = [
       "LearnXR is amazing! I went from zero XR knowledge to building my first AR app in just a few weeks. The hands-on projects really helped me understand the concepts. Plus, the community is super supportive!",
     name: "Rajesh Kumar",
     role: "Government School Teacher",
-    image: "/assets/img/testimonials/testimonials-1.jpg",
+    image: "/media/assets/img/testimonials/testimonials-1.webp",
   },
   {
     quote:
       "I love how LearnXR breaks down complex XR concepts into bite-sized lessons. The interactive tutorials are fun and engaging. I'm now confidently developing VR experiences for my clients.",
     name: "Vipul Joshi",
     role: "Freelance Developer",
-    image: "/assets/img/testimonials/testimonials-2.jpg",
+    image: "/media/assets/img/testimonials/testimonials-2.webp",
   },
   {
     quote:
       "As a teacher, I was looking for ways to make learning more immersive. LearnXR taught me how to create educational AR experiences. My students are now super excited about learning!",
     name: "PK Mathur",
     role: "High School Teacher",
-    image: "/assets/img/testimonials/testimonials-3.jpg",
+    image: "/media/assets/img/testimonials/testimonials-3.webp",
   },
   {
     quote:
       "The XR industry is booming and LearnXR helped me pivot my career into it. The course content is always up-to-date with the latest tech. I landed my dream job in XR development thanks to the skills I learned here!",
     name: "Navin Jain",
     role: "XR Developer",
-    image: "/assets/img/testimonials/testimonials-4.jpg",
+    image: "/media/assets/img/testimonials/testimonials-4.webp",
   },
 ];
 

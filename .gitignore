@@ -83,3 +83,6 @@ build/
 
 # Large files that exceed GitHub limits
 public/AltieRealityWebsite.zip
+
+# Local server log from scripts/
+/tmp-server.log
