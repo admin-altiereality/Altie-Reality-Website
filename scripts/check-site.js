@@ -18,7 +18,7 @@ const ROUTES = [
   "/",
   "/blog",
   "/technology",
-  "/company",
+
   "/career",
   "/contact",
   ...industries.map((i) => i.route),

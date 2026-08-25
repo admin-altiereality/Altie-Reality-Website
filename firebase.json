@@ -47,6 +47,16 @@
     ],
     "redirects": [
       {
+        "source": "/company",
+        "destination": "/#company",
+        "type": 301
+      },
+      {
+        "source": "/about",
+        "destination": "/#company",
+        "type": 301
+      },
+      {
         "source": "/products/learnxr",
         "destination": "https://learnxr.altiereality.com",
         "type": 301
@@ -94,11 +104,6 @@
       {
         "source": "/forms/contact.php",
         "destination": "/contact",
-        "type": 301
-      },
-      {
-        "source": "/about",
-        "destination": "/company",
         "type": 301
       },
       {

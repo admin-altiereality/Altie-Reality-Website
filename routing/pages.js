@@ -40,9 +40,14 @@ router.get("/", (req, res) => {
     ],
     recognition,
     capabilities,
-      team,
+    team,
     testimonials,
     featured: milestones.filter((m) => m.featured).slice(0, 4),
+    // Hero carousel cards, one per published sector.
+    carousel: industries.map((i) => ({
+      src: `/media/carousel/${i.slug}.webp`,
+      label: i.name,
+    })),
   });
 });
 
@@ -107,28 +112,6 @@ router.get("/technology", (req, res) => {
       ]),
     ],
     capabilities,
-  });
-});
-
-/* -------------------------------------------------------------- Company */
-router.get("/company", (req, res) => {
-  res.render("company", {
-    meta: pageMeta(req, {
-      title: "Company",
-      description:
-        "Altie Reality Private Limited builds immersive products from Bhamashah Technohub, Jaipur — recognised by the Meta XR Startup Program, MeitY, FITT IIT Delhi, iStart Rajasthan and SPTBI Mumbai.",
-      image: "/assets/img/teamabout.jpg",
-    }),
-    schema: [
-      organizationSchema(),
-      breadcrumbSchema([
-        { name: "Home", href: "/" },
-        { name: "Company", href: "/company" },
-      ]),
-    ],
-    team,
-    recognition,
-    featured: milestones.filter((m) => m.featured),
   });
 });
 
@@ -250,6 +233,8 @@ router.get("/logout", (req, res) => {
 // Routes the old site linked to but never had a template for, plus renamed
 // paths. Redirecting preserves any inbound links and search equity.
 const redirects = {
+  "/company": "/#company",
+  "/about": "/#company",
   "/products/learnxr": "https://learnxr.altiereality.com",
   "/products/reliconnect": "/",
   "/products/metamatch": "/",
@@ -260,7 +245,6 @@ const redirects = {
   "/portfolio-details": "https://learnxr.altiereality.com",
   "/xrsense": "/technology",
   "/forms/contact.php": "/contact",
-  "/about": "/company",
   "/services": "/technology",
   "/terms": "/termsandconditions",
 };
@@ -280,7 +264,6 @@ router.get("/sitemap.xml", (req, res) => {
   const urls = [
     { loc: "/", priority: "1.0" },
     { loc: "/technology", priority: "0.8" },
-    { loc: "/company", priority: "0.8" },
     { loc: "/blog", priority: "0.8" },
     { loc: "/career", priority: "0.6" },
     { loc: "/contact", priority: "0.7" },

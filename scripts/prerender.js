@@ -33,7 +33,7 @@ const ROUTES = [
   "/",
   "/blog",
   "/technology",
-  "/company",
+
   "/career",
   "/contact",
   ...industries.map((i) => i.route),
@@ -155,6 +155,10 @@ function bytes(n) {
     /(?:src|href)="(\/[^"]+?\.(?:png|jpe?g|webp|svg|css|js|ico|woff2?))(?:\?[^"]*)?"/g;
   const META_RE =
     /<meta[^>]+(?:property="og:image"|name="twitter:image")[^>]+content="([^"]+)"/g;
+  // Assets can also be named inside inline JSON — the hero carousel declares
+  // its textures that way — so quoted absolute paths are collected too.
+  const JSON_RE =
+    /"(\/(?:media|images|assets)\/[^"\\]+?\.(?:png|jpe?g|webp|svg|ico|woff2?))"/g;
 
   (function scan(dir) {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -170,6 +174,11 @@ function bytes(n) {
 
       // Social share images live in meta content attributes as absolute
       // URLs, so they are invisible to the src/href scan above.
+      JSON_RE.lastIndex = 0;
+      while ((m = JSON_RE.exec(text))) {
+        referenced.add(decodeURIComponent(m[1]));
+      }
+
       META_RE.lastIndex = 0;
       while ((m = META_RE.exec(text))) {
         const url = m[1].startsWith(SITE_URL)
@@ -203,6 +212,7 @@ function bytes(n) {
   // A build that ships no stylesheet or script is broken even though every
   // page rendered, so assert the essentials rather than trusting the scan.
   const REQUIRED = [
+    ...industries.map((i) => `media/carousel/${i.slug}.webp`),
     "design/system.css",
     "design/components.css",
     "design/site.js",

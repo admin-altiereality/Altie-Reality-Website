@@ -1,8 +1,9 @@
 /**
- * Altie Reality — hero scene.
+ * Altie Reality — hero carousel.
  *
- * A holographic headset with floating spatial panels, drifting over a depth
- * field. Written against raw WebGL1 so the hero costs no third-party bytes.
+ * A radial spoke-wheel: sector cards hinged on a central vertical axis,
+ * fanning outward and turning slowly, over a depth field. Written against
+ * raw WebGL1 so the hero costs no third-party bytes.
  *
  * Degrades silently: if WebGL is unavailable or the user prefers reduced
  * motion, nothing runs and the CSS gradient backdrop carries the hero.
@@ -13,6 +14,18 @@
   var canvas = document.getElementById("hero-field");
   if (!canvas) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var SECTORS = (window.__ALTIE_CAROUSEL__ || []).slice();
+  if (!SECTORS.length) return;
+
+  // The wheel wants enough blades to read as a fanned deck rather than a few
+  // lonely spokes, so the sector list repeats around the full turn. Each
+  // texture is uploaded once and shared by every blade that uses it.
+  var TARGET_BLADES = window.innerWidth < 900 ? 12 : 16;
+  var CARDS = [];
+  for (var bi = 0; CARDS.length < TARGET_BLADES; bi++) {
+    CARDS.push(SECTORS[bi % SECTORS.length]);
+  }
 
   var gl;
   try {
@@ -30,7 +43,7 @@
   }
   if (!gl) return;
 
-  var LOW_POWER = window.innerWidth < 900;
+  var NARROW = window.innerWidth < 900;
 
   /* ================= shader plumbing ================= */
   function compile(type, src) {
@@ -63,16 +76,16 @@
     return m;
   }
 
+  var scratch = new Float32Array(16);
   function multiply(out, a, b) {
-    var r = new Float32Array(16);
     for (var c = 0; c < 4; c++) {
       for (var i = 0; i < 4; i++) {
-        r[c * 4 + i] =
+        scratch[c * 4 + i] =
           a[i] * b[c * 4] + a[4 + i] * b[c * 4 + 1] +
           a[8 + i] * b[c * 4 + 2] + a[12 + i] * b[c * 4 + 3];
       }
     }
-    out.set(r);
+    out.set(scratch);
     return out;
   }
 
@@ -87,177 +100,130 @@
     return out;
   }
 
-  function trs(out, tx, ty, tz, rx, ry, rz, sx, sy, sz) {
-    var cx=Math.cos(rx), sxr=Math.sin(rx);
-    var cy=Math.cos(ry), syr=Math.sin(ry);
-    var cz=Math.cos(rz), szr=Math.sin(rz);
-    // R = Ry * Rx * Rz
-    var m00 = cy*cz + syr*sxr*szr, m01 = cx*szr, m02 = -syr*cz + cy*sxr*szr;
-    var m10 = -cy*szr + syr*sxr*cz, m11 = cx*cz, m12 = syr*szr + cy*sxr*cz;
-    var m20 = syr*cx, m21 = -sxr, m22 = cy*cx;
-    out[0]=m00*sx; out[1]=m10*sx; out[2]=m20*sx; out[3]=0;
-    out[4]=m01*sy; out[5]=m11*sy; out[6]=m21*sy; out[7]=0;
-    out[8]=m02*sz; out[9]=m12*sz; out[10]=m22*sz; out[11]=0;
+  /** Translate * rotateY(ry) * rotateX(rx) * rotateZ(rz) */
+  function trs(out, tx, ty, tz, rx, ry, rz) {
+    var cx=Math.cos(rx), sx=Math.sin(rx);
+    var cy=Math.cos(ry), sy=Math.sin(ry);
+    var cz=Math.cos(rz), sz=Math.sin(rz);
+    out[0]=cy*cz + sy*sx*sz; out[1]=cx*sz;  out[2]=-sy*cz + cy*sx*sz; out[3]=0;
+    out[4]=-cy*sz + sy*sx*cz; out[5]=cx*cz; out[6]=sy*sz + cy*sx*cz;  out[7]=0;
+    out[8]=sy*cx;             out[9]=-sx;   out[10]=cy*cx;            out[11]=0;
     out[12]=tx; out[13]=ty; out[14]=tz; out[15]=1;
     return out;
   }
 
-  /* ================= geometry ================= */
-  /** Smooth vertex normals accumulated from face normals. */
-  function computeNormals(pos, idx) {
-    var n = new Float32Array(pos.length);
-    for (var i = 0; i < idx.length; i += 3) {
-      var a = idx[i] * 3, b = idx[i + 1] * 3, c = idx[i + 2] * 3;
-      var ux = pos[b] - pos[a], uy = pos[b+1] - pos[a+1], uz = pos[b+2] - pos[a+2];
-      var vx = pos[c] - pos[a], vy = pos[c+1] - pos[a+1], vz = pos[c+2] - pos[a+2];
-      var nx = uy*vz - uz*vy, ny = uz*vx - ux*vz, nz = ux*vy - uy*vx;
-      n[a]+=nx; n[a+1]+=ny; n[a+2]+=nz;
-      n[b]+=nx; n[b+1]+=ny; n[b+2]+=nz;
-      n[c]+=nx; n[c+1]+=ny; n[c+2]+=nz;
-    }
-    for (var j = 0; j < n.length; j += 3) {
-      var l = Math.hypot(n[j], n[j+1], n[j+2]) || 1;
-      n[j]/=l; n[j+1]/=l; n[j+2]/=l;
-    }
-    return n;
+  /* ================= card geometry ================= */
+  // The card hangs off the hub: x runs from the spine outward.
+  var HUB = 0.16;
+  var CARD_W = 1.18;
+  var CARD_H = 0.74;
+
+  var cardPos = new Float32Array([
+    HUB, -CARD_H / 2, 0,
+    HUB + CARD_W, -CARD_H / 2, 0,
+    HUB + CARD_W, CARD_H / 2, 0,
+    HUB, CARD_H / 2, 0,
+  ]);
+  var cardUv = new Float32Array([0, 1, 1, 1, 1, 0, 0, 0]);
+  var cardIdx = new Uint16Array([0, 1, 2, 0, 2, 3]);
+
+  var posBuf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+  gl.bufferData(gl.ARRAY_BUFFER, cardPos, gl.STATIC_DRAW);
+  var uvBuf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, uvBuf);
+  gl.bufferData(gl.ARRAY_BUFFER, cardUv, gl.STATIC_DRAW);
+  var idxBuf = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxBuf);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, cardIdx, gl.STATIC_DRAW);
+
+  /* ================= textures ================= */
+  function makeTexture() {
+    var tex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    // A neutral 1x1 stands in until the image arrives, so the first frame
+    // draws immediately rather than flashing empty.
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+      new Uint8Array([18, 24, 40, 255]));
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    return tex;
   }
 
-  function sgnPow(v, e) {
-    return (v < 0 ? -1 : 1) * Math.pow(Math.abs(v), e);
-  }
-
-  /**
-   * Superellipsoid — a single parametric surface that yields a rounded box,
-   * which is the headset visor silhouette without hand-authoring a mesh.
-   */
-  function superellipsoid(a, b, c, e1, e2, segU, segV) {
-    var pos = [], idx = [];
-    for (var i = 0; i <= segV; i++) {
-      var v = -Math.PI / 2 + (Math.PI * i) / segV;
-      var cv = Math.cos(v), sv = Math.sin(v);
-      for (var j = 0; j <= segU; j++) {
-        var u = -Math.PI + (2 * Math.PI * j) / segU;
-        var cu = Math.cos(u), su = Math.sin(u);
-        pos.push(
-          a * sgnPow(cv, e1) * sgnPow(cu, e2),
-          b * sgnPow(sv, e1),
-          c * sgnPow(cv, e1) * sgnPow(su, e2)
-        );
-      }
-    }
-    for (var y = 0; y < segV; y++) {
-      for (var x = 0; x < segU; x++) {
-        var p0 = y * (segU + 1) + x, p1 = p0 + 1;
-        var p2 = p0 + segU + 1, p3 = p2 + 1;
-        idx.push(p0, p2, p1, p1, p2, p3);
-      }
-    }
-    var P = new Float32Array(pos);
-    var I = new Uint16Array(idx);
-    return { pos: P, nrm: computeNormals(P, I), idx: I };
-  }
-
-  /** Partial torus, used for the head strap. */
-  function torus(R, r, arc, segU, segV) {
-    var pos = [], idx = [];
-    for (var i = 0; i <= segU; i++) {
-      var u = (arc * i) / segU - arc / 2;
-      var cu = Math.cos(u), su = Math.sin(u);
-      for (var j = 0; j <= segV; j++) {
-        var v = (2 * Math.PI * j) / segV;
-        var cv = Math.cos(v), sv = Math.sin(v);
-        pos.push((R + r * cv) * cu, r * sv, (R + r * cv) * su);
-      }
-    }
-    for (var y = 0; y < segU; y++) {
-      for (var x = 0; x < segV; x++) {
-        var p0 = y * (segV + 1) + x, p1 = p0 + 1;
-        var p2 = p0 + segV + 1, p3 = p2 + 1;
-        idx.push(p0, p2, p1, p1, p2, p3);
-      }
-    }
-    var P = new Float32Array(pos);
-    var I = new Uint16Array(idx);
-    return { pos: P, nrm: computeNormals(P, I), idx: I };
-  }
-
-  function plane(w, h) {
-    var P = new Float32Array([
-      -w, -h, 0,  w, -h, 0,  w, h, 0,  -w, h, 0,
-    ]);
-    var I = new Uint16Array([0, 1, 2, 0, 2, 3]);
-    return { pos: P, nrm: computeNormals(P, I), idx: I };
-  }
-
-  function upload(mesh) {
-    var vbo = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
-    gl.bufferData(gl.ARRAY_BUFFER, mesh.pos, gl.STATIC_DRAW);
-    var nbo = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, nbo);
-    gl.bufferData(gl.ARRAY_BUFFER, mesh.nrm, gl.STATIC_DRAW);
-    var ibo = gl.createBuffer();
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, mesh.idx, gl.STATIC_DRAW);
-    return { vbo: vbo, nbo: nbo, ibo: ibo, count: mesh.idx.length };
-  }
+  SECTORS.forEach(function (card) {
+    card.tex = makeTexture();
+    card.ready = 0;
+    var img = new Image();
+    img.decoding = "async";
+    img.onload = function () {
+      gl.bindTexture(gl.TEXTURE_2D, card.tex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+      card.ready = 1;
+      if (!running) draw(lastT);
+    };
+    img.onerror = function () { card.ready = 0; };
+    img.src = card.src;
+  });
 
   /* ================= programs ================= */
-  var SOLID_VS = [
+  var CARD_VS = [
     "attribute vec3 a_pos;",
-    "attribute vec3 a_nrm;",
+    "attribute vec2 a_uv;",
     "uniform mat4 u_mvp;",
     "uniform mat4 u_model;",
-    "varying vec3 v_nrm;",
-    "varying vec3 v_world;",
+    "varying vec2 v_uv;",
+    "varying float v_depth;",
+    "varying float v_facing;",
     "void main() {",
-    "  vec4 w = u_model * vec4(a_pos, 1.0);",
-    "  v_world = w.xyz;",
-    "  v_nrm = normalize(mat3(u_model) * a_nrm);",
-    "  gl_Position = u_mvp * vec4(a_pos, 1.0);",
+    "  vec4 world = u_model * vec4(a_pos, 1.0);",
+    // Card normal is the model's +Z axis.
+    "  vec3 n = normalize(mat3(u_model) * vec3(0.0, 0.0, 1.0));",
+    "  vec3 toEye = normalize(vec3(0.0, 0.0, 0.0) - world.xyz);",
+    "  v_facing = dot(n, toEye);",
+    "  vec4 pos = u_mvp * vec4(a_pos, 1.0);",
+    "  v_depth = pos.w;",
+    "  v_uv = a_uv;",
+    "  gl_Position = pos;",
     "}",
   ].join("\n");
 
-  var SOLID_FS = [
+  var CARD_FS = [
     "precision mediump float;",
-    "varying vec3 v_nrm;",
-    "varying vec3 v_world;",
-    "uniform vec3 u_tint;",
+    "varying vec2 v_uv;",
+    "varying float v_depth;",
+    "varying float v_facing;",
+    "uniform sampler2D u_tex;",
+    "uniform float u_ready;",
+    "uniform float u_ratio;",
     "uniform float u_time;",
-    "uniform float u_alpha;",
+    "uniform float u_opacity;",
     "void main() {",
-    "  vec3 N = normalize(v_nrm);",
-    "  vec3 V = normalize(vec3(0.0, 0.35, 3.2) - v_world);",
-    "  float facing = max(dot(N, V), 0.0);",
-    // Rim light: the edge glow that reads as a hologram.
-    "  float rim = pow(1.0 - facing, 2.6);",
-    "  vec3 key = normalize(vec3(-0.5, 0.9, 0.7));",
-    "  float lambert = max(dot(N, key), 0.0);",
-    // Horizontal scan bands drifting up the surface.
-    "  float scan = 0.5 + 0.5 * sin(v_world.y * 70.0 - u_time * 2.2);",
-    "  vec3 col = u_tint * (0.22 + 0.48 * lambert);",
-    "  col += mix(u_tint, vec3(0.45, 0.90, 1.0), 0.30) * rim * 1.05;",
-    "  col += vec3(0.34, 0.89, 0.92) * scan * 0.05;",
-    "  float a = clamp(u_alpha * (0.42 + rim * 0.85 + lambert * 0.22), 0.0, 0.96);",
-    "  gl_FragColor = vec4(col, a);",
-    "}",
-  ].join("\n");
-
-  var PANEL_FS = [
-    "precision mediump float;",
-    "varying vec3 v_nrm;",
-    "varying vec3 v_world;",
-    "uniform vec3 u_tint;",
-    "uniform float u_time;",
-    "uniform float u_alpha;",
-    "void main() {",
-    // A spatial UI surface: faint grid, brighter border.
-    "  vec2 uv = v_world.xy;",
-    "  vec2 g = abs(fract(uv * 5.0) - 0.5);",
-    "  float grid = smoothstep(0.46, 0.5, max(g.x, g.y));",
-    "  float pulse = 0.6 + 0.4 * sin(u_time * 0.9 + v_world.x * 2.0);",
-    "  vec3 col = u_tint * (0.25 + grid * 0.8) * pulse;",
-    "  gl_FragColor = vec4(col, u_alpha * (0.10 + grid * 0.34));",
+    // Rounded rectangle mask so the cards read as panels, not raw quads.
+    "  vec2 p = (v_uv - 0.5) * vec2(u_ratio, 1.0);",
+    "  float r = 0.055;",
+    "  vec2 q = abs(p) - (vec2(0.5 * u_ratio, 0.5) - r);",
+    "  float d = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - r;",
+    "  float mask = 1.0 - smoothstep(-0.004, 0.004, d);",
+    "  if (mask <= 0.001) discard;",
+    // Cards are double sided: the far half of the wheel samples with U
+    // flipped so its image reads correctly rather than mirrored, and sits
+    // a little darker so the near half still leads.
+    "  float front = step(0.0, v_facing);",
+    "  vec2 uv = vec2(mix(1.0 - v_uv.x, v_uv.x, front), v_uv.y);",
+    "  vec3 img = texture2D(u_tex, uv).rgb;",
+    "  vec3 base = mix(vec3(0.055, 0.075, 0.125), img, u_ready);",
+    "  vec3 col = base * mix(0.55, 1.0, front);",
+    // Edge light along the rounded border.
+    "  float edge = smoothstep(-0.016, -0.002, d);",
+    "  col += vec3(0.35, 0.62, 1.0) * edge * 0.55;",
+    // Depth haze so the far side of the wheel recedes.
+    "  float haze = clamp((v_depth - 3.6) / 4.6, 0.0, 1.0);",
+    "  col = mix(col, vec3(0.016, 0.024, 0.043), haze * 0.6);",
+    "  float alpha = mask * mix(0.9, 1.0, front) * (1.0 - haze * 0.25);",
+    "  gl_FragColor = vec4(col, alpha * u_opacity);",
     "}",
   ].join("\n");
 
@@ -279,7 +245,7 @@
     "  gl_Position = pos;",
     "  v_depth = clamp((pos.w - 1.0) / 7.0, 0.0, 1.0);",
     "  v_height = h;",
-    "  gl_PointSize = u_scale * (13.0 / max(pos.w, 0.7));",
+    "  gl_PointSize = u_scale * (11.0 / max(pos.w, 0.7));",
     "}",
   ].join("\n");
 
@@ -296,61 +262,34 @@
     "  vec3 cyan = vec3(0.341, 0.886, 0.914);",
     "  vec3 col = mix(blue, cyan, clamp(v_height * 1.5 + 0.5, 0.0, 1.0));",
     "  float fade = 1.0 - smoothstep(0.15, 0.95, v_depth);",
-    "  gl_FragColor = vec4(col, soft * fade * 0.7);",
+    "  gl_FragColor = vec4(col, soft * fade * 0.55);",
     "}",
   ].join("\n");
 
-  var solidProg = program(SOLID_VS, SOLID_FS);
-  var panelProg = program(SOLID_VS, PANEL_FS);
+  var cardProg = program(CARD_VS, CARD_FS);
   var fieldProg = program(FIELD_VS, FIELD_FS);
-  if (!solidProg || !panelProg || !fieldProg) return;
+  if (!cardProg || !fieldProg) return;
 
-  var loc = {};
-  [["solid", solidProg], ["panel", panelProg]].forEach(function (pair) {
-    loc[pair[0]] = {
-      prog: pair[1],
-      aPos: gl.getAttribLocation(pair[1], "a_pos"),
-      aNrm: gl.getAttribLocation(pair[1], "a_nrm"),
-      uMvp: gl.getUniformLocation(pair[1], "u_mvp"),
-      uModel: gl.getUniformLocation(pair[1], "u_model"),
-      uTint: gl.getUniformLocation(pair[1], "u_tint"),
-      uTime: gl.getUniformLocation(pair[1], "u_time"),
-      uAlpha: gl.getUniformLocation(pair[1], "u_alpha"),
-    };
-  });
-  loc.field = {
-    prog: fieldProg,
+  var C = {
+    aPos: gl.getAttribLocation(cardProg, "a_pos"),
+    aUv: gl.getAttribLocation(cardProg, "a_uv"),
+    uMvp: gl.getUniformLocation(cardProg, "u_mvp"),
+    uModel: gl.getUniformLocation(cardProg, "u_model"),
+    uTex: gl.getUniformLocation(cardProg, "u_tex"),
+    uReady: gl.getUniformLocation(cardProg, "u_ready"),
+    uRatio: gl.getUniformLocation(cardProg, "u_ratio"),
+    uTime: gl.getUniformLocation(cardProg, "u_time"),
+    uOpacity: gl.getUniformLocation(cardProg, "u_opacity"),
+  };
+  var F = {
     aGrid: gl.getAttribLocation(fieldProg, "a_grid"),
     uMvp: gl.getUniformLocation(fieldProg, "u_mvp"),
     uTime: gl.getUniformLocation(fieldProg, "u_time"),
     uScale: gl.getUniformLocation(fieldProg, "u_scale"),
   };
 
-  /* ================= scene ================= */
-  var detail = LOW_POWER ? 0.6 : 1;
-  var visor = upload(
-    superellipsoid(0.88, 0.37, 0.21, 0.30, 0.28,
-      Math.round(56 * detail), Math.round(34 * detail))
-  );
-  var strap = upload(
-    torus(0.66, 0.05, Math.PI * 2,
-      Math.round(64 * detail), Math.round(12 * detail))
-  );
-  var panelMesh = upload(plane(0.62, 0.42));
-  var topStrap = upload(
-    torus(0.60, 0.045, Math.PI * 2,
-      Math.round(56 * detail), Math.round(10 * detail))
-  );
-
-  // Floating spatial panels: [x, y, z, rotY, scale, driftSpeed]
-  var PANELS = [
-    [-1.85, 0.62, -0.6, 0.55, 1.0, 0.7],
-    [1.72, 0.30, -0.35, -0.5, 0.85, 0.9],
-    [-1.35, -0.72, 0.35, 0.32, 0.7, 1.15],
-    [1.42, -0.85, -0.9, -0.38, 0.62, 0.8],
-  ];
-
-  var N = LOW_POWER ? 34 : 58;
+  /* ================= depth field ================= */
+  var N = NARROW ? 30 : 50;
   var pts = new Float32Array(N * N * 2);
   var pi = 0;
   for (var gx = 0; gx < N; gx++) {
@@ -380,131 +319,150 @@
   var resizeTimer;
   window.addEventListener("resize", function () {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(resize, 150);
+    resizeTimer = setTimeout(function () { resize(); NARROW = window.innerWidth < 900; }, 150);
   });
 
-  /* ================= pointer ================= */
-  var targetX = 0, targetY = 0, curX = 0, curY = 0;
+  /* ================= interaction ================= */
+  var spin = 0;
+  var spinVel = 0;
+  var AUTO = 0.16;          // radians per second when idle
+  var dragging = false;
+  var lastPointerX = 0;
+  var idleAt = 0;
+  var tiltX = 0, tiltTarget = 0;
+
+  canvas.style.touchAction = "pan-y";
+
+  canvas.addEventListener("pointerdown", function (e) {
+    dragging = true;
+    lastPointerX = e.clientX;
+    canvas.setPointerCapture(e.pointerId);
+    canvas.style.cursor = "grabbing";
+  });
+
+  canvas.addEventListener("pointermove", function (e) {
+    tiltTarget = (e.clientY / window.innerHeight - 0.5) * 0.34;
+    if (!dragging) return;
+    var dx = e.clientX - lastPointerX;
+    lastPointerX = e.clientX;
+    spinVel = (dx / window.innerWidth) * 9;
+    spin += spinVel;
+    idleAt = performance.now() + 1400;
+  });
+
+  function endDrag(e) {
+    if (!dragging) return;
+    dragging = false;
+    if (e && e.pointerId != null && canvas.hasPointerCapture(e.pointerId)) {
+      canvas.releasePointerCapture(e.pointerId);
+    }
+    canvas.style.cursor = "grab";
+  }
+  canvas.addEventListener("pointerup", endDrag);
+  canvas.addEventListener("pointercancel", endDrag);
+  canvas.addEventListener("pointerleave", endDrag);
+
   if (window.matchMedia("(pointer: fine)").matches) {
-    window.addEventListener("pointermove", function (e) {
-      targetX = (e.clientX / window.innerWidth - 0.5) * 2;
-      targetY = (e.clientY / window.innerHeight - 0.5) * 2;
-    }, { passive: true });
+    canvas.style.cursor = "grab";
   }
 
   /* ================= draw ================= */
   var proj = new Float32Array(16);
   var view = new Float32Array(16);
   var model = new Float32Array(16);
+  var mv = new Float32Array(16);
   var mvp = new Float32Array(16);
-  var assembly = new Float32Array(16);
-  var local = new Float32Array(16);
   var vp = new Float32Array(16);
 
-  function bindMesh(L, mesh) {
-    gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vbo);
-    gl.enableVertexAttribArray(L.aPos);
-    gl.vertexAttribPointer(L.aPos, 3, gl.FLOAT, false, 0, 0);
-    gl.bindBuffer(gl.ARRAY_BUFFER, mesh.nbo);
-    gl.enableVertexAttribArray(L.aNrm);
-    gl.vertexAttribPointer(L.aNrm, 3, gl.FLOAT, false, 0, 0);
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ibo);
-  }
-
-  function drawMesh(L, mesh, t, tint, alpha) {
-    multiply(mvp, vp, model);
-    gl.uniformMatrix4fv(L.uMvp, false, mvp);
-    gl.uniformMatrix4fv(L.uModel, false, model);
-    gl.uniform3fv(L.uTint, tint);
-    gl.uniform1f(L.uTime, t);
-    gl.uniform1f(L.uAlpha, alpha);
-    bindMesh(L, mesh);
-    gl.drawElements(gl.TRIANGLES, mesh.count, gl.UNSIGNED_SHORT, 0);
-  }
-
-  var BRAND = new Float32Array([0.35, 0.48, 1.0]);
-  var CYAN = new Float32Array([0.30, 0.82, 0.90]);
-  var STRAP = new Float32Array([0.28, 0.44, 0.92]);
+  var lastT = 0;
+  var lastFrame = 0;
 
   function draw(t) {
-    curX += (targetX - curX) * 0.045;
-    curY += (targetY - curY) * 0.045;
+    var dt = Math.min(Math.max(t - lastFrame, 0), 0.05);
+    lastFrame = t;
+    lastT = t;
 
-    var aspect = w / h;
-    perspective(proj, 0.9, aspect, 0.1, 40);
+    // Momentum after a drag, easing back to the idle rotation.
+    if (!dragging) {
+      spinVel *= 0.94;
+      var auto = performance.now() > idleAt ? AUTO : 0;
+      spin += (spinVel + auto * dt);
+    }
+    tiltX += (tiltTarget - tiltX) * 0.05;
 
-    // Right of the headline on wide screens; on narrow ones it drops below
-    // the copy and further back so it reads as a backdrop, not an obstacle.
-    var narrow = window.innerWidth < 900;
-    var offsetX = narrow ? 0.1 : 1.38;
-    var offsetY = narrow ? -1.15 : -0.10;
-    var dist = narrow ? -7.6 : -5.1;
-    trs(view, offsetX, offsetY, dist, 0.16 + curY * 0.07, curX * 0.22, 0, 1, 1, 1);
+    perspective(proj, 0.92, w / h, 0.1, 40);
+
+    // Right of the headline on wide screens; centred and further back on
+    // narrow ones so it never competes with the copy.
+    var offsetX = NARROW ? 0.0 : 1.52;
+    var offsetY = NARROW ? -1.5 : -0.05;
+    var dist = NARROW ? -9.2 : -4.85;
+    trs(view, offsetX, offsetY, dist, 0.20 + tiltX, 0, 0);
     multiply(vp, proj, view);
 
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    // --- depth field, behind everything ---
-    gl.disable(gl.DEPTH_TEST);
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-    gl.useProgram(loc.field.prog);
-    trs(model, 0, -1.5, 0, 0, 0, 0, 1, 1, 1);
-    multiply(mvp, vp, model);
-    gl.uniformMatrix4fv(loc.field.uMvp, false, mvp);
-    gl.uniform1f(loc.field.uTime, t);
-    gl.uniform1f(loc.field.uScale, dpr * (LOW_POWER ? 0.8 : 1.1));
-    gl.bindBuffer(gl.ARRAY_BUFFER, fieldBuf);
-    gl.enableVertexAttribArray(loc.field.aGrid);
-    gl.vertexAttribPointer(loc.field.aGrid, 2, gl.FLOAT, false, 0, 0);
-    gl.drawArrays(gl.POINTS, 0, N * N);
-
-    // --- spatial panels ---
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    gl.useProgram(loc.panel.prog);
-    for (var i = 0; i < PANELS.length; i++) {
-      var p = PANELS[i];
-      var bob = Math.sin(t * 0.5 * p[5] + i * 1.7) * 0.09;
-      trs(model, p[0], p[1] + bob, p[2],
-        Math.sin(t * 0.25 + i) * 0.08, p[3] + Math.sin(t * 0.18 + i) * 0.06, 0,
-        p[4], p[4], p[4]);
-      drawMesh(loc.panel, panelMesh, t, i % 2 ? CYAN : BRAND, 1.0);
-    }
-
-    // --- headset ---
-    gl.enable(gl.DEPTH_TEST);
-    gl.depthFunc(gl.LEQUAL);
-    // Without culling the translucent shell shows its own interior faces,
-    // which read as bright bands across the visor.
-    gl.enable(gl.CULL_FACE);
-    gl.cullFace(gl.FRONT);
-    gl.frontFace(gl.CCW);
-    gl.useProgram(loc.solid.prog);
-
-    var spin = t * 0.18;
-    var lift = Math.sin(t * 0.42) * 0.055;
-
-    trs(assembly, 0, lift, 0, 0.10 + Math.sin(t * 0.3) * 0.06, spin, 0, 1, 1, 1);
-
-    // Visor sits forward of the head centre.
-    trs(local, 0, 0.02, 0.52, 0, 0, 0, 1, 1, 1);
-    multiply(model, assembly, local);
-    drawMesh(loc.solid, visor, t, BRAND, 1.0);
-
-    // Side band, centred behind the visor so it emerges at the temples
-    // instead of cutting across the face.
-    trs(local, 0, 0.02, -0.36, 0, 0, 0, 1, 1, 1);
-    multiply(model, assembly, local);
-    drawMesh(loc.solid, strap, t, STRAP, 0.8);
-
-    // Over-the-top band, upright and equally clear of the visor.
-    trs(local, 0, 0.04, -0.36, Math.PI / 2, 0, 0, 1, 1, 1);
-    multiply(model, assembly, local);
-    drawMesh(loc.solid, topStrap, t, STRAP, 0.7);
-
+    /* --- depth field behind the wheel --- */
     gl.disable(gl.DEPTH_TEST);
     gl.disable(gl.CULL_FACE);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+    gl.useProgram(fieldProg);
+    trs(model, 0, -1.55, 0, 0, 0, 0);
+    multiply(mvp, vp, model);
+    gl.uniformMatrix4fv(F.uMvp, false, mvp);
+    gl.uniform1f(F.uTime, t);
+    gl.uniform1f(F.uScale, dpr * (NARROW ? 0.8 : 1.05));
+    gl.bindBuffer(gl.ARRAY_BUFFER, fieldBuf);
+    gl.enableVertexAttribArray(F.aGrid);
+    gl.vertexAttribPointer(F.aGrid, 2, gl.FLOAT, false, 0, 0);
+    gl.drawArrays(gl.POINTS, 0, N * N);
+
+    /* --- the wheel --- */
+    gl.enable(gl.DEPTH_TEST);
+    gl.depthFunc(gl.LEQUAL);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.useProgram(cardProg);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+    gl.enableVertexAttribArray(C.aPos);
+    gl.vertexAttribPointer(C.aPos, 3, gl.FLOAT, false, 0, 0);
+    gl.bindBuffer(gl.ARRAY_BUFFER, uvBuf);
+    gl.enableVertexAttribArray(C.aUv);
+    gl.vertexAttribPointer(C.aUv, 2, gl.FLOAT, false, 0, 0);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxBuf);
+
+    gl.uniform1f(C.uRatio, CARD_W / CARD_H);
+    gl.uniform1f(C.uTime, t);
+    gl.uniform1f(C.uOpacity, NARROW ? 0.45 : 1.0);
+    gl.uniform1i(C.uTex, 0);
+    gl.activeTexture(gl.TEXTURE0);
+
+    var step = (Math.PI * 2) / CARDS.length;
+    // Painter's order: farthest first, so alpha edges composite correctly
+    // even where depth testing alone would not.
+    var order = CARDS.map(function (card, i) {
+      var a = spin + i * step;
+      return { i: i, a: a, z: Math.cos(a) };
+    }).sort(function (p, q) { return p.z - q.z; });
+
+    for (var k = 0; k < order.length; k++) {
+      var card = CARDS[order[k].i];
+      var angle = order[k].a;
+      // A gentle wave so the fan is not perfectly rigid.
+      var roll = Math.sin(angle * 2 + t * 0.5) * 0.055;
+      trs(model, 0, 0, 0, 0, angle, roll);
+      multiply(mv, view, model);
+      multiply(mvp, proj, mv);
+      gl.uniformMatrix4fv(C.uMvp, false, mvp);
+      gl.uniformMatrix4fv(C.uModel, false, mv);
+      gl.uniform1f(C.uReady, card.ready);
+      gl.bindTexture(gl.TEXTURE_2D, card.tex);
+      gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+    }
+
+    gl.disable(gl.DEPTH_TEST);
   }
 
   /* ================= loop ================= */

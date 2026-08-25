@@ -140,31 +140,51 @@
       </div>
     </section>
 
-    <!-- ================= TEAM ================= -->
-    <section class="section">
+    <!-- ================= COMPANY ================= -->
+    <section class="section" id="company">
       <div class="container container--wide">
-        <div class="section-head" data-reveal>
-          <p class="eyebrow">Company</p>
-          <h2>A small team with an engineering bias.</h2>
-          <p class="lead">
-            Altie Reality was founded in Jaipur and builds immersive products
-            for education, enterprise and culture.
-          </p>
-        </div>
+        <div class="split split--wide-text">
+          <div data-reveal>
+            <p class="eyebrow">Company</p>
+            <h2>Immersive technology should not stop at the metros.</h2>
+            <p class="lead" style="margin-top: var(--s5);">
+              Altie Reality was founded in Jaipur and builds immersive products
+              for education, enterprise and culture. LearnXR is built to reach
+              Tier 1, Tier 2 and Tier 3 cities alike — a constraint that shapes
+              which devices we target and what a school has to buy before a
+              student can put a headset on.
+            </p>
+            <p style="margin-top: var(--s4);">
+              We build and test in the same hardware our users wear. Every
+              experience we ship is walked through in a headset before it
+              reaches a classroom or a client.
+            </p>
 
-        <ul class="people people--row" data-reveal>
-          {{#each team}}
-          <li class="people__row">
-            <span class="people__name">{{this.name}}</span>
-            <span class="people__role">{{this.role}}</span>
-            <span class="people__cred">{{this.credential}}</span>
-          </li>
-          {{/each}}
-        </ul>
+            <ul class="people" style="margin-top: var(--s7);">
+              {{#each team}}
+              <li class="people__row">
+                <span class="people__name">{{this.name}}</span>
+                <span class="people__role">{{this.role}}</span>
+                <span class="people__cred">{{this.credential}}</span>
+              </li>
+              {{/each}}
+            </ul>
 
-        <div class="btn-row" style="margin-top: var(--s8);" data-reveal>
-          <a class="btn btn--ghost" href="/company">About the company</a>
-          <a class="btn btn--ghost" href="/career">Open roles</a>
+            <div class="btn-row" style="margin-top: var(--s7);">
+              <a class="btn btn--ghost" href="/career">Open roles</a>
+              <a class="btn btn--ghost" href="/blog">Our journey</a>
+            </div>
+          </div>
+
+          <div data-reveal>
+            <div class="frame frame--ratio-4-3">
+              <img
+                src="/media/assets/img/teamabout.webp"
+                alt="The Altie Reality team building and testing in Meta Quest headsets"
+                loading="lazy" width="1600" height="898"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -174,6 +194,12 @@
   </main>
 
   {{> sitefooter}}
+  <script>
+    // Sector cards for the hero carousel. Declared inline so the scene has
+    // its data before the script loads, and so the list stays in step with
+    // the industries the site actually publishes.
+    window.__ALTIE_CAROUSEL__ = {{{jsonld carousel}}};
+  </script>
   <script src="/design/hero.js?v={{v}}" defer></script>
 </body>
 </html>

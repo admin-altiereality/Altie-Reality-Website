@@ -1114,3 +1114,7 @@ h1 .tm, h2 .tm, .plate__name .tm {
     gap: var(--s7);
   }
 }
+
+/* The hero canvas is interactive: the carousel can be dragged. It sits behind
+   the copy, so text and buttons keep their own pointer handling. */
+.hero__canvas { pointer-events: auto; }

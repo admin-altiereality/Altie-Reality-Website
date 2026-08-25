@@ -35,7 +35,7 @@ const PAGES = [
   ["home", "/"],
   ["journey", "/blog"],
   ["technology", "/technology"],
-  ["company", "/company"],
+
   ["career", "/career"],
   ["contact", "/contact"],
   ["education", "/education"],
