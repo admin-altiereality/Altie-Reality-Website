@@ -12,8 +12,8 @@
     "check:responsive": "node scripts/shoot.js",
     "check:interactions": "node scripts/check-interactions.js",
     "check": "node scripts/check-contrast.js && node scripts/check-site.js && node scripts/shoot.js && node scripts/check-interactions.js",
-    "build": "node scripts/prerender.js --site-url=https://lexrn1.web.app",
-    "deploy": "npm run build && firebase deploy --only hosting:lexrn1 --project lexrn1"
+    "build": "node scripts/prerender.js --site-url=https://altiereality.com",
+    "deploy": "npm run build && firebase deploy --only hosting:lexrn1,functions:site --project lexrn1"
   },
   "author": "",
   "license": "ISC",

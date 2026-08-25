@@ -34,13 +34,19 @@ const company = {
   whatsapp:
     "https://wa.me/918619953434?text=Hi%20Altie%20Reality%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services",
   hours: "Monday – Friday, 9:00 AM – 5:00 PM IST",
+  // Shown on the contact page and in structured data only, not repeated
+  // across every page.
+  showAddressOn: ["/contact"],
   calendly: "https://calendly.com/info-altiereality/altie-reality-1-1-2",
   careersForm: "https://forms.gle/6Nym8X5jWMjdd7Pu5",
   founded: "2021",
-  // Origin that serves /api/contact and /subscribe. Empty means same-origin,
-  // which is correct when the Express app itself is serving the pages. A
-  // static build sets staticMode instead and the forms fall back to email.
+  // Origin that serves /api/contact and /subscribe. Empty means same-origin.
   apiOrigin: "",
+  // True once real endpoints exist. On Firebase these are Cloud Functions
+  // reached through Hosting rewrites, so they are same-origin. When false,
+  // a static build degrades the forms to a pre-filled email instead of
+  // posting into a void.
+  hasBackend: true,
   logo: "/media/assets/img/logo.webp",
 };
 
@@ -72,99 +78,40 @@ const products = [
   {
     slug: "learnxr",
     name: "LearnXR™",
-    href: "/products/learnxr",
-    external: "https://learnxr.altiereality.com",
-    category: "Flagship platform",
+    href: "https://learnxr.altiereality.com",
+    externalOnly: true,
+    category: "Immersive learning",
     summary: "XR + AI learning platform for schools and colleges.",
     blurb:
-      "Curriculum-aligned immersive lessons delivered on Meta Quest, Android and Cardboard VR, with teacher tooling and learning analytics behind them.",
-    // Real screenshots of the shipped Android app.
-    image: "/media/assets/img/portfolio/portfolio-1.webp",
-    imageFit: "contain",
-    shots: [
-      {
-        src: "/media/assets/img/portfolio/portfolio-1.webp",
-        alt: "LearnXR app home screen listing free lessons and video XR lessons",
-        caption: "Lesson library",
-      },
-      {
-        src: "/media/assets/img/portfolio/portfolio-2.webp",
-        alt: "LearnXR lesson detail screen for Curiosity on Mars",
-        caption: "Lesson detail",
-      },
-      {
-        src: "/media/assets/img/portfolio/portfolio-3.webp",
-        alt: "LearnXR immersive scene with a Cardboard VR toggle",
-        caption: "Immersive scene",
-      },
-    ],
+      "Curriculum-aligned immersive lessons built for Meta Quest, with teacher tooling and learning analytics behind them.",
+    image: "/media/assets/img/teamabout.webp",
+    imageAlt: "Students and developers working in Meta Quest headsets",
     links: [
       {
         label: "Meta Quest Store",
         url: "https://www.meta.com/experiences/8125807630791042/",
       },
-      {
-        label: "Google Play",
-        url:
-          "https://play.google.com/store/apps/details?id=com.altiereality1.lexrn&hl=en_IN",
-      },
       { label: "learnxr.altiereality.com", url: "https://learnxr.altiereality.com" },
     ],
   },
   {
-    slug: "xrtouch",
-    name: "XRtouch",
-    href: "/XRtouch",
-    category: "Hardware",
-    summary: "A 6DoF handheld controller for XR content.",
+    slug: "digital-twins",
+    name: "Digital Twins",
+    href: "https://digitaltwin.altiereality.com",
+    externalOnly: true,
+    category: "Spatial simulation",
+    summary: "Interactive digital replicas of real environments.",
     blurb:
-      "A wireless, ergonomic accessory that pairs with a head-mounted display to navigate virtual and augmented environments through buttons, sensors and haptic feedback.",
-    image: "/media/images/hardware.webp",
-    links: [],
-  },
-  {
-    slug: "reliconnect",
-    name: "ReliconnectVR™",
-    href: "/products/reliconnect",
-    external:
-      "https://play.google.com/store/apps/details?id=com.altiereality.reliconnect",
-    category: "Consumer application",
-    summary: "Immersive religious and cultural experiences in VR.",
-    blurb:
-      "An Android VR application bringing places of worship and cultural sites to audiences who cannot travel to them.",
-    image: null,
+      "Real spaces and assets reconstructed as navigable 3D environments for visualisation, planning and training.",
+    image: "/media/assets/img/mainphoto.webp",
+    imageAlt:
+      "A physical interior explored through a virtual reality headset and a handheld device",
     links: [
       {
-        label: "Google Play",
-        url:
-          "https://play.google.com/store/apps/details?id=com.altiereality.reliconnect",
+        label: "digitaltwin.altiereality.com",
+        url: "https://digitaltwin.altiereality.com",
       },
     ],
-  },
-  {
-    slug: "metamatch",
-    name: "MetaMatch",
-    href: "/products/metamatch",
-    external: "https://metamatch.altiereality.com",
-    category: "Social platform",
-    summary: "Social connection built for shared virtual spaces.",
-    blurb:
-      "A social experience designed around presence — people meeting, and spending time together, inside a shared virtual environment.",
-    image: null,
-    links: [
-      { label: "metamatch.altiereality.com", url: "https://metamatch.altiereality.com" },
-    ],
-  },
-  {
-    slug: "altie-studios",
-    name: "Altie Studios",
-    href: "/gaming",
-    category: "Studio",
-    summary: "Immersive game and simulation development.",
-    blurb:
-      "Our interactive studio practice: gamified corporate training, simulation and XR entertainment built on the same engine stack as our products.",
-    image: "/media/images/game.webp",
-    links: [],
   },
 ];
 
@@ -404,7 +351,6 @@ const industries = [
           "Mixed Reality can be used for simulation and training purposes. Players can practice and develop skills in a virtual environment that closely mimics real-world scenarios.",
       },
     ],
-    relatedProduct: "altie-studios",
   },
   {
     slug: "realestatexr",

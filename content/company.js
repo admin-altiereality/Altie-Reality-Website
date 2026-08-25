@@ -11,19 +11,11 @@ const team = [
     name: "Gaurav Purbia",
     role: "Founder & CEO",
     credential: "B.Tech, Electrical Engineering — UTD Kota",
-    image: "/media/assets/img/team/Team-1.webp",
-  },
-  {
-    name: "Dhanraj P",
-    role: "Chief Technology Officer",
-    credential: "Dual Degree, Aerospace Engineering — IIT Kharagpur",
-    image: "/media/assets/img/team/Team-3.webp",
   },
   {
     name: "Devendra Sharma",
     role: "Chief Business Development Officer",
     credential: "Ex-Sergeant, Indian Air Force",
-    image: "/media/assets/img/team/Team-4.webp",
   },
 ];
 
@@ -53,9 +45,9 @@ const capabilities = [
   {
     key: "hardware",
     label: "Hardware",
-    title: "XR input devices",
+    title: "XR interaction hardware",
     body:
-      "XRtouch: 6DoF handheld input with buttons, sensors, haptic feedback and gesture recognition, developed under a NIDHI PRAYAS grant.",
+      "Handheld 6DoF input with buttons, sensors, haptic feedback and gesture recognition, developed under a NIDHI PRAYAS grant from the Department of Science and Technology.",
   },
   {
     key: "multiuser",
@@ -73,75 +65,9 @@ const capabilities = [
   },
 ];
 
-// LearnXR capability set, transcribed from the current homepage.
-const learnxrFeatures = [
-  "Interactive 3D Learning Models",
-  "Virtual Science Labs",
-  "AR Learning Cards",
-  "Immersive History Tours",
-  "3D Geometry Learning",
-  "Multi-User Collaboration",
-  "Progress Tracking & Analytics",
-  "Curriculum-Aligned Content",
-];
 
-const learnxrPillars = [
-  {
-    title: "Learning Analytics",
-    body:
-      "Track student engagement and learning progress with detailed analytics. Monitor usage patterns and learning outcomes across different subjects and classes.",
-  },
-  {
-    title: "Cross-Platform Support",
-    body:
-      "Built with Flutter and Firebase to provide seamless learning experiences across mobile, tablet and web platforms for maximum accessibility.",
-  },
-  {
-    title: "Data Privacy",
-    body:
-      "Enterprise-grade security protecting student data and learning content. Compliant with educational data privacy standards and hosted on secure cloud infrastructure.",
-  },
-  {
-    title: "Live Virtual Classes",
-    body:
-      "Conduct immersive virtual classes with real-time 360° streaming. Enable remote learning with interactive XR content delivery.",
-  },
-];
 
-const xrtouchFeatures = [
-  {
-    title: "6DoF tracking",
-    body:
-      "Six degrees of freedom lets an object move in six directions, supporting realistic and dynamic interaction inside virtual environments.",
-    image: "/media/images/6DOF.webp",
-    imageAlt: "Diagram of the six degrees of freedom an XR controller tracks",
-  },
-  {
-    title: "Immersive 3D visualisation",
-    body:
-      "Integrates realistic visual elements into extended reality environments to give users a dynamic, spatial experience.",
-    image: "/media/images/3dd.webp",
-    imageAlt: "A physical model overlaid with an interactive 3D architectural visualisation",
-  },
-  {
-    title: "Works with smartphones",
-    body:
-      "The XRtouch controller works with the LearnXR app on both Android and iOS devices. Connect your smartphone to the controller to begin.",
-    image: "/media/images/wid%20phn.webp",
-    imageAlt:
-      "The XRtouch controller tracked by a smartphone camera, shown in augmented, virtual and mixed reality use",
-  },
-];
 
-const xrtouchUseCases = [
-  "Productivity",
-  "Creativity",
-  "3D Modelling",
-  "Education",
-  "Architecture",
-  "Virtual Meetings",
-  "Gaming",
-];
 
 // Open roles, preserved from /career. All apply through the existing form.
 const roles = [
@@ -212,10 +138,6 @@ const testimonials = [
 module.exports = {
   team,
   capabilities,
-  learnxrFeatures,
-  learnxrPillars,
-  xrtouchFeatures,
-  xrtouchUseCases,
   roles,
   testimonials,
 };

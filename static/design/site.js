@@ -206,7 +206,10 @@
   // the message still reaches the team. Setting apiOrigin to a live API
   // restores normal posting with no other change.
   var API_ORIGIN = meta("altie-api-origin") || "";
-  var STATIC_BUILD = meta("altie-static") === "1" && !API_ORIGIN;
+  var STATIC_BUILD =
+    meta("altie-static") === "1" &&
+    meta("altie-has-backend") !== "1" &&
+    !API_ORIGIN;
   var CONTACT_EMAIL = "info.altiereality@gmail.com";
 
   function mailtoFallback(data) {

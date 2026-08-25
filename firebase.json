@@ -47,6 +47,36 @@
     ],
     "redirects": [
       {
+        "source": "/products/learnxr",
+        "destination": "https://learnxr.altiereality.com",
+        "type": 301
+      },
+      {
+        "source": "/products/reliconnect",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/products/metamatch",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/XRtouch",
+        "destination": "/technology",
+        "type": 301
+      },
+      {
+        "source": "/xrsense",
+        "destination": "/technology",
+        "type": 301
+      },
+      {
+        "source": "/portfolio-details",
+        "destination": "https://learnxr.altiereality.com",
+        "type": 301
+      },
+      {
         "source": "/aerospace",
         "destination": "/automotive",
         "type": 301
@@ -59,16 +89,6 @@
       {
         "source": "/blog-single",
         "destination": "/blog",
-        "type": 301
-      },
-      {
-        "source": "/portfolio-details",
-        "destination": "/products/learnxr",
-        "type": 301
-      },
-      {
-        "source": "/xrsense",
-        "destination": "/XRtouch",
         "type": 301
       },
       {
@@ -96,6 +116,33 @@
         "destination": "/contact",
         "type": 301
       }
+    ],
+    "rewrites": [
+      {
+        "source": "/api/contact",
+        "function": {
+          "functionId": "contact",
+          "region": "asia-south1"
+        }
+      },
+      {
+        "source": "/subscribe",
+        "function": {
+          "functionId": "subscribe",
+          "region": "asia-south1"
+        }
+      }
     ]
-  }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "site",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "*.log"
+      ]
+    }
+  ]
 }

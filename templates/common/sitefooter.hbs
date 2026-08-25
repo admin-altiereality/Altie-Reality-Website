@@ -29,16 +29,18 @@
       </div>
 
       <div class="footer__col">
-        <h3>Products</h3>
+        <h3>Solutions</h3>
         <ul>
           {{#each products}}
-          <li><a href="{{this.href}}">{{this.name}}</a></li>
+          <li>
+            <a href="{{this.href}}" target="_blank" rel="noopener noreferrer">{{this.name}}</a>
+          </li>
           {{/each}}
         </ul>
       </div>
 
       <div class="footer__col">
-        <h3>Solutions</h3>
+        <h3>Industries</h3>
         <ul>
           {{#each industries}}
           <li><a href="{{this.route}}">{{this.name}}</a></li>
@@ -58,12 +60,7 @@
 
         <div class="footer__contact" style="margin-top: var(--s7);">
           <h3>Get in touch</h3>
-          <address style="font-style: normal;">
-            {{company.legalName}}<br />
-            {{company.address.line1}}<br />
-            {{company.address.line2}}, {{company.address.city}} {{company.address.postalCode}}<br />
-            {{company.address.country}}
-          </address>
+          <p>{{company.address.city}}, {{company.address.region}} — {{company.address.country}}</p>
           <p style="margin-top: var(--s4);">
             <a href="tel:+918619953434">{{company.phone}}</a><br />
             <a href="mailto:{{company.email}}">{{company.email}}</a>

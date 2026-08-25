@@ -9,41 +9,16 @@
 
     <nav class="nav" id="primary-nav" aria-label="Primary">
       <ul class="nav__list">
+        {{#each products}}
         <li class="nav__item">
-          <button
-            class="nav__link"
-            type="button"
-            data-menu-trigger
-            aria-expanded="false"
-            aria-controls="menu-products"
-          >
-            Products
-            <svg class="nav__chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          <a class="nav__link" href="{{this.href}}" target="_blank" rel="noopener noreferrer">
+            {{this.name}}
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M4 2h6v6M10 2 3 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-          </button>
-
-          <div class="megamenu" id="menu-products">
-            <div class="megamenu__grid">
-              {{#each products}}
-              <a class="megamenu__item" href="{{this.href}}">
-                <span class="megamenu__item-cat">{{this.category}}</span>
-                <span class="megamenu__item-title">{{this.name}}</span>
-                <span class="megamenu__item-desc">{{this.summary}}</span>
-              </a>
-              {{/each}}
-            </div>
-            <div class="megamenu__foot">
-              <p class="mono-label">Products shipping on Meta Quest, Android and the web</p>
-              <a class="link-arrow" href="/technology">
-                How we build them
-                <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
-                  <path d="M9 1L13 5L9 9M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </a>
-            </div>
-          </div>
+          </a>
         </li>
+        {{/each}}
 
         <li class="nav__item">
           <button
@@ -51,15 +26,15 @@
             type="button"
             data-menu-trigger
             aria-expanded="false"
-            aria-controls="menu-solutions"
+            aria-controls="menu-industries"
           >
-            Solutions
+            Industries
             <svg class="nav__chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
               <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
             </svg>
           </button>
 
-          <div class="megamenu" id="menu-solutions">
+          <div class="megamenu" id="menu-industries">
             <div class="megamenu__grid">
               {{#each industries}}
               <a class="megamenu__item" href="{{this.route}}">

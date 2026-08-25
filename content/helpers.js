@@ -72,6 +72,7 @@ function viewLocals(req, res, next) {
   res.locals.v = isDev ? assetVersion() : STATIC_VERSION;
   res.locals.staticMode = STATIC_MODE;
   res.locals.apiOrigin = company.apiOrigin;
+  res.locals.hasBackend = company.hasBackend;
 
   // Per-page metadata; every view overrides what it needs.
   res.locals.meta = {

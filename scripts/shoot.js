@@ -34,9 +34,6 @@ const WIDTHS = arg("widths", "320,375,430,768,1024,1440,1920")
 const PAGES = [
   ["home", "/"],
   ["journey", "/blog"],
-  ["learnxr", "/products/learnxr"],
-  ["xrtouch", "/XRtouch"],
-  ["reliconnect", "/products/reliconnect"],
   ["technology", "/technology"],
   ["company", "/company"],
   ["career", "/career"],

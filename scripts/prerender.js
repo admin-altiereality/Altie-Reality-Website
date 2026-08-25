@@ -36,10 +36,6 @@ const ROUTES = [
   "/company",
   "/career",
   "/contact",
-  "/products/learnxr",
-  "/XRtouch",
-  "/products/reliconnect",
-  "/products/metamatch",
   ...industries.map((i) => i.route),
   "/privacy",
   "/termsandconditions",
@@ -106,7 +102,12 @@ function bytes(n) {
   let count = 0;
 
   async function write(route, filePath) {
-    const res = await fetch(BASE + route);
+    const res = await fetch(BASE + route, { redirect: "manual" });
+    if (res.status >= 300 && res.status < 400) {
+      throw new Error(
+        `${route} redirects to ${res.headers.get("location")} — remove it from ROUTES`
+      );
+    }
     if (res.status !== 200) throw new Error(`${route} → HTTP ${res.status}`);
     const body = await res.text();
     if (/<title>\s*<\/title>/.test(body)) throw new Error(`${route} rendered without a title`);

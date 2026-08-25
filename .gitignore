@@ -92,3 +92,6 @@ public/AltieRealityWebsite.zip
 
 # Static export output (regenerate with npm run build)
 /dist/
+
+# Cloud Functions dependencies
+/functions/node_modules/

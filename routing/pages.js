@@ -7,10 +7,6 @@ const { milestones, recognition } = require("../content/timeline");
 const {
   team,
   capabilities,
-  learnxrFeatures,
-  learnxrPillars,
-  xrtouchFeatures,
-  xrtouchUseCases,
   roles,
   testimonials,
 } = require("../content/company");
@@ -44,8 +40,7 @@ router.get("/", (req, res) => {
     ],
     recognition,
     capabilities,
-    learnxrFeatures,
-    team,
+      team,
     testimonials,
     featured: milestones.filter((m) => m.featured).slice(0, 4),
   });
@@ -93,86 +88,6 @@ router.get("/blog", (req, res) => {
     yearFrom: byYear[byYear.length - 1].year,
     yearTo: byYear[0].year,
     recognition,
-  });
-});
-
-/* ------------------------------------------------------------- Products */
-router.get("/products/learnxr", (req, res) => {
-  const product = productBySlug.learnxr;
-  res.render("product-learnxr", {
-    meta: pageMeta(req, {
-      title: "LearnXR™ — XR + AI learning platform",
-      description:
-        "LearnXR delivers interactive, self-paced, curriculum-aligned learning on Meta Quest 2 & 3, Android and Cardboard VR, with teacher tooling and learning analytics.",
-      image: "/assets/img/portfolio/portfolio-1.png",
-      ogType: "product",
-    }),
-    schema: [
-      breadcrumbSchema([
-        { name: "Home", href: "/" },
-        { name: "Products", href: "/products/learnxr" },
-        { name: "LearnXR", href: "/products/learnxr" },
-      ]),
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        name: "LearnXR",
-        applicationCategory: "EducationalApplication",
-        operatingSystem: "Meta Quest, Android",
-        url: "https://learnxr.altiereality.com",
-        publisher: { "@type": "Organization", name: company.legalName },
-      },
-    ],
-    product,
-    learnxrFeatures,
-    learnxrPillars,
-    testimonials,
-  });
-});
-
-router.get("/XRtouch", (req, res) => {
-  res.render("product-xrtouch", {
-    meta: pageMeta(req, {
-      title: "XRtouch — 6DoF controller for XR",
-      description:
-        "XRtouch is a wireless handheld controller that pairs with a head-mounted display to navigate virtual and augmented environments through buttons, sensors and haptic feedback.",
-      image: "/images/6DOF.jpg",
-      ogType: "product",
-    }),
-    schema: [
-      breadcrumbSchema([
-        { name: "Home", href: "/" },
-        { name: "Products", href: "/XRtouch" },
-        { name: "XRtouch", href: "/XRtouch" },
-      ]),
-    ],
-    product: productBySlug.xrtouch,
-    xrtouchFeatures,
-    xrtouchUseCases,
-  });
-});
-
-// Products whose depth lives on an external property get a concise page
-// rather than an invented one.
-["reliconnect", "metamatch"].forEach((slug) => {
-  router.get(`/products/${slug}`, (req, res) => {
-    const product = productBySlug[slug];
-    res.render("product-simple", {
-      meta: pageMeta(req, {
-        title: `${product.name} — ${product.summary}`,
-        description: product.blurb,
-        image: product.image,
-        ogType: "product",
-      }),
-      schema: [
-        breadcrumbSchema([
-          { name: "Home", href: "/" },
-          { name: "Products", href: product.href },
-          { name: product.name, href: product.href },
-        ]),
-      ],
-      product,
-    });
   });
 });
 
@@ -335,11 +250,15 @@ router.get("/logout", (req, res) => {
 // Routes the old site linked to but never had a template for, plus renamed
 // paths. Redirecting preserves any inbound links and search equity.
 const redirects = {
+  "/products/learnxr": "https://learnxr.altiereality.com",
+  "/products/reliconnect": "/",
+  "/products/metamatch": "/",
+  "/XRtouch": "/technology",
   "/aerospace": "/automotive",
   "/industrial-machinery": "/automotive",
   "/blog-single": "/blog",
-  "/portfolio-details": "/products/learnxr",
-  "/xrsense": "/XRtouch",
+  "/portfolio-details": "https://learnxr.altiereality.com",
+  "/xrsense": "/technology",
   "/forms/contact.php": "/contact",
   "/about": "/company",
   "/services": "/technology",
@@ -360,10 +279,6 @@ router.get("/robots.txt", (req, res) => {
 router.get("/sitemap.xml", (req, res) => {
   const urls = [
     { loc: "/", priority: "1.0" },
-    { loc: "/products/learnxr", priority: "0.9" },
-    { loc: "/XRtouch", priority: "0.8" },
-    { loc: "/products/reliconnect", priority: "0.7" },
-    { loc: "/products/metamatch", priority: "0.7" },
     { loc: "/technology", priority: "0.8" },
     { loc: "/company", priority: "0.8" },
     { loc: "/blog", priority: "0.8" },

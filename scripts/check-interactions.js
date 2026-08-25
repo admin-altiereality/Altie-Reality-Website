@@ -29,10 +29,10 @@ const ok=(c,m)=>console.log((c?'  ✓ ':'  ✗ ')+m);
   ok(await pg.$eval('.nav',e=>e.classList.contains('is-open')), 'nav opens on tap');
   ok(await pg.$eval('.nav-toggle',e=>e.getAttribute('aria-expanded')==='true'), 'aria-expanded set');
   ok(await pg.$eval('body',e=>e.classList.contains('nav-locked')), 'body scroll locked');
-  await pg.click('[data-menu-trigger][aria-controls="menu-products"]');
+  await pg.click('[data-menu-trigger][aria-controls="menu-industries"]');
   await new Promise(r=>setTimeout(r,300));
-  ok(await pg.$eval('#menu-products',e=>e.classList.contains('is-open')), 'products accordion expands');
-  ok(await pg.$eval('#menu-products a',e=>e.getBoundingClientRect().height>0), 'submenu links visible');
+  ok(await pg.$eval('#menu-industries',e=>e.classList.contains('is-open')), 'industries accordion expands');
+  ok(await pg.$eval('#menu-industries a',e=>e.getBoundingClientRect().height>0), 'submenu links visible');
   await pg.keyboard.press('Escape');
   await new Promise(r=>setTimeout(r,400));
   ok(!(await pg.$eval('.nav',e=>e.classList.contains('is-open'))), 'Escape closes nav');
@@ -43,15 +43,15 @@ const ok=(c,m)=>console.log((c?'  ✓ ':'  ✗ ')+m);
   pg=await b.newPage(); await pg.setViewport({width:1440,height:900});
   await pg.goto(B+'/',{waitUntil:'networkidle2'});
   ok(await pg.$eval('.nav-toggle',e=>getComputedStyle(e).display==='none'), 'hamburger hidden');
-  await pg.click('[data-menu-trigger][aria-controls="menu-products"]');
+  await pg.click('[data-menu-trigger][aria-controls="menu-industries"]');
   await new Promise(r=>setTimeout(r,300));
-  ok(await pg.$eval('#menu-products',e=>e.classList.contains('is-open')), 'products menu opens on click');
-  await pg.click('[data-menu-trigger][aria-controls="menu-solutions"]');
-  await new Promise(r=>setTimeout(r,300));
-  ok(!(await pg.$eval('#menu-products',e=>e.classList.contains('is-open'))), 'opening solutions closes products');
+  ok(await pg.$eval('#menu-industries',e=>e.classList.contains('is-open')), 'industries menu opens on click');
   await pg.keyboard.press('Escape');
   await new Promise(r=>setTimeout(r,300));
-  ok(!(await pg.$eval('#menu-solutions',e=>e.classList.contains('is-open'))), 'Escape closes mega menu');
+  ok(!(await pg.$eval('#menu-industries',e=>e.classList.contains('is-open'))), 'Escape closes mega menu');
+  const solutionLinks = await pg.$$eval('.nav__list a[target="_blank"]', as=>as.map(a=>a.href));
+  ok(solutionLinks.some(h=>h.includes('learnxr.altiereality.com')), 'LearnXR links out to learnxr.altiereality.com');
+  ok(solutionLinks.some(h=>h.includes('digitaltwin.altiereality.com')), 'Digital Twins links out to digitaltwin.altiereality.com');
 
   // Keyboard reachability
   const reach=await pg.evaluate(async()=>{

@@ -1078,3 +1078,31 @@ h1 .tm, h2 .tm, .plate__name .tm {
   margin-bottom: var(--s6);
 }
 .role .card__index { margin-bottom: 0; }
+
+/* --- People list ----------------------------------------------------------
+   Named leadership without portraits. The repo has no photographs of the
+   people listed, and placeholder avatars read as clip art. */
+.people { display: grid; gap: var(--s5); }
+.people__row {
+  display: grid;
+  gap: var(--s1);
+  padding-top: var(--s5);
+  border-top: 1px solid var(--line);
+}
+.people__name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.people__role {
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-bright);
+}
+.people__cred { font-size: 0.88rem; color: var(--text-3); }
+.section--paper .people__row { border-top-color: var(--line-inv); }
+.section--paper .people__role { color: var(--brand-deep); }
+.section--paper .people__cred { color: var(--text-3-inv); }
