@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  {{> sitehead}}
+  <script type="application/ld+json">{{{jsonld schema}}}</script>
+</head>
+
+<body>
+  {{> siteheader}}
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container container--wide">
+        <nav aria-label="Breadcrumb">
+          <ol class="crumbs">
+            <li><a href="/">Home</a></li>
+            <li>Journey</li>
+          </ol>
+        </nav>
+
+        <div class="page-hero__inner">
+          <p class="eyebrow">2023 → {{year}}</p>
+          <h1 class="display">Journey &amp; achievements.</h1>
+          <p class="lead" style="margin-top: var(--s6); max-width: 62ch;">
+            Every entry below is a programme that selected us, a stage we were
+            invited onto, or a product we shipped. Nothing here is a projection.
+          </p>
+        </div>
+
+        <div style="margin-top: var(--s9); max-width: 460px;">
+          <div class="field">
+            <label for="timeline-filter">Filter milestones</label>
+            <input
+              id="timeline-filter"
+              type="search"
+              placeholder="Try “Meta”, “grant”, “Europe”…"
+              autocomplete="off"
+            />
+          </div>
+          <p class="mono-label" id="timeline-count" aria-live="polite" style="margin-top: var(--s3);">
+            {{total}} milestones
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--flush-top">
+      <div class="container container--wide">
+        <div class="timeline">
+          {{#each byYear}}
+          <div class="timeline__group" data-year-group>
+            <div>
+              <h2 class="timeline__year">{{this.year}}</h2>
+            </div>
+
+            <div class="timeline__entries">
+              {{#each this.entries}}
+              <article class="entry" data-entry="{{this.search}}" data-reveal>
+                <div class="entry__media">
+                  <img src="{{this.image}}" alt="{{this.imageAlt}}" loading="lazy" />
+                </div>
+
+                <div>
+                  <div class="entry__meta">
+                    <span class="pill">{{this.kind}}</span>
+                    <span class="entry__date">{{this.date}}</span>
+                  </div>
+
+                  <h3>{{this.title}}</h3>
+                  <p style="margin-top: var(--s4);">{{this.body}}</p>
+
+                  <p class="entry__place">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z" stroke="currentColor" stroke-width="1.8" />
+                      <circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.8" />
+                    </svg>
+                    {{this.place}}
+                  </p>
+
+                  {{#if this.href}}
+                  <p style="margin-top: var(--s4);">
+                    <a class="link-arrow" href="{{this.href}}" target="_blank" rel="noopener noreferrer">
+                      View the source
+                      <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                        <path d="M9 1L13 5L9 9M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </a>
+                  </p>
+                  {{/if}}
+                </div>
+              </article>
+              {{/each}}
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--raised">
+      <div class="container container--wide">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Ecosystem</p>
+          <h2>The institutions behind the work.</h2>
+        </div>
+
+        <div class="recog" data-reveal>
+          {{#each recognition}}
+          {{#if this.href}}
+          <a class="recog__item" href="{{this.href}}" target="_blank" rel="noopener noreferrer">
+            <img class="recog__logo" src="{{this.image}}" alt="{{this.name}}" loading="lazy" width="130" height="34" />
+            <span class="recog__name">{{this.name}}</span>
+            <span class="recog__note">{{this.note}}</span>
+          </a>
+          {{else}}
+          <div class="recog__item">
+            <img class="recog__logo" src="{{this.image}}" alt="{{this.name}}" loading="lazy" width="130" height="34" />
+            <span class="recog__name">{{this.name}}</span>
+            <span class="recog__note">{{this.note}}</span>
+          </div>
+          {{/if}}
+          {{/each}}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container container--wide">
+        {{> ctaband}}
+      </div>
+    </section>
+  </main>
+
+  {{> sitefooter}}
+</body>
+</html>

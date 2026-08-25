@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  {{> sitehead}}
+  <script type="application/ld+json">{{{jsonld schema}}}</script>
+</head>
+
+<body>
+  {{> siteheader}}
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container container--wide">
+        <nav aria-label="Breadcrumb">
+          <ol class="crumbs">
+            <li><a href="/">Home</a></li>
+            <li>Technology</li>
+          </ol>
+        </nav>
+
+        <div class="page-hero__inner">
+          <p class="eyebrow">Technology</p>
+          <h1 class="display">The stack behind every product we ship.</h1>
+          <p class="lead" style="margin-top: var(--s6); max-width: 62ch;">
+            We work across the immersive stack — headset and handheld
+            applications, real-time 3D, applied AI, multi-user environments, and
+            the input hardware that makes any of it usable in a classroom.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--flush-top">
+      <div class="container container--wide">
+        <div class="cap-grid" data-reveal>
+          {{#each capabilities}}
+          <div class="cap">
+            <span class="cap__label">{{this.label}}</span>
+            <h3>{{this.title}}</h3>
+            <p>{{this.body}}</p>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--paper">
+      <div class="container container--wide">
+        <div class="split">
+          <div data-reveal>
+            <p class="eyebrow">Delivery targets</p>
+            <h2>We build for the hardware people already have.</h2>
+            <p class="lead" style="margin-top: var(--s5);">
+              A platform that only runs on the newest headset does not reach a
+              government school. Our products ship to standalone headsets,
+              ordinary Android phones and Cardboard VR at the same time.
+            </p>
+
+            <div class="pill-row" style="margin-top: var(--s7);">
+              <span class="pill">Meta Quest 2 &amp; 3</span>
+              <span class="pill">Android</span>
+              <span class="pill">Cardboard VR</span>
+              <span class="pill">Web</span>
+              <span class="pill">Tablet</span>
+            </div>
+          </div>
+
+          <div data-reveal>
+            <div class="frame frame--ratio-4-3">
+              <img src="/images/6doff.jpg" alt="Six degrees of freedom tracking in an XR environment" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container container--wide">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Products</p>
+          <h2>Where the technology lands.</h2>
+        </div>
+
+        <div class="grid grid-3">
+          {{#each products}}
+          <a class="card card--link" href="{{this.href}}" data-reveal="stagger">
+            <span class="card__index" style="margin-bottom: var(--s3);">{{this.category}}</span>
+            <h3>{{this.name}}</h3>
+            <p style="margin-top: var(--s3);">{{this.summary}}</p>
+          </a>
+          {{/each}}
+        </div>
+
+        <div style="margin-top: var(--s10);">
+          {{> ctaband}}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  {{> sitefooter}}
+</body>
+</html>

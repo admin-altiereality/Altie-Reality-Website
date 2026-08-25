@@ -1,0 +1,110 @@
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="Altie Reality — home">
+      <img src="/assets/img/logo.png" alt="" width="30" height="30" />
+      <span>Altie Reality</span>
+    </a>
+
+    <nav class="nav" id="primary-nav" aria-label="Primary">
+      <ul class="nav__list">
+        <li class="nav__item">
+          <button
+            class="nav__link"
+            type="button"
+            data-menu-trigger
+            aria-expanded="false"
+            aria-controls="menu-products"
+          >
+            Products
+            <svg class="nav__chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </button>
+
+          <div class="megamenu" id="menu-products">
+            <div class="megamenu__grid">
+              {{#each products}}
+              <a class="megamenu__item" href="{{this.href}}">
+                <span class="megamenu__item-cat">{{this.category}}</span>
+                <span class="megamenu__item-title">{{this.name}}</span>
+                <span class="megamenu__item-desc">{{this.summary}}</span>
+              </a>
+              {{/each}}
+            </div>
+            <div class="megamenu__foot">
+              <p class="mono-label">Products shipping on Meta Quest, Android and the web</p>
+              <a class="link-arrow" href="/technology">
+                How we build them
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                  <path d="M9 1L13 5L9 9M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav__item">
+          <button
+            class="nav__link"
+            type="button"
+            data-menu-trigger
+            aria-expanded="false"
+            aria-controls="menu-solutions"
+          >
+            Solutions
+            <svg class="nav__chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </button>
+
+          <div class="megamenu" id="menu-solutions">
+            <div class="megamenu__grid">
+              {{#each industries}}
+              <a class="megamenu__item" href="{{this.route}}">
+                <span class="megamenu__item-cat">{{this.eyebrow}}</span>
+                <span class="megamenu__item-title">{{this.name}}</span>
+                <span class="megamenu__item-desc">{{this.title}}</span>
+              </a>
+              {{/each}}
+            </div>
+          </div>
+        </li>
+
+        <li class="nav__item">
+          <a class="nav__link" href="/technology">Technology</a>
+        </li>
+        <li class="nav__item">
+          <a class="nav__link" href="/company">Company</a>
+        </li>
+        <li class="nav__item">
+          <a class="nav__link" href="/blog">Journey</a>
+        </li>
+        <li class="nav__item">
+          <a class="nav__link" href="/career">Careers</a>
+        </li>
+      </ul>
+
+      <div class="nav__cta">
+        <a class="btn btn--primary" href="{{company.calendly}}" target="_blank" rel="noopener">Book a demo</a>
+        <a class="btn btn--ghost" href="/contact">Contact us</a>
+      </div>
+    </nav>
+
+    <div class="header__actions">
+      <a class="btn btn--primary btn--sm" href="{{company.calendly}}" target="_blank" rel="noopener">
+        Book a demo
+      </a>
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+        aria-label="Open menu"
+      >
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
