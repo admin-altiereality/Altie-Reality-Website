@@ -336,6 +336,7 @@ p { text-wrap: pretty; }
 .link-arrow {
   display: inline-flex;
   align-items: center;
+  min-height: 32px;
   gap: var(--s2);
   font-weight: 600;
   font-size: 0.95rem;
@@ -402,6 +403,13 @@ p { text-wrap: pretty; }
 /* Contain-fit frame for logos and screenshots that must not crop. */
 .frame--contain { background: var(--ink-100); }
 .frame--contain img { object-fit: contain; padding: var(--s5); }
+/* Portrait sources (phone screenshots) need a squarer box and less inset,
+   otherwise they float in a field of empty space. */
+.frame--portrait { aspect-ratio: 1 / 1; }
+.frame--portrait img { padding: var(--s4); }
+@media (max-width: 600px) {
+  .frame--portrait { aspect-ratio: 4 / 5; }
+}
 
 .section--paper .frame { border-color: var(--line-inv); background: #fff; }
 .section--paper .frame--contain { background: #fff; }

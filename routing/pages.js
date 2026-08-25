@@ -87,6 +87,10 @@ router.get("/blog", (req, res) => {
     ],
     byYear,
     total: milestones.length,
+    // Range comes from the data, so it can never claim a year with no
+    // milestone behind it.
+    yearFrom: byYear[byYear.length - 1].year,
+    yearTo: byYear[0].year,
     recognition,
   });
 });

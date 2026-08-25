@@ -86,3 +86,6 @@ public/AltieRealityWebsite.zip
 
 # Local server log from scripts/
 /tmp-server.log
+
+# Screenshot output from scripts/shoot.js
+.screens/

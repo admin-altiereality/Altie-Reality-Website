@@ -1,7 +1,7 @@
 {
   "name": "altie-reality-website",
   "version": "1.0.0",
-  "description": "Altie Reality \u2014 corporate website (Express + Handlebars)",
+  "description": "Altie Reality — corporate website (Express + Handlebars)",
   "main": "app.js",
   "scripts": {
     "start": "nodemon -e js,html,hbs,css app.js",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "clean-css-cli": "^5.6.3",
+    "puppeteer-core": "^25.8.0",
     "uglify-js": "^3.19.3"
   }
 }

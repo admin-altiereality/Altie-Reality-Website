@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const nodemailer = require('nodemailer'); // Import nodemailer
 const connectDB = require('./db'); // Import the database connection module
+const { isDBConnected } = require('./db');
 require('dotenv').config();
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
@@ -92,6 +93,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Handle POST request to /subscribe
 app.post('/subscribe', async (req, res) => {
+    if (!isDBConnected()) {
+        return res.status(503).json({
+            message: "Newsletter signup is temporarily unavailable. Please email us instead."
+        });
+    }
+
     const email = req.body.email;
     if (email) {
         try {
@@ -109,6 +116,10 @@ app.post('/subscribe', async (req, res) => {
 
 // Handle GET request to /subscribers
 app.get('/subscribers', async (req, res) => {
+    if (!isDBConnected()) {
+        return res.status(503).json({ message: 'Database unavailable.' });
+    }
+
     try {
         const allSubscribers = await Subscriber.find();
         res.status(200).json(allSubscribers);
@@ -217,6 +228,11 @@ app.use((req, res) => {
             ogType: "website",
         },
     });
+});
+
+process.on('unhandledRejection', (reason) => {
+    // Log rather than exit: a background failure must not take the site down.
+    console.error('Unhandled rejection:', reason);
 });
 
 app.listen(port, "localhost", () => {

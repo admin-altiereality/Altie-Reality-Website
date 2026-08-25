@@ -36,6 +36,7 @@
 .brand {
   display: inline-flex;
   align-items: center;
+  min-height: 40px;
   gap: var(--s3);
   text-decoration: none;
   flex: none;
@@ -735,8 +736,11 @@ a.info-tile:hover {
   color: var(--text-3);
   margin-bottom: var(--s5);
 }
-.footer__col ul { display: grid; gap: var(--s3); }
+.footer__col ul { display: grid; gap: var(--s1); }
 .footer__col a {
+  display: inline-block;
+  padding-block: 5px;
+  min-height: 26px;
   font-size: 0.9rem;
   color: var(--text-2);
   text-decoration: none;
@@ -779,7 +783,12 @@ a.info-tile:hover {
   color: var(--text-3);
 }
 .footer__bar nav { display: flex; flex-wrap: wrap; gap: var(--s5); }
-.footer__bar a { text-decoration: none; transition: color 0.2s var(--ease); }
+.footer__bar a {
+  display: inline-block;
+  padding-block: 5px;
+  text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
 .footer__bar a:hover { color: var(--text-1); }
 
 /* --- Page hero (interior pages) ------------------------------------------- */
@@ -815,7 +824,12 @@ a.info-tile:hover {
   color: var(--text-3);
   margin-bottom: var(--s6);
 }
-.crumbs a { text-decoration: none; transition: color 0.2s var(--ease); }
+.crumbs a {
+  display: inline-block;
+  padding-block: 5px;
+  text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
 .crumbs a:hover { color: var(--brand-bright); }
 .crumbs li { display: flex; align-items: center; gap: var(--s2); }
 .crumbs li + li::before { content: "/"; color: var(--line-strong); }
@@ -835,6 +849,13 @@ a.info-tile:hover {
 .prose ul { list-style: disc; }
 .prose ol { list-style: decimal; }
 .prose a { color: var(--brand-bright); text-decoration: underline; text-underline-offset: 3px; }
+/* A link that is a whole list item is a standalone target and must meet the
+   24px minimum. Links inline in a sentence are exempt under WCAG 2.5.8. */
+.prose li > a:only-child {
+  display: inline-block;
+  min-height: 26px;
+  padding-block: 4px;
+}
 .prose strong { color: var(--text-1); font-weight: 600; }
 
 /* --- Back to top ---------------------------------------------------------- */
@@ -868,7 +889,7 @@ a.info-tile:hover {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(0.75rem, 2vw, 1.75rem);
   align-items: end;
-  padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2.5rem) 0;
+  padding: clamp(1.25rem, 2.6vw, 2rem) clamp(0.75rem, 1.6vw, 1.25rem) 0;
   border-radius: var(--r-xl);
   border: 1px solid var(--line);
   background:
@@ -976,3 +997,11 @@ a.info-tile:hover {
 }
 .section--paper .plate__name { color: var(--text-1-inv); }
 .section--paper .plate__cat { color: var(--brand-deep); }
+
+/* Trademark marks sit as superscript rather than at display size. */
+h1 .tm, h2 .tm, .plate__name .tm {
+  font-size: 0.42em;
+  vertical-align: super;
+  letter-spacing: 0;
+  font-weight: 500;
+}
