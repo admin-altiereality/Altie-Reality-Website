@@ -57,14 +57,22 @@ app.use(express.static(staticpath, {
 app.use(cookieParser()); //to get cookie from browser
 const templatepath = path.join(__dirname, "/templates/views");
 const commonfiledir = path.join(__dirname, "/templates/common");
+
+// View engine and partials are configured before the routers mount so that
+// every route renders against a fully registered template environment.
+hbs.registerPartials(commonfiledir);
+app.set("view engine", "hbs");
+app.set("views", templatepath);
+
+// Company facts, navigation and page metadata defaults for every view.
+const { viewLocals } = require("./content/helpers");
+app.use(viewLocals);
+
 app.use(require("./routing/pages"));
 app.use(require("./routing/signinsignuplogout"));
 app.use(require("./routing/resetpassword"));
 app.use(require("./routing/verifyemail"));
-app.use(require("./routing/google-signin").router);
-hbs.registerPartials(commonfiledir);
-app.set("view engine", "hbs");
-app.set("views", templatepath); //matlab abhi tak jo jum views folder mai doondh rahe the vo ab tum templatepath naam ke folder mai  doondho... and we know view is default name for folder for template engine or view engine which is now not found in locally as we have moved it inside templates folder so we have to do this
+app.use(require("./routing/google-signin").router); //matlab abhi tak jo jum views folder mai doondh rahe the vo ab tum templatepath naam ke folder mai  doondho... and we know view is default name for folder for template engine or view engine which is now not found in locally as we have moved it inside templates folder so we have to do this
 
 // Connect to MongoDB
 connectDB(); // Call the connection function
@@ -196,6 +204,19 @@ Message: ${message}
             message: "Error sending email. Please try again later." 
         });
     }
+});
+
+// 404 — must be registered after every route.
+app.use((req, res) => {
+    res.status(404).render("404", {
+        meta: {
+            title: "Page not found — Altie Reality",
+            description: "The page you are looking for does not exist.",
+            canonical: "https://www.altiereality.com" + req.originalUrl,
+            image: "https://www.altiereality.com/assets/img/logo.png",
+            ogType: "website",
+        },
+    });
 });
 
 app.listen(port, "localhost", () => {
