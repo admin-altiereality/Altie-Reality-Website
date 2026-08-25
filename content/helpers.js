@@ -76,7 +76,7 @@ function viewLocals(req, res, next) {
 
   // Per-page metadata; every view overrides what it needs.
   res.locals.meta = {
-    title: "Altie Reality — Immersive technology for the spatial computing era",
+    title: "Altie Reality — Immersive worlds you can step into",
     description: company.boilerplate.slice(0, 155),
     canonical: url,
     image: `${SITE_URL}/assets/img/logo.png`,
@@ -94,7 +94,7 @@ function pageMeta(req, overrides = {}) {
   return {
     title: overrides.title
       ? `${overrides.title} — Altie Reality`
-      : "Altie Reality — Immersive technology for the spatial computing era",
+      : "Altie Reality — Immersive worlds you can step into",
     description: overrides.description || company.boilerplate.slice(0, 155),
     canonical: `${SITE_URL}${path}`,
     image: overrides.image

@@ -24,6 +24,7 @@
             <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.6" />
           </svg>
           <h3>Office</h3>
+          {{#if contactFlush}}
           <address style="font-style: normal;">
             <p>
               {{company.legalName}}<br />
@@ -31,6 +32,9 @@
               {{company.address.line2}}, {{company.address.city}} {{company.address.postalCode}}
             </p>
           </address>
+          {{else}}
+          <p>{{company.address.city}}, {{company.address.region}}<br />{{company.address.country}}</p>
+          {{/if}}
           <span class="info-tile__hint">View on Google Maps</span>
         </a>
 

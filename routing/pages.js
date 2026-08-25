@@ -25,8 +25,8 @@ router.get("/", (req, res) => {
     meta: pageMeta(req, {
       title: null,
       description:
-        "Altie Reality builds immersive learning platforms, XR interaction hardware and enterprise simulation — shipping on Meta Quest, Android and the web from Jaipur, India.",
-      image: "/assets/img/portfolio/portfolio-1.png",
+        "Altie Reality builds extended reality experiences for Meta Quest — LearnXR for immersive classrooms and Digital Twins of real environments. Jaipur, India.",
+      image: "/assets/img/teamabout.jpg",
     }),
     schema: [
       organizationSchema(),
