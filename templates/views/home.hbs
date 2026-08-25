@@ -52,41 +52,6 @@
       </div>
     </section>
 
-    <!-- ================= INSIDE THE WORK ================= -->
-    <section class="section section--tight section--raised">
-      <div class="container container--wide">
-        <div class="split split--wide-text">
-          <div data-reveal>
-            <p class="eyebrow">Inside the studio</p>
-            <h2>Headsets on, every day.</h2>
-            <p class="lead" style="margin-top: var(--s5);">
-              We build and test in the same hardware our users wear. Every
-              experience we ship has been walked through in a headset before it
-              reaches a classroom or a client.
-            </p>
-            <div class="btn-row" style="margin-top: var(--s7);">
-              <a class="link-arrow" href="/company">
-                About the company
-                <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
-                  <path d="M9 1L13 5L9 9M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          <div data-reveal>
-            <div class="frame frame--ratio-16-9">
-              <img
-                src="/media/assets/img/teamabout.webp"
-                alt="The Altie Reality team building and testing in Meta Quest headsets"
-                loading="lazy" width="1600" height="898"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ================= RECOGNITION ================= -->
     <section class="section section--tight">
       <div class="container container--wide">
@@ -111,82 +76,6 @@
           </div>
           {{/if}}
           {{/each}}
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= WHAT WE BUILD ================= -->
-    <section class="section section--paper" id="solutions">
-      <div class="container container--wide">
-        <div class="section-head" data-reveal>
-          <p class="eyebrow">What we build</p>
-          <h2>Two things, built properly.</h2>
-          <p class="lead">
-            An immersive learning platform, and digital twins of real
-            environments. Both delivered through the headset.
-          </p>
-        </div>
-
-        <div>
-          {{#each products}}
-          <article class="product-row" data-reveal>
-            <div class="product-row__body">
-              <p class="eyebrow">{{this.category}}</p>
-              <h3 style="font-size: var(--t-h2);">{{this.name}}</h3>
-              <p class="lead" style="margin-top: var(--s4);">{{this.summary}}</p>
-              <p style="margin-top: var(--s4);">{{this.blurb}}</p>
-
-              <div class="btn-row" style="margin-top: var(--s6);">
-                <a class="btn btn--primary" href="{{this.href}}" target="_blank" rel="noopener noreferrer">
-                  Visit {{this.name}}
-                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                    <path d="M4 2h6v6M10 2 3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            <div class="product-row__media">
-              <div class="frame frame--ratio-4-3">
-                <img src="{{this.image}}" alt="{{this.imageAlt}}" loading="lazy" />
-              </div>
-            </div>
-          </article>
-          {{/each}}
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= TECHNOLOGY ================= -->
-    <section class="section" id="technology">
-      <div class="container container--wide">
-        <div class="section-head" data-reveal>
-          <p class="eyebrow">Technology</p>
-          <h2>The capabilities behind both.</h2>
-          <p class="lead">
-            We work across the immersive stack — headset applications,
-            real-time 3D, applied AI, multi-user environments and the input
-            hardware that makes any of it usable.
-          </p>
-        </div>
-
-        <div class="cap-grid" data-reveal>
-          {{#each capabilities}}
-          <div class="cap">
-            <span class="cap__label">{{this.label}}</span>
-            <h3>{{this.title}}</h3>
-            <p>{{this.body}}</p>
-          </div>
-          {{/each}}
-        </div>
-
-        <div style="margin-top: var(--s7);" data-reveal>
-          <a class="link-arrow" href="/technology">
-            How we build
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
-              <path d="M9 1L13 5L9 9M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
         </div>
       </div>
     </section>
@@ -251,68 +140,31 @@
       </div>
     </section>
 
-    <!-- ================= VOICES ================= -->
-    <section class="section section--raised">
-      <div class="container container--wide">
-        <div class="section-head" data-reveal>
-          <p class="eyebrow">In their words</p>
-          <h2>What learners and educators tell us.</h2>
-        </div>
-
-        <div class="grid grid-4">
-          {{#each testimonials}}
-          <article class="card quote" data-reveal="stagger">
-            <blockquote>“{{this.quote}}”</blockquote>
-            <div class="quote__who">
-              <img src="{{this.image}}" alt="" loading="lazy" width="42" height="42" />
-              <div>
-                <div class="quote__name">{{this.name}}</div>
-                <div class="quote__role">{{this.role}}</div>
-              </div>
-            </div>
-          </article>
-          {{/each}}
-        </div>
-      </div>
-    </section>
-
     <!-- ================= TEAM ================= -->
     <section class="section">
       <div class="container container--wide">
-        <div class="split split--wide-text">
-          <div data-reveal>
-            <p class="eyebrow">Company</p>
-            <h2>A small team with an engineering bias.</h2>
-            <p class="lead" style="margin-top: var(--s5);">
-              Altie Reality was founded in Jaipur and builds immersive products
-              for education, enterprise and culture.
-            </p>
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Company</p>
+          <h2>A small team with an engineering bias.</h2>
+          <p class="lead">
+            Altie Reality was founded in Jaipur and builds immersive products
+            for education, enterprise and culture.
+          </p>
+        </div>
 
-            <ul class="people" style="margin-top: var(--s7);">
-              {{#each team}}
-              <li class="people__row">
-                <span class="people__name">{{this.name}}</span>
-                <span class="people__role">{{this.role}}</span>
-                <span class="people__cred">{{this.credential}}</span>
-              </li>
-              {{/each}}
-            </ul>
+        <ul class="people people--row" data-reveal>
+          {{#each team}}
+          <li class="people__row">
+            <span class="people__name">{{this.name}}</span>
+            <span class="people__role">{{this.role}}</span>
+            <span class="people__cred">{{this.credential}}</span>
+          </li>
+          {{/each}}
+        </ul>
 
-            <div class="btn-row" style="margin-top: var(--s7);">
-              <a class="btn btn--ghost" href="/company">About the company</a>
-              <a class="btn btn--ghost" href="/career">Open roles</a>
-            </div>
-          </div>
-
-          <div data-reveal>
-            <div class="frame frame--ratio-4-3">
-              <img
-                src="/media/images/avgcxr.webp"
-                alt="The Altie Reality team hosting AVGC-XR stakeholders in Jaipur"
-                loading="lazy"
-              />
-            </div>
-          </div>
+        <div class="btn-row" style="margin-top: var(--s8);" data-reveal>
+          <a class="btn btn--ghost" href="/company">About the company</a>
+          <a class="btn btn--ghost" href="/career">Open roles</a>
         </div>
       </div>
     </section>

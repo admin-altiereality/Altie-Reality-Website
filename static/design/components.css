@@ -1106,3 +1106,11 @@ h1 .tm, h2 .tm, .plate__name .tm {
 .section--paper .people__row { border-top-color: var(--line-inv); }
 .section--paper .people__role { color: var(--brand-deep); }
 .section--paper .people__cred { color: var(--text-3-inv); }
+
+/* Leadership laid out across the width when there is no accompanying image. */
+@media (min-width: 700px) {
+  .people--row {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--s7);
+  }
+}
