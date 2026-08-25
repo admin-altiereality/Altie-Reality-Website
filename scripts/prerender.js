@@ -153,6 +153,8 @@ function bytes(n) {
   const referenced = new Set(["/favicon.ico"]);
   const ASSET_RE =
     /(?:src|href)="(\/[^"]+?\.(?:png|jpe?g|webp|svg|css|js|ico|woff2?))(?:\?[^"]*)?"/g;
+  const META_RE =
+    /<meta[^>]+(?:property="og:image"|name="twitter:image")[^>]+content="([^"]+)"/g;
 
   (function scan(dir) {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -164,6 +166,16 @@ function bytes(n) {
       ASSET_RE.lastIndex = 0;
       while ((m = ASSET_RE.exec(text))) {
         referenced.add(decodeURIComponent(m[1].split("?")[0]));
+      }
+
+      // Social share images live in meta content attributes as absolute
+      // URLs, so they are invisible to the src/href scan above.
+      META_RE.lastIndex = 0;
+      while ((m = META_RE.exec(text))) {
+        const url = m[1].startsWith(SITE_URL)
+          ? m[1].slice(SITE_URL.length)
+          : m[1];
+        if (url.startsWith("/")) referenced.add(decodeURIComponent(url.split("?")[0]));
       }
     }
   })(OUT);

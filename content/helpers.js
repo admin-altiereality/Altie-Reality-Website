@@ -9,6 +9,7 @@ const path = require("path");
 const hbs = require("hbs");
 
 const { company, social, products, industries } = require("./site");
+const { shareImage } = require("./og");
 
 /**
  * Fingerprint for the design assets.
@@ -79,7 +80,7 @@ function viewLocals(req, res, next) {
     title: "Altie Reality — Immersive worlds you can step into",
     description: company.boilerplate.slice(0, 155),
     canonical: url,
-    image: `${SITE_URL}/assets/img/logo.png`,
+    image: `${SITE_URL}${shareImage()}`,
     ogType: "website",
   };
 
@@ -97,9 +98,9 @@ function pageMeta(req, overrides = {}) {
       : "Altie Reality — Immersive worlds you can step into",
     description: overrides.description || company.boilerplate.slice(0, 155),
     canonical: `${SITE_URL}${path}`,
-    image: overrides.image
-      ? `${SITE_URL}${overrides.image}`
-      : `${SITE_URL}/assets/img/logo.png`,
+    // Always a cropped JPEG derivative: scrapers handle WebP poorly and
+    // source photographs are far too large to share.
+    image: `${SITE_URL}${shareImage(overrides.image)}`,
     ogType: overrides.ogType || "website",
   };
 }

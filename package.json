@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon -e js,html,hbs,css app.js",
     "dev": "nodemon -e js,html,hbs,css app.js",
-    "media": "node scripts/optimize-media.js",
+    "media": "node scripts/optimize-media.js && node scripts/make-og.js",
     "check:site": "node scripts/check-site.js",
     "check:contrast": "node scripts/check-contrast.js",
     "check:responsive": "node scripts/shoot.js",

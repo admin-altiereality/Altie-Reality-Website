@@ -34,7 +34,7 @@ router.get("/", (req, res) => {
         "@context": "https://schema.org",
         "@type": "WebSite",
         name: company.brandName,
-        url: company.domain,
+        url: SITE_URL,
         publisher: { "@type": "Organization", name: company.legalName },
       },
     ],
