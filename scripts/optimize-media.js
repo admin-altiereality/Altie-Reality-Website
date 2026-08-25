@@ -40,7 +40,27 @@ const LEGACY_VIEWS = new Set([
   "navbar.hbs",
   "footer.hbs",
 ]);
-const REF_RE = /["'](\/(?:images|assets)\/[^"']+\.(?:png|jpe?g|webp))["']/gi;
+// Templates reference the generated /media/... paths, so the work list is
+// derived by mapping each one back to its source file. Direct /images or
+// /assets references (the logo and favicons) are picked up too.
+const REF_RE = /["'](\/(?:media\/)?(?:images|assets)\/[^"']+\.(?:png|jpe?g|webp))["']/gi;
+const SOURCE_EXTS = [".png", ".jpg", ".jpeg", ".webp"];
+
+/** Maps a referenced URL back to the original file under static/. */
+function resolveSource(ref) {
+  const bare = ref.replace(/^\/media\//, "/");
+  const direct = path.join(STATIC, bare.replace(/^\//, ""));
+  if (fs.existsSync(direct)) return { ref: bare, file: direct };
+
+  // A /media/... ref ends in .webp; the source may be any of these.
+  const stem = direct.replace(/\.[^.]+$/, "");
+  for (const ext of SOURCE_EXTS) {
+    if (fs.existsSync(stem + ext)) {
+      return { ref: bare.replace(/\.[^.]+$/, ext), file: stem + ext };
+    }
+  }
+  return null;
+}
 
 function walk(dir, out = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -79,12 +99,13 @@ let outTotal = 0;
 let built = 0;
 const missing = [];
 
-for (const ref of refs) {
-  const src = path.join(STATIC, ref.replace(/^\//, ""));
-  if (!fs.existsSync(src)) {
-    missing.push(ref);
+for (const rawRef of refs) {
+  const resolved = resolveSource(rawRef);
+  if (!resolved) {
+    missing.push(rawRef);
     continue;
   }
+  const { ref, file: src } = resolved;
 
   const dest = path.join(OUT_ROOT, ref.replace(/^\//, "").replace(/\.[^.]+$/, ".webp"));
   srcTotal += fs.statSync(src).size;

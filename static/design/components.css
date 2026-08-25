@@ -437,14 +437,22 @@ body.nav-locked { overflow: hidden; }
 .section--paper .product-row { border-top-color: var(--line-inv); }
 
 /* --- Capability grid ------------------------------------------------------ */
+/* Explicit columns rather than auto-fit: with six capabilities, auto-fit
+   leaves a single orphan cell on a wide screen. */
 .cap-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
   background: var(--line);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
   overflow: hidden;
+}
+@media (max-width: 900px) {
+  .cap-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .cap-grid { grid-template-columns: minmax(0, 1fr); }
 }
 .cap {
   background: var(--ink-000);
@@ -1005,3 +1013,68 @@ h1 .tm, h2 .tm, .plate__name .tm {
   letter-spacing: 0;
   font-weight: 500;
 }
+
+/* --- Media card -----------------------------------------------------------
+   A card whose image is flush with its top edge. Replaces the negative-margin
+   workaround that was repeated inline across templates. */
+.card--media { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+
+.card__media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: var(--ink-200);
+  flex: none;
+}
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+.card--media:hover .card__media img { transform: scale(1.03); }
+
+.card__body {
+  padding: clamp(1.25rem, 2vw, 1.6rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  flex: 1;
+}
+
+.section--paper .card__media {
+  border-bottom-color: var(--line-inv);
+  background: var(--paper-200);
+}
+
+/* The final card in a 7-item sector grid spans the row so the layout does not
+   end on a lone orphan. */
+.card--wide { grid-column: 1 / -1; }
+.card--wide .card__media { aspect-ratio: auto; border-bottom: 0; border-right: 1px solid var(--line); }
+.section--paper .card--wide .card__media { border-right-color: var(--line-inv); }
+
+@media (min-width: 761px) {
+  .card--wide {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    align-items: stretch;
+  }
+  .card--wide .card__body { justify-content: center; }
+}
+@media (max-width: 760px) {
+  .card--wide .card__media { aspect-ratio: 16 / 9; border-right: 0; border-bottom: 1px solid var(--line); }
+}
+
+/* --- Role card ------------------------------------------------------------
+   Open roles are presented typographically. The stock illustrations that
+   previously sat here (a Unity logo, generic "sales" clip art) misrepresented
+   the work and undercut the rest of the page. */
+.role { display: flex; flex-direction: column; min-height: 260px; }
+.role__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  margin-bottom: var(--s6);
+}
+.role .card__index { margin-bottom: 0; }

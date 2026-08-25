@@ -246,13 +246,19 @@
 
         <div class="grid grid-3">
           {{#each industries}}
-          <a class="card card--link" href="{{this.route}}" data-reveal="stagger">
-            <div class="frame frame--ratio-16-9" style="margin: calc(-1 * clamp(1.5rem, 2.4vw, 2rem)) calc(-1 * clamp(1.5rem, 2.4vw, 2rem)) clamp(1.5rem, 2.4vw, 2rem); border-radius: var(--r-lg) var(--r-lg) 0 0; border-width: 0 0 1px 0;">
+          <a
+            class="card card--link card--media{{#if @last}} card--wide{{/if}}"
+            href="{{this.route}}"
+            data-reveal="stagger"
+          >
+            <div class="card__media">
               <img src="{{this.image}}" alt="{{this.imageAlt}}" loading="lazy" />
             </div>
-            <span class="card__index" style="margin-bottom: var(--s3);">{{this.eyebrow}}</span>
-            <h3>{{this.name}}</h3>
-            <p>{{this.title}}</p>
+            <div class="card__body">
+              <span class="card__index" style="margin-bottom: var(--s2);">{{this.eyebrow}}</span>
+              <h3>{{this.name}}</h3>
+              <p>{{this.title}}</p>
+            </div>
           </a>
           {{/each}}
         </div>

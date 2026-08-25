@@ -46,16 +46,16 @@
 
         <div class="grid grid-3">
           {{#each roles}}
-          <article class="card" data-reveal="stagger">
-            <div class="frame frame--ratio-16-9" style="margin: calc(-1 * clamp(1.5rem, 2.4vw, 2rem)) calc(-1 * clamp(1.5rem, 2.4vw, 2rem)) clamp(1.5rem, 2.4vw, 2rem); border-radius: var(--r-lg) var(--r-lg) 0 0; border-width: 0 0 1px 0;">
-              <img src="{{this.image}}" alt="{{this.title}}" loading="lazy" />
+          <article class="card role" data-reveal="stagger">
+            <div class="role__head">
+              <span class="card__index">{{num @index}}</span>
+              <span class="pill">{{this.type}}</span>
             </div>
-            <span class="pill" style="margin-bottom: var(--s4);">{{this.type}}</span>
             <h3>{{this.title}}</h3>
             <p style="margin-top: var(--s3);">{{this.body}}</p>
             <a
               class="link-arrow"
-              style="margin-top: var(--s5);"
+              style="margin-top: auto; padding-top: var(--s6);"
               href="{{../company.careersForm}}"
               target="_blank"
               rel="noopener noreferrer"

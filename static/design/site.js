@@ -60,12 +60,19 @@
     return document.getElementById(trigger.getAttribute("aria-controls"));
   }
 
+  function setMenu(trigger, open) {
+    var panel = panelFor(trigger);
+    trigger.setAttribute("aria-expanded", String(open));
+    if (panel) panel.classList.toggle("is-open", open);
+    if (!open) {
+      delete trigger.dataset.hoverOpen;
+      delete trigger.dataset.pinned;
+    }
+  }
+
   function closeAllMenus(except) {
     triggers.forEach(function (t) {
-      if (t === except) return;
-      var p = panelFor(t);
-      t.setAttribute("aria-expanded", "false");
-      if (p) p.classList.remove("is-open");
+      if (t !== except) setMenu(t, false);
     });
   }
 
@@ -76,12 +83,22 @@
     trigger.addEventListener("click", function (e) {
       e.preventDefault();
       var open = trigger.getAttribute("aria-expanded") === "true";
+
+      // On desktop the pointer may already have opened this menu on hover.
+      // Clicking then should pin it open, not close it the instant the user
+      // reaches for it.
+      if (open && trigger.dataset.hoverOpen && !trigger.dataset.pinned) {
+        delete trigger.dataset.hoverOpen;
+        trigger.dataset.pinned = "1";
+        return;
+      }
+
       closeAllMenus(trigger);
-      trigger.setAttribute("aria-expanded", String(!open));
-      panel.classList.toggle("is-open", !open);
+      setMenu(trigger, !open);
+      if (!open) trigger.dataset.pinned = "1";
     });
 
-    // Pointer affordance on desktop only; click still drives state.
+    // Hover is a desktop affordance layered over the click disclosure.
     var wrapper = trigger.closest(".nav__item");
     if (wrapper) {
       var timer;
@@ -89,14 +106,17 @@
         if (!desktop.matches) return;
         clearTimeout(timer);
         closeAllMenus(trigger);
-        trigger.setAttribute("aria-expanded", "true");
-        panel.classList.add("is-open");
+        if (trigger.getAttribute("aria-expanded") !== "true") {
+          setMenu(trigger, true);
+          trigger.dataset.hoverOpen = "1";
+        }
       });
       wrapper.addEventListener("mouseleave", function () {
         if (!desktop.matches) return;
+        // A menu the user deliberately clicked stays put.
+        if (trigger.dataset.pinned) return;
         timer = setTimeout(function () {
-          trigger.setAttribute("aria-expanded", "false");
-          panel.classList.remove("is-open");
+          setMenu(trigger, false);
         }, 140);
       });
     }

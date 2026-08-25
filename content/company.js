@@ -146,35 +146,30 @@ const roles = [
     type: "Internship",
     body:
       "Code, create and contribute to production XR projects across our product line and studio work.",
-    image: "/media/images/unity.webp",
   },
   {
     title: "Flutter Developer",
     type: "Internship",
     body:
       "Cross-platform app development with expertise in the Dart programming language.",
-    image: "/media/images/flutter.webp",
   },
   {
     title: "Blender / 3D Artist",
     type: "Internship",
     body:
       "Model, texture and optimise the 3D content that our immersive environments are built from.",
-    image: "/media/images/3d.webp",
   },
   {
     title: "Business Developer",
     type: "Internship",
     body:
       "Build strategic skills and contribute directly to how our products reach schools and enterprises.",
-    image: "/media/images/bd.webp",
   },
   {
     title: "Sales",
     type: "Internship",
     body:
       "Hone commercial skills and make a measurable impact on our growth trajectory.",
-    image: "/media/images/sales.webp",
   },
 ];
 

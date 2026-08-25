@@ -24,6 +24,9 @@ const arg = (name, fallback) => {
 const OUT = arg("out", path.join(__dirname, "..", ".screens"));
 // Full-page captures of long pages are very large; opt in when needed.
 const FULL = process.argv.includes("--full");
+const PROFILE = fs.mkdtempSync(
+  path.join(require("os").tmpdir(), "altie-shoot-")
+);
 const WIDTHS = arg("widths", "320,375,430,768,1024,1440,1920")
   .split(",")
   .map(Number);
@@ -52,9 +55,9 @@ const findings = [];
     executablePath: CHROME,
     headless: "new",
     protocolTimeout: 120000,
-    // A dedicated profile dir keeps this out of the user's real Chrome
-    // session, which otherwise causes the target to close immediately.
-    userDataDir: path.join(require("os").tmpdir(), "altie-shoot-profile"),
+    // A throwaway profile keeps this out of the user's real Chrome session
+    // and avoids a stale lock when a previous run did not exit cleanly.
+    userDataDir: PROFILE,
     args: [
       "--hide-scrollbars",
       "--force-device-scale-factor=1",
@@ -89,10 +92,10 @@ const findings = [];
       await page.evaluate(async () => {
         // Bounded pass: tall pages would otherwise exceed the CDP timeout.
         const total = document.body.scrollHeight;
-        const steps = Math.min(30, Math.ceil(total / window.innerHeight));
+        const steps = Math.min(50, Math.ceil(total / window.innerHeight));
         for (let i = 0; i <= steps; i++) {
           window.scrollTo(0, (total / steps) * i);
-          await new Promise((r) => setTimeout(r, 45));
+          await new Promise((r) => setTimeout(r, 70));
         }
         window.scrollTo(0, 0);
       });
@@ -105,10 +108,10 @@ const findings = [];
             let left = pending.length;
             const tick = () => { if (--left <= 0) done(); };
             pending.forEach((i) => { i.onload = i.onerror = tick; });
-            setTimeout(done, 4000);
+            setTimeout(done, 9000);
           })
       );
-      await new Promise((r) => setTimeout(r, 250));
+      await new Promise((r) => setTimeout(r, 600));
 
       const audit = await page.evaluate((vw) => {
         const out = { overflow: null, wide: [], smallTargets: [] };
@@ -181,6 +184,7 @@ const findings = [];
   }
 
   await browser.close();
+  fs.rmSync(PROFILE, { recursive: true, force: true });
   console.log("\n");
 
   if (!findings.length) {

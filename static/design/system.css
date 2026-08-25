@@ -54,19 +54,20 @@ a { color: inherit; }
   /* Type on light. */
   --text-1-inv: #0a1020;
   --text-2-inv: #47526a;
-  --text-3-inv: #737f96;
+  --text-3-inv: #5f6a7d;   /* 5.09:1 on --paper-000 */
 
   /* Brand — evolved from the existing #4154f1 for dark-surface legibility. */
-  --brand: #5b7cff;
-  --brand-bright: #7d99ff;
-  --brand-deep: #3a53d6;
+  --brand: #4560e8;        /* filled surfaces — 5.13:1 with white */
+  --brand-hover: #5069ec;  /* 4.59:1 with white */
+  --brand-bright: #7d99ff; /* text/accents on dark — 7.60:1 */
+  --brand-deep: #3a53d6;   /* text on light — 5.78:1 */
   --signal: #57e2e9;      /* technical / data accent, used sparingly */
 
   /* Hairlines and glows. */
   --line: rgba(255, 255, 255, 0.09);
   --line-strong: rgba(255, 255, 255, 0.16);
   --line-inv: rgba(10, 16, 32, 0.12);
-  --glow: rgba(91, 124, 255, 0.28);
+  --glow: rgba(69, 96, 232, 0.32);
 
   /* Spacing scale — 4px base. */
   --s1: 0.25rem;  --s2: 0.5rem;   --s3: 0.75rem;  --s4: 1rem;
@@ -298,7 +299,7 @@ p { text-wrap: pretty; }
   box-shadow: 0 8px 28px -10px var(--glow);
 }
 .btn--primary:hover {
-  background: var(--brand-bright);
+  background: var(--brand-hover);
   box-shadow: 0 14px 34px -10px var(--glow);
 }
 

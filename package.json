@@ -1,11 +1,17 @@
 {
   "name": "altie-reality-website",
   "version": "1.0.0",
-  "description": "Altie Reality — corporate website (Express + Handlebars)",
+  "description": "Altie Reality \u2014 corporate website (Express + Handlebars)",
   "main": "app.js",
   "scripts": {
     "start": "nodemon -e js,html,hbs,css app.js",
-    "dev": "nodemon -e js,html,hbs,css app.js"
+    "dev": "nodemon -e js,html,hbs,css app.js",
+    "media": "node scripts/optimize-media.js",
+    "check:site": "node scripts/check-site.js",
+    "check:contrast": "node scripts/check-contrast.js",
+    "check:responsive": "node scripts/shoot.js",
+    "check:interactions": "node scripts/check-interactions.js",
+    "check": "node scripts/check-contrast.js && node scripts/check-site.js && node scripts/shoot.js && node scripts/check-interactions.js"
   },
   "author": "",
   "license": "ISC",

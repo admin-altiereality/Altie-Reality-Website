@@ -60,12 +60,14 @@
 
         <div class="grid grid-3">
           {{#each xrtouchFeatures}}
-          <article class="card" data-reveal="stagger">
-            <div class="frame frame--ratio-16-9" style="margin: calc(-1 * clamp(1.5rem, 2.4vw, 2rem)) calc(-1 * clamp(1.5rem, 2.4vw, 2rem)) clamp(1.5rem, 2.4vw, 2rem); border-radius: var(--r-lg) var(--r-lg) 0 0; border-width: 0 0 1px 0;">
+          <article class="card card--media" data-reveal="stagger">
+            <div class="card__media">
               <img src="{{this.image}}" alt="{{this.title}}" loading="lazy" />
             </div>
-            <h3>{{this.title}}</h3>
-            <p style="margin-top: var(--s3);">{{this.body}}</p>
+            <div class="card__body">
+              <h3>{{this.title}}</h3>
+              <p style="margin-top: var(--s2);">{{this.body}}</p>
+            </div>
           </article>
           {{/each}}
         </div>
