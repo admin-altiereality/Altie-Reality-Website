@@ -56,8 +56,13 @@ hbs.registerHelper("jsonld", (value) =>
 /**
  * Express middleware: attaches company facts and page defaults to res.locals.
  */
+// A static export has no Node runtime behind it, so the templates need to
+// know which mode they are rendering for.
+const STATIC_MODE = process.env.ALTIE_STATIC === "1";
+const SITE_URL = process.env.ALTIE_SITE_URL || company.domain;
+
 function viewLocals(req, res, next) {
-  const url = `${company.domain}${req.originalUrl.split("?")[0]}`;
+  const url = `${SITE_URL}${req.originalUrl.split("?")[0]}`;
 
   res.locals.company = company;
   res.locals.social = social;
@@ -65,13 +70,15 @@ function viewLocals(req, res, next) {
   res.locals.industries = industries;
   res.locals.year = new Date().getFullYear();
   res.locals.v = isDev ? assetVersion() : STATIC_VERSION;
+  res.locals.staticMode = STATIC_MODE;
+  res.locals.apiOrigin = company.apiOrigin;
 
   // Per-page metadata; every view overrides what it needs.
   res.locals.meta = {
     title: "Altie Reality — Immersive technology for the spatial computing era",
     description: company.boilerplate.slice(0, 155),
-    canonical: url === `${company.domain}/` ? company.domain + "/" : url,
-    image: `${company.domain}/assets/img/logo.png`,
+    canonical: url,
+    image: `${SITE_URL}/assets/img/logo.png`,
     ogType: "website",
   };
 
@@ -88,10 +95,10 @@ function pageMeta(req, overrides = {}) {
       ? `${overrides.title} — Altie Reality`
       : "Altie Reality — Immersive technology for the spatial computing era",
     description: overrides.description || company.boilerplate.slice(0, 155),
-    canonical: `${company.domain}${path}`,
+    canonical: `${SITE_URL}${path}`,
     image: overrides.image
-      ? `${company.domain}${overrides.image}`
-      : `${company.domain}/assets/img/logo.png`,
+      ? `${SITE_URL}${overrides.image}`
+      : `${SITE_URL}/assets/img/logo.png`,
     ogType: overrides.ogType || "website",
   };
 }
@@ -103,8 +110,8 @@ function organizationSchema() {
     "@type": "Organization",
     name: company.legalName,
     alternateName: company.brandName,
-    url: company.domain,
-    logo: `${company.domain}/assets/img/logo.png`,
+    url: SITE_URL,
+    logo: `${SITE_URL}/assets/img/logo.png`,
     email: company.email,
     telephone: company.phone,
     foundingDate: company.founded,
@@ -138,9 +145,16 @@ function breadcrumbSchema(crumbs) {
       "@type": "ListItem",
       position: i + 1,
       name: c.name,
-      item: `${company.domain}${c.href}`,
+      item: `${SITE_URL}${c.href}`,
     })),
   };
 }
 
-module.exports = { viewLocals, pageMeta, organizationSchema, breadcrumbSchema };
+module.exports = {
+  viewLocals,
+  pageMeta,
+  organizationSchema,
+  breadcrumbSchema,
+  SITE_URL,
+  STATIC_MODE,
+};

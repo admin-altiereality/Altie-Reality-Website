@@ -1,0 +1,101 @@
+{
+  "hosting": {
+    "target": "lexrn1",
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=0, must-revalidate"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "SAMEORIGIN"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(css|js|webp|png|jpg|jpeg|gif|svg|ico|woff2)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      }
+    ],
+    "redirects": [
+      {
+        "source": "/aerospace",
+        "destination": "/automotive",
+        "type": 301
+      },
+      {
+        "source": "/industrial-machinery",
+        "destination": "/automotive",
+        "type": 301
+      },
+      {
+        "source": "/blog-single",
+        "destination": "/blog",
+        "type": 301
+      },
+      {
+        "source": "/portfolio-details",
+        "destination": "/products/learnxr",
+        "type": 301
+      },
+      {
+        "source": "/xrsense",
+        "destination": "/XRtouch",
+        "type": 301
+      },
+      {
+        "source": "/forms/contact.php",
+        "destination": "/contact",
+        "type": 301
+      },
+      {
+        "source": "/about",
+        "destination": "/company",
+        "type": 301
+      },
+      {
+        "source": "/services",
+        "destination": "/technology",
+        "type": 301
+      },
+      {
+        "source": "/terms",
+        "destination": "/termsandconditions",
+        "type": 301
+      },
+      {
+        "source": "/contactus",
+        "destination": "/contact",
+        "type": 301
+      }
+    ]
+  }
+}

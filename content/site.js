@@ -37,6 +37,10 @@ const company = {
   calendly: "https://calendly.com/info-altiereality/altie-reality-1-1-2",
   careersForm: "https://forms.gle/6Nym8X5jWMjdd7Pu5",
   founded: "2021",
+  // Origin that serves /api/contact and /subscribe. Empty means same-origin,
+  // which is correct when the Express app itself is serving the pages. A
+  // static build sets staticMode instead and the forms fall back to email.
+  apiOrigin: "",
   logo: "/media/assets/img/logo.webp",
 };
 

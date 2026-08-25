@@ -89,3 +89,6 @@ public/AltieRealityWebsite.zip
 
 # Screenshot output from scripts/shoot.js
 .screens/
+
+# Static export output (regenerate with npm run build)
+/dist/

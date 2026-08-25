@@ -33,6 +33,11 @@
   href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&display=swap"
 />
 
+<!-- Where the form endpoints live. Empty means same-origin; on a static
+     export there is no server, so the forms fall back to email. -->
+<meta name="altie-api-origin" content="{{apiOrigin}}" />
+<meta name="altie-static" content="{{#if staticMode}}1{{else}}0{{/if}}" />
+
 <link rel="stylesheet" href="/design/system.css?v={{v}}" />
 <link rel="stylesheet" href="/design/components.css?v={{v}}" />
 

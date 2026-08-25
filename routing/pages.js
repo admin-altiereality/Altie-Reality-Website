@@ -18,6 +18,7 @@ const {
   pageMeta,
   organizationSchema,
   breadcrumbSchema,
+  SITE_URL,
 } = require("../content/helpers");
 
 const productBySlug = Object.fromEntries(products.map((p) => [p.slug, p]));
@@ -352,7 +353,7 @@ Object.entries(redirects).forEach(([from, to]) => {
 /* ---------------------------------------------------------- SEO plumbing */
 router.get("/robots.txt", (req, res) => {
   res.type("text/plain").send(
-    ["User-agent: *", "Allow: /", "", `Sitemap: ${company.domain}/sitemap.xml`, ""].join("\n")
+    ["User-agent: *", "Allow: /", "", `Sitemap: ${SITE_URL}/sitemap.xml`, ""].join("\n")
   );
 });
 
@@ -375,7 +376,7 @@ router.get("/sitemap.xml", (req, res) => {
   const body = urls
     .map(
       (u) =>
-        `  <url><loc>${company.domain}${u.loc}</loc><priority>${u.priority}</priority></url>`
+        `  <url><loc>${SITE_URL}${u.loc}</loc><priority>${u.priority}</priority></url>`
     )
     .join("\n");
 

@@ -196,6 +196,31 @@
 
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+  function meta(name) {
+    var el = document.querySelector('meta[name="' + name + '"]');
+    return el ? el.getAttribute("content") : "";
+  }
+
+  // On a static export there is no Node runtime, so posting would fail
+  // silently. In that mode the form composes a pre-filled email instead —
+  // the message still reaches the team. Setting apiOrigin to a live API
+  // restores normal posting with no other change.
+  var API_ORIGIN = meta("altie-api-origin") || "";
+  var STATIC_BUILD = meta("altie-static") === "1" && !API_ORIGIN;
+  var CONTACT_EMAIL = "info.altiereality@gmail.com";
+
+  function mailtoFallback(data) {
+    var subject = data.subject || "Website enquiry";
+    var body =
+      "Name: " + (data.name || "") + "\n" +
+      "Email: " + (data.email || "") + "\n\n" +
+      (data.message || "");
+    window.location.href =
+      "mailto:" + CONTACT_EMAIL +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+  }
+
   /* Contact — posts to the existing /api/contact endpoint. */
   var contactForm = document.getElementById("contact-form");
   if (contactForm) {
@@ -225,10 +250,20 @@
         return;
       }
 
+      if (STATIC_BUILD) {
+        setStatus(
+          contactStatus,
+          "success",
+          "Opening your email app with this message ready to send."
+        );
+        mailtoFallback(data);
+        return;
+      }
+
       contactBtn.setAttribute("aria-busy", "true");
       setStatus(contactStatus, "pending", "Sending your message…");
 
-      fetch("/api/contact", {
+      fetch(API_ORIGIN + "/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -273,9 +308,18 @@
         return;
       }
 
+      if (STATIC_BUILD) {
+        setStatus(newsStatus, "success", "Opening your email app to subscribe.");
+        window.location.href =
+          "mailto:" + CONTACT_EMAIL +
+          "?subject=" + encodeURIComponent("Newsletter subscription") +
+          "&body=" + encodeURIComponent("Please subscribe " + email + " to the newsletter.");
+        return;
+      }
+
       newsBtn.setAttribute("aria-busy", "true");
 
-      fetch("/subscribe", {
+      fetch(API_ORIGIN + "/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email }),
