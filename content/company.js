@@ -103,41 +103,9 @@ const roles = [
   },
 ];
 
-// Preserved verbatim from the existing homepage testimonials section.
-const testimonials = [
-  {
-    quote:
-      "LearnXR is amazing! I went from zero XR knowledge to building my first AR app in just a few weeks. The hands-on projects really helped me understand the concepts. Plus, the community is super supportive!",
-    name: "Rajesh Kumar",
-    role: "Government School Teacher",
-    image: "/media/assets/img/testimonials/testimonials-1.webp",
-  },
-  {
-    quote:
-      "I love how LearnXR breaks down complex XR concepts into bite-sized lessons. The interactive tutorials are fun and engaging. I'm now confidently developing VR experiences for my clients.",
-    name: "Vipul Joshi",
-    role: "Freelance Developer",
-    image: "/media/assets/img/testimonials/testimonials-2.webp",
-  },
-  {
-    quote:
-      "As a teacher, I was looking for ways to make learning more immersive. LearnXR taught me how to create educational AR experiences. My students are now super excited about learning!",
-    name: "PK Mathur",
-    role: "High School Teacher",
-    image: "/media/assets/img/testimonials/testimonials-3.webp",
-  },
-  {
-    quote:
-      "The XR industry is booming and LearnXR helped me pivot my career into it. The course content is always up-to-date with the latest tech. I landed my dream job in XR development thanks to the skills I learned here!",
-    name: "Navin Jain",
-    role: "XR Developer",
-    image: "/media/assets/img/testimonials/testimonials-4.webp",
-  },
-];
 
 module.exports = {
   team,
   capabilities,
   roles,
-  testimonials,
 };

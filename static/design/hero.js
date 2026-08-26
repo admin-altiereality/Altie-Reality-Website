@@ -328,6 +328,7 @@
   var AUTO = 0.16;          // radians per second when idle
   var dragging = false;
   var lastPointerX = 0;
+  var lastPointerAt = 0;
   var idleAt = 0;
   var tiltX = 0, tiltTarget = 0;
 
@@ -336,6 +337,8 @@
   canvas.addEventListener("pointerdown", function (e) {
     dragging = true;
     lastPointerX = e.clientX;
+    lastPointerAt = performance.now();
+    spinVel = 0;
     canvas.setPointerCapture(e.pointerId);
     canvas.style.cursor = "grabbing";
   });
@@ -343,11 +346,15 @@
   canvas.addEventListener("pointermove", function (e) {
     tiltTarget = (e.clientY / window.innerHeight - 0.5) * 0.34;
     if (!dragging) return;
+    var now = performance.now();
     var dx = e.clientX - lastPointerX;
+    var gap = Math.max((now - lastPointerAt) / 1000, 1 / 240);
     lastPointerX = e.clientX;
-    spinVel = (dx / window.innerWidth) * 9;
-    spin += spinVel;
-    idleAt = performance.now() + 1400;
+    lastPointerAt = now;
+    var delta = (dx / window.innerWidth) * 9;
+    spin += delta;                 // direct manipulation
+    spinVel = delta / gap;         // carried into the throw
+    idleAt = now + 1400;
   });
 
   function endDrag(e) {
@@ -377,16 +384,23 @@
   var lastT = 0;
   var lastFrame = 0;
 
+  var STEP = (Math.PI * 2) / CARDS.length;
+  var order = CARDS.map(function (_, i) { return { i: i, a: 0, z: 0 }; });
+  function byDepth(p, q) { return p.z - q.z; }
+
   function draw(t) {
     var dt = Math.min(Math.max(t - lastFrame, 0), 0.05);
     lastFrame = t;
     lastT = t;
 
-    // Momentum after a drag, easing back to the idle rotation.
+    // Momentum after a drag, easing back to the idle rotation. Velocity is
+    // in radians per second and damping is exponential in dt, so the feel is
+    // identical on a 60Hz and a 120Hz display.
     if (!dragging) {
-      spinVel *= 0.94;
+      spinVel *= Math.pow(0.06, dt);
+      if (Math.abs(spinVel) < 0.0005) spinVel = 0;
       var auto = performance.now() > idleAt ? AUTO : 0;
-      spin += (spinVel + auto * dt);
+      spin += (spinVel + auto) * dt;
     }
     tiltX += (tiltTarget - tiltX) * 0.05;
 
@@ -418,6 +432,7 @@
     gl.enableVertexAttribArray(F.aGrid);
     gl.vertexAttribPointer(F.aGrid, 2, gl.FLOAT, false, 0, 0);
     gl.drawArrays(gl.POINTS, 0, N * N);
+    gl.disableVertexAttribArray(F.aGrid);
 
     /* --- the wheel --- */
     gl.enable(gl.DEPTH_TEST);
@@ -439,13 +454,16 @@
     gl.uniform1i(C.uTex, 0);
     gl.activeTexture(gl.TEXTURE0);
 
-    var step = (Math.PI * 2) / CARDS.length;
     // Painter's order: farthest first, so alpha edges composite correctly
-    // even where depth testing alone would not.
-    var order = CARDS.map(function (card, i) {
-      var a = spin + i * step;
-      return { i: i, a: a, z: Math.cos(a) };
-    }).sort(function (p, q) { return p.z - q.z; });
+    // even where depth testing alone would not. The array is allocated once
+    // and rewritten in place — rebuilding it each frame produced garbage at
+    // frame rate.
+    for (var oi = 0; oi < order.length; oi++) {
+      var slot = order[oi];
+      slot.a = spin + slot.i * STEP;
+      slot.z = Math.cos(slot.a);
+    }
+    order.sort(byDepth);
 
     for (var k = 0; k < order.length; k++) {
       var card = CARDS[order[k].i];
@@ -462,6 +480,11 @@
       gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
     }
 
+    // Attribute enable state is global in WebGL1. Leaving the card arrays on
+    // means next frame's field draw has a 4-vertex buffer bound for a
+    // 2500-point draw, which is undefined behaviour outside Chrome.
+    gl.disableVertexAttribArray(C.aPos);
+    gl.disableVertexAttribArray(C.aUv);
     gl.disable(gl.DEPTH_TEST);
   }
 

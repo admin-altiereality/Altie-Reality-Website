@@ -8,7 +8,6 @@ const {
   team,
   capabilities,
   roles,
-  testimonials,
 } = require("../content/company");
 const {
   pageMeta,
@@ -41,8 +40,7 @@ router.get("/", (req, res) => {
     recognition,
     capabilities,
     team,
-    testimonials,
-    featured: milestones.filter((m) => m.featured).slice(0, 4),
+      featured: milestones.filter((m) => m.featured).slice(0, 4),
     // Hero carousel cards, one per published sector.
     carousel: industries.map((i) => ({
       src: `/media/carousel/${i.slug}.webp`,
