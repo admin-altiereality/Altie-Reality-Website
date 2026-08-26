@@ -141,6 +141,8 @@ const findings = [];
             const r = el.getBoundingClientRect();
             if (r.width === 0 || r.height === 0) return;
             if (getComputedStyle(el).display === "contents") return;
+            // Screen-reader-only content is not a pointer target.
+            if (el.closest(".visually-hidden")) return;
             if (r.height < 24) {
               out.smallTargets.push({
                 tag: el.tagName.toLowerCase(),

@@ -1152,3 +1152,46 @@ h1 .tm, h2 .tm, .plate__name .tm {
   white-space: nowrap;
 }
 .hero__pick[hidden] { display: none; }
+
+/* --- three.js scene layers ------------------------------------------------
+   Each scene mounts its own canvas into one of these. They fade in once the
+   first frame is ready, so a blocked or failed import leaves the CSS
+   treatment underneath untouched rather than a blank hole. */
+.scene-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease);
+  overflow: hidden;
+}
+/* A positioned layer paints above a static sibling, so the content that
+   follows it has to be lifted explicitly or the scene covers the copy. */
+.scene-layer ~ .container { position: relative; z-index: 1; }
+/* A section hosting a scene must clip it, so a bleeding layer can never
+   widen the page. */
+.section:has(> .scene-layer) { overflow: hidden; }
+.scene-layer.is-live { opacity: 1; }
+.scene-layer canvas { width: 100%; height: 100%; display: block; }
+
+/* Ambient field around the capability grid. The .cap cells are opaque, so a
+   layer strictly behind the grid would be invisible; this bleeds past it. */
+.scene-layer--lattice {
+  /* Vertical bleed only. Horizontal bleed pushed scrollWidth past the
+     viewport and produced a horizontal scrollbar at every width. */
+  inset: -10% 0;
+  opacity: 0;
+}
+.scene-layer--lattice.is-live { opacity: 0.7; }
+
+/* Inside the CTA band, which is a rounded overflow-hidden box. */
+.scene-layer--band { border-radius: inherit; }
+.scene-layer--band.is-live { opacity: 0.75; }
+
+/* The band's own content must sit above its scene layer. */
+.cta-band > *:not(.scene-layer) { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-layer { display: none; }
+}

@@ -31,6 +31,7 @@
     </section>
 
     <section class="section section--flush-top">
+      <div class="scene-layer scene-layer--lattice" data-scene="lattice" aria-hidden="true"></div>
       <div class="container container--wide">
         <div class="cap-grid" data-reveal>
           {{#each capabilities}}
@@ -92,7 +93,7 @@
         </div>
 
         <div style="margin-top: var(--s10);">
-          {{> ctaband}}
+          {{> ctaband glass=true}}
         </div>
       </div>
     </section>

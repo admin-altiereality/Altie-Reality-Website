@@ -22,10 +22,19 @@ const DESIGN_DIR = path.join(__dirname, "..", "static", "design");
 
 function assetVersion() {
   try {
-    const newest = fs
-      .readdirSync(DESIGN_DIR)
-      .map((f) => fs.statSync(path.join(DESIGN_DIR, f)).mtimeMs)
-      .reduce((a, b) => Math.max(a, b), 0);
+    // Recursive: the scene modules live in subdirectories, and a directory's
+    // mtime does not change when a file inside it is edited in place. A
+    // shallow scan would leave `v` static and returning visitors stuck with a
+    // year-old module under the immutable cache header.
+    const walk = (dir) =>
+      fs.readdirSync(dir, { withFileTypes: true }).reduce((newest, entry) => {
+        const full = path.join(dir, entry.name);
+        return Math.max(
+          newest,
+          entry.isDirectory() ? walk(full) : fs.statSync(full).mtimeMs
+        );
+      }, 0);
+    const newest = walk(DESIGN_DIR);
     return Math.floor(newest).toString(36);
   } catch (err) {
     return "0";

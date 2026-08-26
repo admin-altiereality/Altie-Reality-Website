@@ -148,6 +148,13 @@ function bytes(n) {
 
   server.kill();
 
+  // The scene modules are reached only by dynamic import() from
+  // design/scenes.js and by relative import from each other, so no HTML or CSS
+  // ever names them and the reference scan below cannot see them. Copy the
+  // design tree wholesale — it is small, and this stays correct as modules are
+  // added or renamed.
+  copyDir(path.join(ROOT, "static", "design"), path.join(OUT, "design"));
+
   // Copy only the assets the rendered pages actually reference. Copying
   // static/ wholesale would ship ~80 MB of superseded originals.
   const referenced = new Set(["/favicon.ico"]);
@@ -211,8 +218,16 @@ function bytes(n) {
 
   // A build that ships no stylesheet or script is broken even though every
   // page rendered, so assert the essentials rather than trusting the scan.
+  const THREE_VERSION = require("../static/design/vendor/three-version.json").version;
   const REQUIRED = [
     ...industries.map((i) => `media/carousel/${i.slug}.webp`),
+    "design/scenes.js",
+    "design/three/boot.js",
+    "design/three/env.js",
+    "design/three/lattice.js",
+    "design/three/glass.js",
+    `design/vendor/three-${THREE_VERSION}/three.module.min.js`,
+    `design/vendor/three-${THREE_VERSION}/three.core.min.js`,
     "design/system.css",
     "design/components.css",
     "design/site.js",
