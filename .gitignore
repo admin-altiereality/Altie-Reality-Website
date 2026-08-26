@@ -95,3 +95,6 @@ public/AltieRealityWebsite.zip
 
 # Cloud Functions dependencies
 /functions/node_modules/
+
+# Firebase deploy cache (local artifact, regenerated on every deploy)
+.firebase/
