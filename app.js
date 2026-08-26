@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const nodemailer = require('nodemailer'); // Import nodemailer
 const connectDB = require('./db'); // Import the database connection module
+const { isDBConnected } = require('./db');
 require('dotenv').config();
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
@@ -24,7 +25,7 @@ app.use(helmet({
 }));
 app.use(compression()); // Enable gzip compression
 
-const port = 3000;
+const port = Number(process.env.PORT) || 3000;
 app.use(favicon(path.join(__dirname, "favicon.ico")));
 app.use(express.json());
 app.use(
@@ -57,14 +58,22 @@ app.use(express.static(staticpath, {
 app.use(cookieParser()); //to get cookie from browser
 const templatepath = path.join(__dirname, "/templates/views");
 const commonfiledir = path.join(__dirname, "/templates/common");
+
+// View engine and partials are configured before the routers mount so that
+// every route renders against a fully registered template environment.
+hbs.registerPartials(commonfiledir);
+app.set("view engine", "hbs");
+app.set("views", templatepath);
+
+// Company facts, navigation and page metadata defaults for every view.
+const { viewLocals } = require("./content/helpers");
+app.use(viewLocals);
+
 app.use(require("./routing/pages"));
 app.use(require("./routing/signinsignuplogout"));
 app.use(require("./routing/resetpassword"));
 app.use(require("./routing/verifyemail"));
-app.use(require("./routing/google-signin").router);
-hbs.registerPartials(commonfiledir);
-app.set("view engine", "hbs");
-app.set("views", templatepath); //matlab abhi tak jo jum views folder mai doondh rahe the vo ab tum templatepath naam ke folder mai  doondho... and we know view is default name for folder for template engine or view engine which is now not found in locally as we have moved it inside templates folder so we have to do this
+app.use(require("./routing/google-signin").router); //matlab abhi tak jo jum views folder mai doondh rahe the vo ab tum templatepath naam ke folder mai  doondho... and we know view is default name for folder for template engine or view engine which is now not found in locally as we have moved it inside templates folder so we have to do this
 
 // Connect to MongoDB
 connectDB(); // Call the connection function
@@ -84,6 +93,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Handle POST request to /subscribe
 app.post('/subscribe', async (req, res) => {
+    if (!isDBConnected()) {
+        return res.status(503).json({
+            message: "Newsletter signup is temporarily unavailable. Please email us instead."
+        });
+    }
+
     const email = req.body.email;
     if (email) {
         try {
@@ -101,6 +116,10 @@ app.post('/subscribe', async (req, res) => {
 
 // Handle GET request to /subscribers
 app.get('/subscribers', async (req, res) => {
+    if (!isDBConnected()) {
+        return res.status(503).json({ message: 'Database unavailable.' });
+    }
+
     try {
         const allSubscribers = await Subscriber.find();
         res.status(200).json(allSubscribers);
@@ -196,6 +215,24 @@ Message: ${message}
             message: "Error sending email. Please try again later." 
         });
     }
+});
+
+// 404 — must be registered after every route.
+app.use((req, res) => {
+    res.status(404).render("404", {
+        meta: {
+            title: "Page not found — Altie Reality",
+            description: "The page you are looking for does not exist.",
+            canonical: "https://www.altiereality.com" + req.originalUrl,
+            image: "https://www.altiereality.com/assets/img/logo.png",
+            ogType: "website",
+        },
+    });
+});
+
+process.on('unhandledRejection', (reason) => {
+    // Log rather than exit: a background failure must not take the site down.
+    console.error('Unhandled rejection:', reason);
 });
 
 app.listen(port, "localhost", () => {

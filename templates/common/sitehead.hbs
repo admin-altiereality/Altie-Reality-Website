@@ -1,0 +1,62 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#04060b" />
+
+<title>{{meta.title}}</title>
+<meta name="description" content="{{meta.description}}" />
+<link rel="canonical" href="{{meta.canonical}}" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="{{#if meta.ogType}}{{meta.ogType}}{{else}}website{{/if}}" />
+<meta property="og:site_name" content="Altie Reality" />
+<meta property="og:title" content="{{meta.title}}" />
+<meta property="og:description" content="{{meta.description}}" />
+<meta property="og:url" content="{{meta.canonical}}" />
+<meta property="og:image" content="{{meta.image}}" />
+<meta property="og:locale" content="en_IN" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{meta.title}}" />
+<meta name="twitter:description" content="{{meta.description}}" />
+<meta name="twitter:image" content="{{meta.image}}" />
+
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/assets/img/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="/assets/img/logo.png" />
+
+<!-- Fonts: preconnect, then a single subset-limited request. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&display=swap"
+/>
+
+<!-- Where the form endpoints live. Empty means same-origin; on a static
+     export there is no server, so the forms fall back to email. -->
+<meta name="altie-api-origin" content="{{apiOrigin}}" />
+<meta name="altie-static" content="{{#if staticMode}}1{{else}}0{{/if}}" />
+<meta name="altie-has-backend" content="{{#if hasBackend}}1{{else}}0{{/if}}" />
+
+<link rel="stylesheet" href="/design/system.css?v={{v}}" />
+<link rel="stylesheet" href="/design/components.css?v={{v}}" />
+
+<script>
+  // Opt in to scroll reveals before first paint. Without this class the
+  // content renders immediately, so a JS failure degrades to a static page
+  // rather than a blank one. Skipped when the user prefers reduced motion.
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.classList.add("js-reveal");
+  }
+</script>
+
+<!-- Google Analytics — preserved from the existing site. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1QVJFF7NCD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-1QVJFF7NCD');
+  gtag('config', 'UA-134442353-2');
+</script>

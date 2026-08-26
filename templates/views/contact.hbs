@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  {{> sitehead}}
+  <script type="application/ld+json">{{{jsonld schema}}}</script>
+</head>
+
+<body>
+  {{> siteheader}}
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container container--wide">
+        <nav aria-label="Breadcrumb">
+          <ol class="crumbs">
+            <li><a href="/">Home</a></li>
+            <li>Contact</li>
+          </ol>
+        </nav>
+
+        <div class="page-hero__inner">
+          <p class="eyebrow">Contact</p>
+          <h1 class="display">Let's talk about what you want to build.</h1>
+          <p class="lead" style="margin-top: var(--s6); max-width: 60ch;">
+            Schools, enterprises, government programmes and partners — reach us
+            directly, or book time with the team.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {{> contactsection contactFlush=true}}
+  </main>
+
+  {{> sitefooter}}
+</body>
+</html>

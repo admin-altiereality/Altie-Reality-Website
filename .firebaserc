@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "lexrn1"
+  },
+  "targets": {
+    "lexrn1": {
+      "hosting": {
+        "lexrn1": ["lexrn1"]
+      }
+    }
+  }
+}

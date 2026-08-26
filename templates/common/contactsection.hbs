@@ -1,0 +1,141 @@
+<section class="section{{#if contactFlush}} section--flush-top{{/if}}" id="contact">
+  <div class="container container--wide">
+    {{#unless contactFlush}}
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Contact</p>
+      <h2>Talk to the team.</h2>
+      <p class="lead">
+        Schools, enterprises, government programmes and partners — tell us what
+        you want to build and we will show you what is already running.
+      </p>
+    </div>
+    {{/unless}}
+
+    <div class="split" style="align-items: start;">
+      <div class="grid grid-2" style="gap: var(--s5);" data-reveal>
+        <a
+          class="info-tile"
+          href="{{company.address.maps}}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="info-tile__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z" stroke="currentColor" stroke-width="1.6" />
+            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.6" />
+          </svg>
+          <h3>Office</h3>
+          {{#if contactFlush}}
+          <address style="font-style: normal;">
+            <p>
+              {{company.legalName}}<br />
+              {{company.address.line1}}<br />
+              {{company.address.line2}}, {{company.address.city}} {{company.address.postalCode}}
+            </p>
+          </address>
+          {{else}}
+          <p>{{company.address.city}}, {{company.address.region}}<br />{{company.address.country}}</p>
+          {{/if}}
+          <span class="info-tile__hint">View on Google Maps</span>
+        </a>
+
+        <a class="info-tile" href="{{company.whatsapp}}" target="_blank" rel="noopener noreferrer">
+          <svg class="info-tile__icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.95L2 22l5.2-1.5A9.9 9.9 0 1 0 12.04 2Zm0 1.8a8.1 8.1 0 1 1-4.15 15.05l-.3-.18-3.1.9.9-3-.2-.31A8.1 8.1 0 0 1 12.04 3.8Zm4.5 10.35c-.24-.13-1.43-.7-1.65-.78-.22-.08-.38-.12-.54.12-.16.25-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.42-1.34-1.66-.14-.24-.02-.37.1-.5.1-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.25-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.1.16 1.52.1.46-.07 1.43-.58 1.63-1.15.2-.56.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28Z" />
+          </svg>
+          <h3>WhatsApp</h3>
+          <p>{{company.phone}}<br />{{company.phoneAlt}}</p>
+          <span class="info-tile__hint">Start a chat</span>
+        </a>
+
+        <a class="info-tile" href="mailto:{{company.email}}">
+          <svg class="info-tile__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6" />
+            <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <h3>Email</h3>
+          <p>{{company.email}}<br />{{company.emailAlt}}</p>
+          <span class="info-tile__hint">Send us a message</span>
+        </a>
+
+        <div class="info-tile">
+          <svg class="info-tile__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+            <path d="M12 7v5l3.2 1.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+          <h3>Open hours</h3>
+          <p>{{company.hours}}</p>
+          <span class="info-tile__hint">Demos by appointment</span>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <form id="contact-form" novalidate>
+          <div class="grid grid-2" style="gap: var(--s5);">
+            <div class="field">
+              <label for="cf-name">Your name</label>
+              <input id="cf-name" name="name" type="text" autocomplete="name" required />
+              <span class="field__error" aria-live="polite"></span>
+            </div>
+
+            <div class="field">
+              <label for="cf-email">Email</label>
+              <input id="cf-email" name="email" type="email" autocomplete="email" required />
+              <span class="field__error" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="field" style="margin-top: var(--s5);">
+            <label for="cf-subject">Subject</label>
+            <input id="cf-subject" name="subject" type="text" required />
+            <span class="field__error" aria-live="polite"></span>
+          </div>
+
+          <div class="field" style="margin-top: var(--s5);">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="6" required></textarea>
+            <span class="field__error" aria-live="polite"></span>
+          </div>
+
+          <div style="margin-top: var(--s6); display: grid; gap: var(--s5);">
+            <p class="form-status" role="status" aria-live="polite" hidden></p>
+            <div class="btn-row">
+              <button class="btn btn--primary btn--lg" type="submit">Send message</button>
+              <a class="btn btn--ghost btn--lg" href="{{company.calendly}}" target="_blank" rel="noopener">
+                Book a demo instead
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Newsletter — posts to the existing /subscribe endpoint. -->
+    <div class="cta-band" style="margin-top: var(--s10);" data-reveal>
+      <p class="eyebrow eyebrow--plain" style="justify-content: center;">Newsletter</p>
+      <h2>Follow what we ship.</h2>
+      <p class="lead">
+        Occasional updates on product releases, programmes and the places we
+        are showing our work.
+      </p>
+
+      <form
+        id="newsletter-form"
+        novalidate
+        style="margin-top: var(--s7); display: flex; gap: var(--s4); flex-wrap: wrap; justify-content: center; max-width: 520px; margin-inline: auto;"
+      >
+        <label class="visually-hidden" for="nl-email">Your email address</label>
+        <input
+          id="nl-email"
+          name="email"
+          type="email"
+          placeholder="you@organisation.com"
+          autocomplete="email"
+          required
+          style="flex: 1 1 240px; padding: 0.85rem 1rem; background: rgba(255,255,255,0.04); border: 1px solid var(--line-strong); border-radius: var(--r-md); color: var(--text-1);"
+        />
+        <button class="btn btn--primary" type="submit">Subscribe</button>
+      </form>
+      <p class="form-status" role="status" aria-live="polite" hidden style="margin-top: var(--s5); max-width: 520px; margin-inline: auto;"></p>
+    </div>
+  </div>
+</section>

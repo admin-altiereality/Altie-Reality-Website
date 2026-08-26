@@ -83,3 +83,18 @@ build/
 
 # Large files that exceed GitHub limits
 public/AltieRealityWebsite.zip
+
+# Local server log from scripts/
+/tmp-server.log
+
+# Screenshot output from scripts/shoot.js
+.screens/
+
+# Static export output (regenerate with npm run build)
+/dist/
+
+# Cloud Functions dependencies
+/functions/node_modules/
+
+# Firebase deploy cache (local artifact, regenerated on every deploy)
+.firebase/
