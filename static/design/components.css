@@ -1115,6 +1115,40 @@ h1 .tm, h2 .tm, .plate__name .tm {
   }
 }
 
-/* The hero canvas is interactive: the carousel can be dragged. It sits behind
-   the copy, so text and buttons keep their own pointer handling. */
-.hero__canvas { pointer-events: auto; }
+
+/* --- Hero carousel affordances --------------------------------------------
+   The canvas paints at z-index -2 so it sits behind the copy, which means it
+   can never win a hit test. The hero element carries the listeners instead,
+   so the cursor lives here too. */
+.hero { touch-action: pan-y; }
+@media (pointer: fine) and (min-width: 1101px) {
+  .hero { cursor: grab; }
+  .hero.is-pickable { cursor: pointer; }
+  .hero.is-grabbing { cursor: grabbing; }
+  /* The text column is text, not a handle. */
+  .hero__inner { cursor: auto; }
+}
+
+/* Name of the blade under the pointer. Real text, not baked into a texture. */
+.hero__pick {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: clamp(2rem, 8vh, 5rem);
+  z-index: 2;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(11, 15, 24, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-1);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.hero__pick[hidden] { display: none; }

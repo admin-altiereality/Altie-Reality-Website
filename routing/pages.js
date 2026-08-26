@@ -45,6 +45,7 @@ router.get("/", (req, res) => {
     carousel: industries.map((i) => ({
       src: `/media/carousel/${i.slug}.webp`,
       label: i.name,
+      route: i.route,
     })),
   });
 });

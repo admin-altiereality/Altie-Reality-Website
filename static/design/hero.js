@@ -21,7 +21,7 @@
   // The wheel wants enough blades to read as a fanned deck rather than a few
   // lonely spokes, so the sector list repeats around the full turn. Each
   // texture is uploaded once and shared by every blade that uses it.
-  var TARGET_BLADES = window.innerWidth < 900 ? 12 : 16;
+  var TARGET_BLADES = window.innerWidth < 1100 ? 12 : 16;
   var CARDS = [];
   for (var bi = 0; CARDS.length < TARGET_BLADES; bi++) {
     CARDS.push(SECTORS[bi % SECTORS.length]);
@@ -43,7 +43,11 @@
   }
   if (!gl) return;
 
-  var NARROW = window.innerWidth < 900;
+  // Below this the wheel becomes a dimmed backdrop rather than a side
+  // composition — there is no room beside a 780px text column under ~1100px.
+  var WIDE_MIN = 1100;
+  var NARROW = window.innerWidth < WIDE_MIN;
+  var FOV = 0.92;
 
   /* ================= shader plumbing ================= */
   function compile(type, src) {
@@ -200,6 +204,7 @@
     "uniform float u_ratio;",
     "uniform float u_time;",
     "uniform float u_opacity;",
+    "uniform float u_hover;",
     "void main() {",
     // Rounded rectangle mask so the cards read as panels, not raw quads.
     "  vec2 p = (v_uv - 0.5) * vec2(u_ratio, 1.0);",
@@ -218,11 +223,14 @@
     "  vec3 col = base * mix(0.55, 1.0, front);",
     // Edge light along the rounded border.
     "  float edge = smoothstep(-0.016, -0.002, d);",
-    "  col += vec3(0.35, 0.62, 1.0) * edge * 0.55;",
+    "  col += vec3(0.35, 0.62, 1.0) * edge * (0.55 + u_hover * 1.5);",
+    // The hovered blade lifts out of the fan.
+    "  col *= 1.0 + u_hover * 0.45;",
     // Depth haze so the far side of the wheel recedes.
     "  float haze = clamp((v_depth - 3.6) / 4.6, 0.0, 1.0);",
     "  col = mix(col, vec3(0.016, 0.024, 0.043), haze * 0.6);",
     "  float alpha = mask * mix(0.9, 1.0, front) * (1.0 - haze * 0.25);",
+    "  alpha = min(1.0, alpha + u_hover * 0.2);",
     "  gl_FragColor = vec4(col, alpha * u_opacity);",
     "}",
   ].join("\n");
@@ -280,6 +288,7 @@
     uRatio: gl.getUniformLocation(cardProg, "u_ratio"),
     uTime: gl.getUniformLocation(cardProg, "u_time"),
     uOpacity: gl.getUniformLocation(cardProg, "u_opacity"),
+    uHover: gl.getUniformLocation(cardProg, "u_hover"),
   };
   var F = {
     aGrid: gl.getAttribLocation(fieldProg, "a_grid"),
@@ -304,6 +313,48 @@
 
   /* ================= sizing ================= */
   var dpr = 1, w = 0, h = 0;
+
+  // Where the wheel sits horizontally. Derived from the measured text column
+  // rather than hard-coded: a fixed world offset collides with the copy at any
+  // viewport the constant was not tuned for.
+  var placement = { offsetX: 1.52, dist: -4.85 };
+
+  function solvePlacement() {
+    placement.dist = -4.85;
+    placement.offsetX = 1.52;
+    if (NARROW || !w || !h) return;
+
+    var inner = document.querySelector(".hero__inner");
+    var rect = canvas.getBoundingClientRect();
+    if (!inner || !rect.width) return;
+
+    var textRight = inner.getBoundingClientRect().right;
+    var gap = Math.max(48, rect.width * 0.035);
+    var wantLeftPx = textRight + gap;
+
+    var f = 1 / Math.tan(FOV / 2);
+    var aspect = w / h;
+    var radius = HUB + CARD_W;
+    var d = -placement.dist;
+
+    // leftNdc = (f / aspect) * (offsetX - radius) / d   →   solve for offsetX
+    var leftNdc = (wantLeftPx / rect.width) * 2 - 1;
+    var offsetX = (leftNdc * aspect * d) / f + radius;
+
+    // If that pushes the far edge off-canvas, step the wheel back until the
+    // whole fan fits rather than letting it clip.
+    for (var guard = 0; guard < 8; guard++) {
+      var rightNdc = (f / aspect) * (offsetX + radius) / d;
+      if (rightNdc <= 0.93) break;
+      d += 0.55;
+      leftNdc = (wantLeftPx / rect.width) * 2 - 1;
+      offsetX = (leftNdc * aspect * d) / f + radius;
+    }
+
+    placement.dist = -d;
+    placement.offsetX = offsetX;
+  }
+
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     var rect = canvas.getBoundingClientRect();
@@ -314,6 +365,7 @@
       canvas.height = h;
     }
     gl.viewport(0, 0, w, h);
+    solvePlacement();
   }
   resize();
   var resizeTimer;
@@ -331,46 +383,186 @@
   var lastPointerAt = 0;
   var idleAt = 0;
   var tiltX = 0, tiltTarget = 0;
+  var hover = -1;
+  var pressX = 0, pressY = 0, moved = 0;
+  // Last pointer position in canvas space, or null when the pointer is away.
+  var lastPoint = null;
 
-  canvas.style.touchAction = "pan-y";
+  // The canvas sits at z-index -2 so it paints behind the copy, which also
+  // means it never wins a hit test — the hero's own container box is on top.
+  // Listen on the hero itself and let the canvas stay purely visual.
+  var surface = canvas.closest(".hero") || canvas;
+  var INTERACTIVE = "a, button, input, textarea, select, label";
 
-  canvas.addEventListener("pointerdown", function (e) {
+  /** Pointer position in canvas pixel space, whatever element was hit. */
+  function localPoint(e) {
+    var r = canvas.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top, w: r.width, h: r.height };
+  }
+
+  surface.addEventListener("pointerdown", function (e) {
+    if (e.target.closest(INTERACTIVE)) return;   // let real controls work
     dragging = true;
+    moved = 0;
+    pressX = e.clientX;
+    pressY = e.clientY;
     lastPointerX = e.clientX;
     lastPointerAt = performance.now();
     spinVel = 0;
-    canvas.setPointerCapture(e.pointerId);
-    canvas.style.cursor = "grabbing";
+    if (surface.setPointerCapture) surface.setPointerCapture(e.pointerId);
+    surface.classList.add("is-grabbing");
   });
 
-  canvas.addEventListener("pointermove", function (e) {
-    tiltTarget = (e.clientY / window.innerHeight - 0.5) * 0.34;
-    if (!dragging) return;
+  surface.addEventListener("pointermove", function (e) {
+    var p = localPoint(e);
+    tiltTarget = (p.y / Math.max(p.h, 1) - 0.5) * 0.34;
+
+    lastPoint = p;
+    if (!dragging) return;   // hover is resolved per frame in refreshHover()
+
     var now = performance.now();
     var dx = e.clientX - lastPointerX;
     var gap = Math.max((now - lastPointerAt) / 1000, 1 / 240);
     lastPointerX = e.clientX;
     lastPointerAt = now;
-    var delta = (dx / window.innerWidth) * 9;
+    moved = Math.max(moved, Math.abs(e.clientX - pressX) + Math.abs(e.clientY - pressY));
+    var delta = (dx / Math.max(p.w, 1)) * 9;
     spin += delta;                 // direct manipulation
     spinVel = delta / gap;         // carried into the throw
     idleAt = now + 1400;
   });
 
+  surface.addEventListener("pointerup", function (e) {
+    if (!dragging) return;
+    // A drag must never navigate; only a genuine tap does.
+    if (moved < 6 && !e.target.closest(INTERACTIVE)) {
+      var hit = pick(localPoint(e));
+      if (hit >= 0 && CARDS[hit].route) {
+        endDrag(e);
+        window.location.href = CARDS[hit].route;
+        return;
+      }
+    }
+    endDrag(e);
+  });
+
   function endDrag(e) {
     if (!dragging) return;
     dragging = false;
-    if (e && e.pointerId != null && canvas.hasPointerCapture(e.pointerId)) {
-      canvas.releasePointerCapture(e.pointerId);
+    if (e && e.pointerId != null && surface.hasPointerCapture &&
+        surface.hasPointerCapture(e.pointerId)) {
+      surface.releasePointerCapture(e.pointerId);
     }
-    canvas.style.cursor = "grab";
+    surface.classList.remove("is-grabbing");
   }
-  canvas.addEventListener("pointerup", endDrag);
-  canvas.addEventListener("pointercancel", endDrag);
-  canvas.addEventListener("pointerleave", endDrag);
+  surface.addEventListener("pointercancel", endDrag);
+  surface.addEventListener("pointerleave", function (e) {
+    endDrag(e);
+    lastPoint = null;
+    if (hover !== -1) { hover = -1; setLabel(-1); surface.classList.remove("is-pickable"); }
+  });
 
-  if (window.matchMedia("(pointer: fine)").matches) {
-    canvas.style.cursor = "grab";
+  /**
+   * Re-picks under the stationary pointer every frame. Hover cannot be
+   * resolved on pointermove alone: the wheel turns underneath a still cursor,
+   * so the highlight would drift off the blade it named.
+   */
+  function refreshHover() {
+    if (dragging || !lastPoint) return;
+    var hit = pick(lastPoint);
+    // Hold the wheel still while a blade is under the cursor, so you click the
+    // sector you aimed at rather than whatever rotated into place.
+    if (hit >= 0) idleAt = performance.now() + 400;
+    if (hit !== hover) {
+      hover = hit;
+      setLabel(hit);
+      surface.classList.toggle("is-pickable", hit >= 0);
+    }
+  }
+
+  /* ================= picking ================= */
+  // Each blade is a flat quad with a known model matrix, so a ray/plane test
+  // against the same matrices used to draw is exact and costs nothing — no
+  // colour-picking pass, no second draw.
+  var inv = new Float32Array(16);
+  // The view matrix from the last drawn frame, so picking uses exactly the
+  // transform the user is looking at.
+  var lastView = new Float32Array(16);
+
+  /** Inverts an affine 4x4 (rotation + translation only, which is all we use). */
+  function invertRigid(out, m) {
+    // Transpose the rotation block.
+    out[0]=m[0]; out[1]=m[4]; out[2]=m[8];  out[3]=0;
+    out[4]=m[1]; out[5]=m[5]; out[6]=m[9];  out[7]=0;
+    out[8]=m[2]; out[9]=m[6]; out[10]=m[10];out[11]=0;
+    // Translation becomes -R^T * t.
+    out[12] = -(m[0]*m[12] + m[1]*m[13] + m[2]*m[14]);
+    out[13] = -(m[4]*m[12] + m[5]*m[13] + m[6]*m[14]);
+    out[14] = -(m[8]*m[12] + m[9]*m[13] + m[10]*m[14]);
+    out[15] = 1;
+    return out;
+  }
+
+  function xform(m, x, y, z) {
+    return {
+      x: m[0]*x + m[4]*y + m[8]*z + m[12],
+      y: m[1]*x + m[5]*y + m[9]*z + m[13],
+      z: m[2]*x + m[6]*y + m[10]*z + m[14],
+    };
+  }
+
+  /**
+   * Returns the index into CARDS of the blade under the pointer, or -1.
+   * `order` is already sorted far-to-near, so walking it backwards tests the
+   * nearest blade first and the first hit is the visible one.
+   */
+  function pick(p) {
+    if (!w || !h || !lastView) return -1;
+
+    // Pointer to a ray in view space.
+    var ndcX = (p.x / Math.max(p.w, 1)) * 2 - 1;
+    var ndcY = 1 - (p.y / Math.max(p.h, 1)) * 2;
+    var f = 1 / Math.tan(FOV / 2);
+    var aspect = w / h;
+    var dirX = (ndcX * aspect) / f;
+    var dirY = ndcY / f;
+
+    for (var k = order.length - 1; k >= 0; k--) {
+      var slot = order[k];
+      buildBlade(model, slot.a, slot.roll);
+      multiply(mv, lastView, model);
+      invertRigid(inv, mv);
+
+      // Eye at the view-space origin; transform origin and direction to the
+      // blade's local frame, where the quad lies on z = 0.
+      var o = xform(inv, 0, 0, 0);
+      var d = xform(inv, dirX, dirY, -1);
+      d.x -= o.x; d.y -= o.y; d.z -= o.z;
+      if (Math.abs(d.z) < 1e-6) continue;
+
+      var t = -o.z / d.z;
+      if (t <= 0) continue;
+
+      var hx = o.x + d.x * t;
+      var hy = o.y + d.y * t;
+      if (hx >= HUB && hx <= HUB + CARD_W &&
+          hy >= -CARD_H / 2 && hy <= CARD_H / 2) {
+        return slot.i;
+      }
+    }
+    return -1;
+  }
+
+  var labelEl = document.getElementById("hero-carousel-label");
+  function setLabel(index) {
+    if (!labelEl) return;
+    if (index < 0) {
+      labelEl.hidden = true;
+      labelEl.textContent = "";
+      return;
+    }
+    labelEl.textContent = CARDS[index].label;
+    labelEl.hidden = false;
   }
 
   /* ================= draw ================= */
@@ -385,8 +577,14 @@
   var lastFrame = 0;
 
   var STEP = (Math.PI * 2) / CARDS.length;
-  var order = CARDS.map(function (_, i) { return { i: i, a: 0, z: 0 }; });
+  // `roll` is stored so the picker can rebuild the exact matrix that was drawn.
+  var order = CARDS.map(function (_, i) { return { i: i, a: 0, z: 0, roll: 0 }; });
   function byDepth(p, q) { return p.z - q.z; }
+
+  /** The transform for one blade — used by both the draw loop and the picker. */
+  function buildBlade(out, angle, roll) {
+    return trs(out, 0, 0, 0, 0, angle, roll);
+  }
 
   function draw(t) {
     var dt = Math.min(Math.max(t - lastFrame, 0), 0.05);
@@ -404,14 +602,12 @@
     }
     tiltX += (tiltTarget - tiltX) * 0.05;
 
-    perspective(proj, 0.92, w / h, 0.1, 40);
+    perspective(proj, FOV, w / h, 0.1, 40);
 
-    // Right of the headline on wide screens; centred and further back on
-    // narrow ones so it never competes with the copy.
-    var offsetX = NARROW ? 0.0 : 1.52;
     var offsetY = NARROW ? -1.5 : -0.05;
-    var dist = NARROW ? -9.2 : -4.85;
-    trs(view, offsetX, offsetY, dist, 0.20 + tiltX, 0, 0);
+    var dist = NARROW ? -9.2 : placement.dist;
+    trs(view, NARROW ? 0 : placement.offsetX, offsetY, dist, 0.20 + tiltX, 0, 0);
+    lastView.set(view);
     multiply(vp, proj, view);
 
     gl.clearColor(0, 0, 0, 0);
@@ -462,20 +658,21 @@
       var slot = order[oi];
       slot.a = spin + slot.i * STEP;
       slot.z = Math.cos(slot.a);
+      // A gentle wave so the fan is not perfectly rigid.
+      slot.roll = Math.sin(slot.a * 2 + t * 0.5) * 0.055;
     }
     order.sort(byDepth);
+    refreshHover();
 
     for (var k = 0; k < order.length; k++) {
       var card = CARDS[order[k].i];
-      var angle = order[k].a;
-      // A gentle wave so the fan is not perfectly rigid.
-      var roll = Math.sin(angle * 2 + t * 0.5) * 0.055;
-      trs(model, 0, 0, 0, 0, angle, roll);
+      buildBlade(model, order[k].a, order[k].roll);
       multiply(mv, view, model);
       multiply(mvp, proj, mv);
       gl.uniformMatrix4fv(C.uMvp, false, mvp);
       gl.uniformMatrix4fv(C.uModel, false, mv);
       gl.uniform1f(C.uReady, card.ready);
+      gl.uniform1f(C.uHover, order[k].i === hover ? 1 : 0);
       gl.bindTexture(gl.TEXTURE_2D, card.tex);
       gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
     }
@@ -509,6 +706,17 @@
     draw((now - start) / 1000);
     raf = requestAnimationFrame(frame);
   }
+
+  // Read-only hook the verification harness uses to assert placement and
+  // rotation without reaching into closures.
+  window.__heroDebug = function () {
+    return {
+      spin: spin, spinVel: spinVel, hover: hover, narrow: NARROW, fov: FOV,
+      offsetX: NARROW ? 0 : placement.offsetX,
+      dist: NARROW ? -9.2 : placement.dist,
+      radius: HUB + CARD_W,
+    };
+  };
 
   canvas.classList.add("is-live");
   draw(0);

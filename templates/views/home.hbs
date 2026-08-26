@@ -13,6 +13,17 @@
     <section class="hero">
       <div class="hero__backdrop" aria-hidden="true"></div>
       <canvas class="hero__canvas" id="hero-field" aria-hidden="true"></canvas>
+      <p class="hero__pick" id="hero-carousel-label" aria-hidden="true" hidden></p>
+
+      <!-- The carousel is a canvas, so it cannot be operated by keyboard or
+           read by a screen reader. These links carry the same destinations. -->
+      <nav class="visually-hidden" aria-label="Sectors">
+        <ul>
+          {{#each industries}}
+          <li><a href="{{this.route}}">{{this.name}}</a></li>
+          {{/each}}
+        </ul>
+      </nav>
 
       <div class="container container--wide">
         <div class="hero__inner">

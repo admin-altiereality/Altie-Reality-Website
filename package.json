@@ -11,9 +11,10 @@
     "check:contrast": "node scripts/check-contrast.js",
     "check:responsive": "node scripts/shoot.js",
     "check:interactions": "node scripts/check-interactions.js",
-    "check": "node scripts/check-contrast.js && node scripts/check-site.js && node scripts/shoot.js && node scripts/check-interactions.js",
+    "check": "node scripts/check-contrast.js && node scripts/check-site.js && node scripts/shoot.js && node scripts/check-interactions.js && node scripts/check-hero.js",
     "build": "node scripts/prerender.js --site-url=https://altiereality.com",
-    "deploy": "npm run build && firebase deploy --only hosting:lexrn1,functions:site --project lexrn1"
+    "deploy": "npm run build && firebase deploy --only hosting:lexrn1,functions:site --project lexrn1",
+    "check:hero": "node scripts/check-hero.js"
   },
   "author": "",
   "license": "ISC",
