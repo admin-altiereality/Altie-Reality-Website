@@ -280,14 +280,14 @@
           setStatus(
             contactStatus,
             "success",
-            "Thank you — your message has been sent. We usually reply within two business days."
+            "Thank you — we have your message. We usually reply within two business days."
           );
         })
         .catch(function () {
           setStatus(
             contactStatus,
             "error",
-            "We could not send your message. Please email info.altiereality@gmail.com directly."
+            "We could not record your message. Please email info.altiereality@gmail.com directly."
           );
         })
         .finally(function () {
